@@ -1,6 +1,3 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
 import { promises as fs } from 'fs';
 
 export default async function Home() {

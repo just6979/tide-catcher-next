@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./main.css";
 
 export const metadata: Metadata = {
   title: "Tide Catcher Next",
@@ -38,8 +39,6 @@ export default function RootLayout({
           <meta name="msapplication-TileColor" content="#ffffff"/>
           <meta name="msapplication-TileImage" content="/static/icons/ms-icon-144x144.png"/>
           <meta name="theme-color" content="#ffffff"/>
-
-          <link rel="stylesheet" type="text/css" href="/static/css/main.css" media="screen, handheld"/>
 
           <script src="/static/js/contrib/jquery-3.1.0.min.js" defer></script>
           <script src="/static/js/contrib/underscore-1.8.3-min.js" defer></script>
