@@ -2,94 +2,130 @@ import Image from "next/image";
 import styles from "./page.module.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    return (
+        <div id="title">
+            <a href="/#">
+                <img id="logo" src="../static/images/wave_left_48.png" alt="Site Logo"/>
+                <h1>Tide Catcher</h1>
+            </a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div id="sections">
+        <div id="loading">
+            <p>Loading...</p>
+        </div>
+
+        <div id="tides" class="hidden">
+            <script id="tides-template" type="x-tmpl-mustache">
+                <table id="tides-table">
+                    <caption class="top">
+                        {{station}}
+                    </caption>
+                    {{#tides}}
+                    <tr class="{{#lower}}{{type}}{{/lower}} {{prior}}" title="{{type}} at {{iso-date}}">
+                        <td class="type">{{type}}</td>
+                        <td class="date">{{date}}</td>
+                        <td class="day">{{day}}</td>
+                        <td class="time">{{time}}</td>
+                    </tr>
+                    {{/tides}}
+                        </table>
+
+                        <div id="info">
+                        <table id="request">
+                        <caption class="top">Request</caption>
+                        <tr>
+                        <td>Time</td>
+                        <td>{{req_timestamp}}</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <a href="http://maps.google.com/maps/place/{{req_lat}},{{req_lon}}/@{{req_lat}},{{req_lon}},12z"
+                           target="_blank">{{req_lat}}, {{req_lon}}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <table id="response">
+                <caption class="top">Response</caption>
+                <tr>
+                    <td><a href="#stations">Station</a></td>
+                    <td>{{station}}</td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <a href="http://maps.google.com/maps/place/{{resp_lat}},{{resp_lon}}/@{{resp_lat}},{{resp_lon}}
+            ,12z" target="_blank">
+                            {{resp_lat}} , {{resp_lon}}
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="notes">
+            <p>
+                <em>
+                    {{wti_copyright}}
+                </em>
+            </p>
+        </div>
+
+    </script>
     </div>
-  );
+
+    <div id="coming-soon">
+        <h2>Coming Soon...</h2>
+        <ul>
+            <li>Offline mode: always see the last tides retrieved.</li>
+            <li>Save your favorite stations.</li>
+        </ul>
+    </div>
+
+    <div id="stations" class="hidden">
+        <script id="stations-template" type="x-tmpl-mustache">
+            <h2>Stations</h2>
+            <p>
+                {{station_count}} stations cached: <a href="/#refresh-stations">Refresh</a>
+            </p>
+            <ul>
+                {{#stations}}
+                <li>
+                    {{org}},
+                    {{name}}
+                    @(<a href="http://maps.google.com/maps/place/{{lat}},{{lon}}" target="_blank">
+                    {{lat}},{{lon}}
+                </a>)
+                    {{#noaa}}
+                    NOAA ID: <a href=https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id={{org_id}}
+                                target="_blank">
+                    {{org_id}}
+                </a>
+                    {{/noaa}}
+                    {{^noaa}}
+                    {{org_id}}
+                    {{/noaa}}
+                        </li>
+                    {{/stations}}
+                        </ul>
+
+                        </script>
+                        </div>
+
+                        <div id="error" class="hidden">
+                        <script id="error-template" type="x-tmpl-mustache">
+                        <p>
+                        Error: {{status}}
+                </p>
+                <p>
+                    Try refreshing the <a href="#stations">Stations List</a>.
+                </p>
+
+        </script>
+    </div>
+
+</div>
+)
+    ;
 }
