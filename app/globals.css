@@ -1,25 +1,39 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: lightblue;
+  --foreground: black;
+  --high-row-bg: lightyellow;
+  --low-row-bg: lightgreen;
+  --past-row-bg: lightgray;
+  --past-row-fg: darkgray;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: black;
+    --foreground: lightblue;
+    --high-row-bg: yellow;
+    --low-row-bg: green;
+    --past-row-bg: darkgray;
+    --past-row-fg: gray;
   }
 }
 
 html,
 body {
-  max-width: 100vw;
+  max-width: 500vw;
   overflow-x: hidden;
+  padding: 0.5em;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: monospace;
+  font-size: 150%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -32,7 +46,6 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,3 +53,97 @@ a {
     color-scheme: dark;
   }
 }
+
+@media (max-width: 500px) {
+  #tides table, #info table {
+    width: 100%;
+  }
+}
+
+#title h1 {
+  margin-bottom: 0.25em;
+  padding-bottom: 0.25em;
+  border-bottom: dashed thin;
+}
+
+#title a {
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+#loading {
+  margin-bottom: 1em;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+caption {
+  padding: 0.5em;
+}
+
+th, td {
+  padding: 0.5em;
+}
+
+.prior {
+  font-size: 75%;
+  color: var(--past-row-fg);
+  background-color: var(--past-row-bg);
+}
+
+.high {
+  background-color: var(--high-row-bg);
+}
+
+.low {
+  background-color: var(--low-row-bg);
+}
+
+#info {
+  margin: 1em 0em;
+  font-size: 66%
+}
+
+#info td:first-child {
+  border-right: dotted thin;
+  white-space: nowrap;
+}
+
+#info td {
+  text-align: left;
+}
+
+#info td:first-child {
+  text-align: right;
+}
+
+#footer {
+  text-align: center;
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 66%;
+}
+
+#coming-soon {
+  border-top: dotted thin;
+  padding: 1em;
+}
+
+#coming-soon ul, #stations ul {
+  list-style-position: inside;
+}
+
+#notes {
+  border-top: dotted thin;
+  text-align: justify;
+  padding: 1em;
+}
+

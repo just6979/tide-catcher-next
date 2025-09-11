@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./main.css";
 
 import Head from "./head";
 import Header from './header';
