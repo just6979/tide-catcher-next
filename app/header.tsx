@@ -1,10 +1,12 @@
+import Link from 'next/link'
+
 export default function Header() {
   return (
     <div id="title">
-      <a href="/#">
+      <Link href="/#">
         <img id="logo" src="../static/images/wave_left_48.png" alt="Site Logo"/>
         <h1>Tide Catcher</h1>
-      </a>
+      </Link>
     </div>
   )
 }
