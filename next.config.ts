@@ -8,4 +8,5 @@ export default nextConfig;
 
 module.exports = {
     distDir: 'build',
+    output: "standalone",
 }
