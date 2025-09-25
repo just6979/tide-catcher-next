@@ -21,15 +21,14 @@ Web app to display high & low tide data from nearby NOAA tide stations.
 
 ## TODO
 
-### Backend
-* Implement REST/JSON API locally (remove dependency on https://tide-catcher.appspot.com)
-* Switch to https://api.tidesandcurrents.noaa.gov/mdapi/prod/ for tide data
-  * Nothing wrong with https://www.worldtides.info/apidocs, just doesn't align exactly with the functionality I want:
-    * No longer supports pulling data directly from a station, only "nearest"
-    * Free usage tier has shrunk massively: used to be 1000 per month, now is only 100 at signup.
-      * (I seem to be grandfathered into the 1000 per month, but who knows when that will stop...)
-* (Backend) Cache recently used stations and tide data to minimize external data requests
-
-### Frontend
-* (Frontend) Offline mode: pull 7 days of data at a time, will only need internet when that data is stale.
-* (Frontend) Favorite stations: Keep a list of nearby stations instead of relying on GPS data.
+* Backend
+  * Implement REST/JSON API locally (remove dependency on https://tide-catcher.appspot.com)
+  * Switch to https://api.tidesandcurrents.noaa.gov/mdapi/prod/ for tide data
+    * Nothing wrong with https://www.worldtides.info/apidocs, just doesn't align exactly with the functionality I want:
+      * No longer supports pulling data directly from a station, only "nearest"
+      * Free usage tier has shrunk massively: used to be 1000 per month, now is only 100 at signup.
+        * (I seem to be grandfathered into the 1000 per month, but who knows when that will stop...)
+  * Cache recently used stations and tide data to minimize external data requests
+* Frontend
+  * Offline mode: pull 7 days of data at a time, will only need internet when that data is stale.
+  * Favorite stations: Keep a list of nearby stations instead of relying on GPS data.
