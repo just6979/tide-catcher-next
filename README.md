@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# What
 
-## Getting Started
+Web app to display high & low tide data from nearby NOAA tide stations.
 
-First, run the development server:
+* Built with Next.js, React, & Docker.
+* Currently deployed on Google Cloud Run and Vercel.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> An enhanced reproduction of https://github.com/just6979/tide-catcher.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# How
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Next.js backend serves up a React frontend and a REST/JSON API.
+* Fetches tide info from https://www.worldtides.info/apidocs (temporarily, see below).
+  * Via the API from https://tide-catcher.appspot.com (temporarily, see below).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Where
 
-## Learn More
+* https://tide-catcher.justinwhite.net
+* Alternate URL: https://tide-catcher-next-1072051472642.us-east4.run.app
+* Secondary Deploy: https://tide-catcher-next.vercel.app
 
-To learn more about Next.js, take a look at the following resources:
+## TODO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Backend
+* Implement REST/JSON API locally (remove dependency on https://tide-catcher.appspot.com)
+* Switch to https://api.tidesandcurrents.noaa.gov/mdapi/prod/ for tide data
+  * Nothing wrong with https://www.worldtides.info/apidocs, just doesn't align exactly with the functionality I want:
+    * No longer supports pulling data directly from a station, only "nearest"
+    * Free usage tier has shrunk massively: used to be 1000 per month, now is only 100 at signup.
+      * (I seem to be grandfathered into the 1000 per month, but who knows when that will stop...)
+* (Backend) Cache recently used stations and tide data to minimize external data requests
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Frontend
+* (Frontend) Offline mode: pull 7 days of data at a time, will only need internet when that data is stale.
+* (Frontend) Favorite stations: Keep a list of nearby stations instead of relying on GPS data.
