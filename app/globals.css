@@ -22,7 +22,7 @@ html,
 body {
   max-width: 500px;
   overflow-x: hidden;
-  padding: 0.5em;
+  padding: 0.5em 0;
   margin: auto;
 }
 
@@ -35,14 +35,8 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -55,14 +49,8 @@ a {
   }
 }
 
-@media (max-width: 500px) {
-  #tides table, #info table {
-    width: 100%;
-  }
-}
-
 #title h1 {
-  margin-bottom: 0.25em;
+  margin: 0;
   padding-bottom: 0.25em;
   border-bottom: dashed thin;
 }
@@ -80,8 +68,7 @@ a {
 }
 
 table {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
   border-collapse: collapse;
   width: 100%;
 }
@@ -118,29 +105,24 @@ th, td {
   white-space: nowrap;
 }
 
-#info td {
-  text-align: left;
+#info td:first-child {
+  text-align: end;
 }
 
-#info td:first-child {
-  text-align: right;
+#info td {
+  text-align: start;
 }
 
 #footer {
-  font-size: 66%;
+  font-size: 50%;
+  text-align: start;
+  margin: 1em;
 }
 
 #coming-soon {
   border-top: dashed thin;
-  padding: 1em;
-}
-
-#coming-soon ul, #stations ul {
-  list-style-position: inside;
 }
 
 #notes {
   border-top: dotted thin;
-  text-align: justify;
-  padding: 1em;
 }
