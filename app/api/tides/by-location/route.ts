@@ -5,6 +5,7 @@ export async function GET(request: Request) {
     {cache: 'force-cache'}
   )
   const data = await external_response.json();
+  delete data.wti_copyright
   return new Response(JSON.stringify(data), {
     headers: { 'Content-Type': 'application/json' },
   });
