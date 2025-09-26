@@ -1,17 +1,11 @@
-import {NextRequest, NextResponse} from "next/server"
-
-export async function GET(request: NextRequest) {
-  console.log("incoming request: " + request.url)
-
-  const location = '42.6726,-70.9441'
-
-  const old_api_url = 'https://tide-catcher.appspot.com/json/tides/by-location/' + location
-  console.log("outgoing request: " + old_api_url)
-
-  const old_api_response = await fetch(old_api_url, {cache: 'force-cache'})
-  const old_api_data = await old_api_response.json()
-
-  console.log("response length: " + old_api_data.length)
-
-  return NextResponse.json(old_api_data)
+export async function GET(request: Request) {
+  const location = '42.7101,-70.7886'
+  const external_response = await fetch(
+    'https://tide-catcher.appspot.com/json/tides/by-location/' + location,
+    {cache: 'force-cache'}
+  )
+  const data = await external_response.json();
+  return new Response(JSON.stringify(data), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
