@@ -1,9 +1,10 @@
-import type { Metadata } from "next"
+import type {Metadata} from "next"
 import "./globals.css"
-
-import Head from "./head"
-import Header from './header'
-import Footer from './footer'
+import Head from "@/app/head"
+import Header from '@/app/header'
+import {Suspense} from "react";
+import Loading from "@/app/loading";
+import Footer from '@/app/footer'
 
 export const metadata: Metadata = {
   title: "Tide Catcher Next",
@@ -20,7 +21,9 @@ export default function RootLayout({
       <Head/>
       <body>
         <Header/>
-        {children}
+        <Suspense fallback={<Loading/>}>
+          {children}
+        </Suspense>
         <Footer/>
       </body>
     </html>
