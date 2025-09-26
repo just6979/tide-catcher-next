@@ -16,7 +16,7 @@ Web app to display high & low tide data from nearby NOAA tide stations.
 # Where
 
 * https://tide-catcher.justinwhite.net
-* Alternate URL: https://tide-catcher-next-1072051472642.us-east4.run.app
+* Alternate URL: https://tide-catcher-next-1072051472642.us-east1.run.app
 * Secondary Deploy: https://tide-catcher-next.vercel.app
 
 ## TODO
