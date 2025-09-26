@@ -1,4 +1,3 @@
-import responseData from '../../data/tc_plum_island_example.json'
 import {NextRequest, NextResponse} from "next/server"
 
 export async function GET(request: NextRequest) {
