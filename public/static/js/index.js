@@ -82,7 +82,7 @@ function getTides() {
 
     $.ajax(
         {
-            url: 'https://tide-catcher.appspot.com/json/tides/by-location/' + location_string,
+            url: '/api/tides/by-location/' + location_string,
             type: 'GET',
             dataType: 'json'
         }
