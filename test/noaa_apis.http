@@ -1,0 +1,8 @@
+### plum island sound (south end)
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241.json
+
+###
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241/nearby.json
+
+### hilo
+https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=168&station=8441241&product=predictions&datum=MSL&time_zone=lst_ldt&interval=hilo&units=english&format=json
