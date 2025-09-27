@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="docker run" type="docker-deploy" factoryName="docker-image" server-name="Docker">
-    <deployment type="docker-image">
+  <configuration default="false" name="docker build &amp; run" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="tide-catcher-next:dev" />
         <option name="containerName" value="" />
@@ -12,8 +12,8 @@
             </DockerPortBindingImpl>
           </list>
         </option>
-        <option name="pullImage" value="NEVER" />
         <option name="showCommandPreview" value="true" />
+        <option name="sourceFilePath" value="Dockerfile" />
       </settings>
     </deployment>
     <method v="2" />
