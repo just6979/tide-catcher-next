@@ -1,4 +1,4 @@
-export async function GET(request: Request) {
+export async function GET() {
   const location = '42.7101,-70.7886'
   const external_response = await fetch(
     'https://tide-catcher.appspot.com/json/tides/by-location/' + location,
