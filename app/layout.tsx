@@ -18,11 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script src="/static/js/contrib/jquery-3.1.0.min.js"/>
-      <Script src="/static/js/contrib/underscore-1.8.3-min.js"/>
-      <Script src="/static/js/contrib/backbone-1.3.3-min.js"/>
-      <Script src="/static/js/contrib/mustache-2.2.1.min.js"/>
-      <Script src="/static/js/index.js"/>
+      <Script src="/js/contrib/jquery-3.1.0.min.js"/>
+      <Script src="/js/contrib/underscore-1.8.3-min.js"/>
+      <Script src="/js/contrib/backbone-1.3.3-min.js"/>
+      <Script src="/js/contrib/mustache-2.2.1.min.js"/>
+      <Script src="/js/index.js"/>
       <body>
         <Header/>
         <Suspense fallback={<Loading/>}>
