@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <div id="title">
       <Link href="/#">
-        <Image id="logo" src="/static/images/wave_left_48.png" alt="Site Logo" width={48} height={48}
+        <Image id="logo" src="/images/wave_left_48.png" alt="Site Logo" width={48} height={48}
                unoptimized={true}/>
         <h1>Tide Catcher</h1>
       </Link>
