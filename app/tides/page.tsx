@@ -72,9 +72,9 @@ export default function Tides() {
   const request_location_url =
     `https://maps.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
   const response_location_url =
-    `https://maps.google.com/maps/place/$data['resp_lat'],$data['resp_lon']/@$data['resp_lat'],$data['resp_lon'],12z`
+    `https://maps.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
   const station_url =
-    `https://www.google.com/search?q=noaa+$data['station']`
+    `https://www.google.com/search?q=noaa+${data.station}`
 
   return (
     <div>
