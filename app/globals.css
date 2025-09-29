@@ -7,17 +7,6 @@
   --past-row-fg: darkgray;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: black;
-    --foreground: lightblue;
-    --high-row-bg: yellow;
-    --low-row-bg: green;
-    --past-row-bg: darkgray;
-    --past-row-fg: gray;
-  }
-}
-
 html,
 body {
   max-width: 500px;

@@ -2,6 +2,8 @@
   "name": "Tide Catcher",
   "description": "Web app to quickly display upcoming high & low tide data from nearest NOAA tide stations.",
   "start_url": "/",
+  "display": "standalone",
+  "theme_color": "lightblue",
   "icons": [
     {
       "src": "/icons/icon-36x36.png",
