@@ -112,6 +112,20 @@ th, td {
   border-top: dashed thin;
 }
 
+#coming-soon ul {
+  padding-inline-start: 2em;
+}
+
 #notes {
   border-top: dotted thin;
+}
+
+#stations {
+  text-align: start;
+  font-size: 66%;
+  white-space-collapse: preserve;
+}
+
+#stations ul {
+  padding-inline-start: 2em;
 }

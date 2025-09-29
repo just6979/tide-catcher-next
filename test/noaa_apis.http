@@ -1,3 +1,6 @@
+###
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json?type=tidepredictions
+
 ### plum island sound (south end)
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241.json
 
