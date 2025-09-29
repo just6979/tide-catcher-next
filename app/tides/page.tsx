@@ -76,26 +76,26 @@ export default function Tides() {
   const station_url =
     `https://www.google.com/search?q=noaa+$data['station']`
 
-  return <>
-    <div id="tides">
-      <table id="tides-table">
+  return (
+    <div>
+      <table id="tides">
         <caption className="top">{data['station']}</caption>
         <tbody>
         {data.tides.map((tide) => {
           const tideType: string = tide["type"];
-          return <tr key={tide["iso_date"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
+          return (
+            <tr key={tide["iso_date"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
               <td className="type">{tide["type"]}</td>
               <td className="time">{tide["time"]}</td>
               <td className="day">{tide["day"]}</td>
               <td className="date">{tide["date"]}</td>
-            </tr>;
+            </tr>
+          )
         })}
         </tbody>
       </table>
-    </div>
 
-    <div id="info">
-      <table id="request">
+      <table id="request-info">
         <tbody>
         <tr>
           <td>Request Time</td>
@@ -117,5 +117,5 @@ export default function Tides() {
         </tbody>
       </table>
     </div>
-  </>
+  )
 }

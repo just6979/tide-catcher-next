@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Header() {
   return (
-    <div id="title">
+    <div id="header">
       <Link href="/#">
         <Image
           id="logo"

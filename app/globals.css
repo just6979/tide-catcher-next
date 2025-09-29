@@ -38,13 +38,13 @@ a {
   }
 }
 
-#title h1 {
+#header h1 {
   margin: 0;
   padding-bottom: 0.25em;
   border-bottom: dashed thin;
 }
 
-#title a {
+#header a {
   text-decoration: none;
 }
 
@@ -84,21 +84,21 @@ th, td {
   background-color: var(--low-row-bg);
 }
 
-#info {
+#request-info {
   margin: 1em 0em;
   font-size: 66%
 }
 
-#info td:first-child {
+#request-info td:first-child {
   border-right: dotted thin;
   white-space: nowrap;
 }
 
-#info td:first-child {
+#request-info td:first-child {
   text-align: end;
 }
 
-#info td {
+#request-info td {
   text-align: start;
 }
 
