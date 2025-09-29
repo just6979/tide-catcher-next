@@ -1,5 +1,4 @@
 import type {Metadata, Viewport} from "next"
-import Script from "next/script";
 import {ReactNode, Suspense} from "react";
 
 import Header from '@/app/header'

@@ -4,7 +4,9 @@ import {useEffect, useState} from "react";
 
 export default function Stations() {
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState({})
+  const [data, setData] = useState({
+    stations: []
+  })
 
   useEffect(() => {
     fetch("/api/stations")
@@ -18,7 +20,7 @@ export default function Stations() {
   if (isLoading) return <p>Loading Stations List...</p>
   if (!data) return <p>No Stations List found.</p>
 
-  let noaaStations = data.stations.filter(station =>
+  const noaaStations = data.stations.filter((station: { noaa: string; }) =>
     station.noaa != ''
   )
 
@@ -30,22 +32,13 @@ export default function Stations() {
       </p>
       <ul>
         {noaaStations.map((station) => (
-          <li key={station.id}>
-            {StationLink(station.noaa, station.org_id)} {station.name}
+          <li key={station["id"]}>
+            <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["org_id"]}`} target="_blank">
+              {station["id"]}
+            </a> {station["name"]}
           </li>
         ))}
       </ul>
     </div>
   )
-}
-
-function StationLink(isNoaa: boolean, org_id: string) {
-  if (isNoaa) {
-    return <>
-      <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${org_id}`} target="_blank">NOAA {org_id}</a>
-    </>
-
-  } else {
-    return <>{org_id}</>
-  }
 }

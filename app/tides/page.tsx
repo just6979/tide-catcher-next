@@ -4,10 +4,21 @@ import {useEffect, useState} from 'react';
 
 export default function Tides() {
   const [isLocating, setLocating] = useState(true)
-  const [location, setLocation] = useState({latitude: '', longitude: ''})
+  const [location, setLocation] = useState({
+    latitude: '',
+    longitude: ''
+  })
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState()
+  const [data, setData] = useState({
+    tides: [],
+    req_lat: '',
+    req_lon: '',
+    req_timestamp: '',
+    resp_lat: 0,
+    resp_lon: 0,
+    station: ''
+  })
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -61,23 +72,24 @@ export default function Tides() {
   const request_location_url =
     `https://maps.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
   const response_location_url =
-    `https://maps.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
+    `https://maps.google.com/maps/place/$data['resp_lat'],$data['resp_lon']/@$data['resp_lat'],$data['resp_lon'],12z`
   const station_url =
-    `https://www.google.com/search?q=noaa+${data.station}`
+    `https://www.google.com/search?q=noaa+$data['station']`
 
-  return (<>
+  return <>
     <div id="tides">
       <table id="tides-table">
-        <caption className="top">{data.station}</caption>
+        <caption className="top">{data['station']}</caption>
         <tbody>
-        {data.tides.map((tide) => (
-          <tr key={tide.iso_date} className={tide.prior === "prior" ? "prior" : tide.type.toLowerCase()}>
-            <td className="type">{tide.type}</td>
-            <td className="time">{tide.time}</td>
-            <td className="day">{tide.day}</td>
-            <td className="date">{tide.date}</td>
-          </tr>
-        ))}
+        {data.tides.map((tide) => {
+          const tideType: string = tide["type"];
+          return <tr key={tide["iso_date"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
+              <td className="type">{tide["type"]}</td>
+              <td className="time">{tide["time"]}</td>
+              <td className="day">{tide["day"]}</td>
+              <td className="date">{tide["date"]}</td>
+            </tr>;
+        })}
         </tbody>
       </table>
     </div>
@@ -91,7 +103,7 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Request Location</td>
-          <td><a href={request_location_url} target="_blank"> {data.req_lat}, {data.req_lon} </a>
+          <td><a href={request_location_url} target="_blank">{data.req_lat},{data.req_lon}</a>
           </td>
         </tr>
         <tr>
@@ -100,10 +112,10 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Response Location</td>
-          <td><a href={response_location_url} target="_blank"> {data.resp_lat} , {data.resp_lon} </a></td>
+          <td><a href={response_location_url} target="_blank">{data.resp_lat},{data.resp_lon}</a></td>
         </tr>
         </tbody>
       </table>
     </div>
-  </>)
+  </>
 }
