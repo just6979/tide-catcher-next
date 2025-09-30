@@ -36,41 +36,47 @@ export async function tides_by_station(station: string) {
   )
   const data = await external_response.json();
 
+  let out_data
   if ('error' in data) {
-    return new Response(JSON.stringify(data), {
-      headers: {'Content-Type': 'application/json'},
-    })
-
-  }
-
-  let tides = []
-  for (let i in data.predictions) {
-    const prediction = data.predictions[i]
-    const in_date: string = prediction.t
-    const tide_date = new Date(in_date)
-    const tide = {
-      source_date: in_date,
-      date: `${(tide_date.getMonth() + 1).toString().padStart(2, '0')}-` +
-        `${tide_date.getDate().toString().padStart(2, '0')}`,
-      day: weekDays[tide_date.getDay()],
-      height: Number(prediction.v),
-      iso_date: tide_date.toISOString(),
-      prior: tide_date < now_date ? 'prior' : 'future',
-      time: `${tide_date.getHours().toString().padStart(2, '0')}:` +
-        `${tide_date.getMinutes().toString().padStart(2, '0')}`,
-      type: prediction.type === 'H' ? 'high' : 'low'
+    out_data = {
+      req_time: now_date.toISOString(),
+      message: "Error calling NOAA CO-OPS Data Retrieval API.",
+      url: url,
+      co_ops_response: data
     }
-    tides.push(tide)
-  }
+  } else {
 
-  const out_data = {
-    resp_lat: 42.7101,
-    resp_lon: -70.7886,
-    station_id: station,
-    station: "Plum Island Sound (south end), Massachusetts",
-    station_tz: "America/New_York",
-    status: 200,
-    tides: tides
+    let tides = []
+    for (let i in data.predictions) {
+      const prediction = data.predictions[i]
+      const in_date: string = prediction.t
+      const tide_date = new Date(in_date)
+      const tide = {
+        source_date: in_date,
+        date: `${(tide_date.getMonth() + 1).toString().padStart(2, '0')}-` +
+          `${tide_date.getDate().toString().padStart(2, '0')}`,
+        day: weekDays[tide_date.getDay()],
+        height: Number(prediction.v),
+        iso_date: tide_date.toISOString(),
+        prior: tide_date < now_date ? 'prior' : 'future',
+        time: `${tide_date.getHours().toString().padStart(2, '0')}:` +
+          `${tide_date.getMinutes().toString().padStart(2, '0')}`,
+        type: prediction.type === 'H' ? 'high' : 'low'
+      }
+      tides.push(tide)
+    }
+
+    out_data = {
+      req_time: now_date.toISOString(),
+      resp_lat: 42.7101,
+      resp_lon: -70.7886,
+      station_id: station,
+      station: "Plum Island Sound (south end), Massachusetts",
+      station_tz: "America/New_York",
+      status: 200,
+      tides: tides
+    }
+
   }
 
   return new Response(JSON.stringify(out_data), {
