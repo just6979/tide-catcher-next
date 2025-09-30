@@ -24,7 +24,7 @@ export async function readLocal(filename: string): Promise<string> {
     return (await readFile(buildFN(filename), {encoding: 'utf8'})).toString()
   } catch (err) {
     console.log(`${__filename}: Unable to read ${filename}: ${err}`)
-    throw err
+    return ''
   }
 }
 
@@ -34,7 +34,6 @@ export async function writeLocal(filename: string, data: string): Promise<void> 
     return await writeFile(buildFN(filename), data)
   } catch (err) {
     console.log(`${__filename}: Unable to store ${filename}: ${err}`)
-    throw err
   }
 
 }
