@@ -36,6 +36,13 @@ export async function tides_by_station(station: string) {
   )
   const data = await external_response.json();
 
+  if ('error' in data) {
+    return new Response(JSON.stringify(data), {
+      headers: {'Content-Type': 'application/json'},
+    })
+
+  }
+
   let tides = []
   for (let i in data.predictions) {
     const prediction = data.predictions[i]
