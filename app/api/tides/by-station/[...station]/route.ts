@@ -1,3 +1,5 @@
+import {subHours} from "date-fns";
+
 const weekDays = [
   'Sun',
   'Mon',
@@ -15,11 +17,13 @@ export async function GET(request: Request, {params}: { params: Promise<{ locati
 
 export async function tides_by_station(station: string) {
   const now_date = new Date()
-  const month = String(now_date.getMonth() + 1).padStart(2, '0')
-  const hours = String(now_date.getHours()).padStart(2, '0');
+  const req_date = subHours(now_date, 12)
 
-  // const dateString = `${date.getFullYear()}${month}${date.getDate()} ${hours}:${date.getMinutes()}`
-  const dateString = `${now_date.getFullYear()}${month}${now_date.getDate()} 00:00`
+  const month = String(req_date.getMonth() + 1).padStart(2, '0')
+  const hours = String(req_date.getHours()).padStart(2, '0');
+  const minutes = String(req_date.getMinutes()).padStart(2, '0');
+
+  const dateString = `${req_date.getFullYear()}${month}${req_date.getDate()} ${hours}:${minutes}`;
   const range = `48`;
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
