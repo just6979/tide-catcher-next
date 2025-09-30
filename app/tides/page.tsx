@@ -69,10 +69,12 @@ export default function Tides() {
   if (isLoading) return <p>Loading Tides Data for ({`${location.latitude},${location.longitude}`})...</p>
   if (!data) return <p>No Tides Data found.</p>
 
+  /* URL format is pin_lat,pin_long/@center_lat,center_long,zoomlevel */
   const request_location_url =
-    `https://maps.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
+    `https://www.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
   const response_location_url =
-    `https://maps.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
+    `https://www.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
+
   const station_url =
     `https://www.google.com/search?q=noaa+${data.station}`
 
