@@ -1,11 +1,14 @@
-###
+### stations
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json?type=tidepredictions
 
-### plum island sound (south end)
+### 8441241 plum island sound
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241.json
 
-###
+### 8441242 nearby
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241/nearby.json
 
-### hilo
+### 8441241 tides hilo 7 days
 https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=168&station=8441241&product=predictions&datum=MSL&time_zone=lst_ldt&interval=hilo&units=english&format=json
+
+### 8441241 tides hilo 1 days
+https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=24&station=8441241&product=predictions&datum=MSL&time_zone=lst_ldt&interval=hilo&units=english&format=json
