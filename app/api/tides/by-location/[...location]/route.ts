@@ -1,5 +1,9 @@
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
   const location = (await params).location;
+  return tides_by_location(location);
+}
+
+export async function tides_by_location(location: string) {
   const external_response = await fetch(
     'https://tide-catcher.appspot.com/json/tides/by-location/' + location,
     {cache: 'force-cache'}
@@ -7,6 +11,6 @@ export async function GET(request: Request, {params}: { params: Promise<{ locati
   const data = await external_response.json();
   delete data.wti_copyright
   return new Response(JSON.stringify(data), {
-    headers: { 'Content-Type': 'application/json' },
+    headers: {'Content-Type': 'application/json'},
   });
 }
