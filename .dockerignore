@@ -5,3 +5,8 @@ npm-debug.log
 README.md
 .next
 .git
+.idea
+.gitignore
+.gcloudignore
+.storage
+test
