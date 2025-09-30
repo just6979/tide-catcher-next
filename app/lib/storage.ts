@@ -1,27 +1,35 @@
-import {currentEnv, deploy_envs} from "@/app/lib/env"
+import {envs, initDeployEnv} from "@/app/lib/env";
+import {existsLocal, readLocal, writeLocal} from "./storage/local"
+
+let initialized = false
 
 export function initStorage() {
-  console.log(currentEnv)
+  if (initialized) {
+    return
+  }
 
-  if (currentEnv === deploy_envs.LOCAL) {
-    initLocalStorage();
+  const currentEnv = initDeployEnv()
+  if (currentEnv === envs.LOCAL) {
+    console.log("Using LOCAL storage")
   }
-  if( currentEnv === deploy_envs.GCR) {
-    initGCRStorage();
+  if (currentEnv === envs.GCR) {
+    console.log("Using Google Cloud Storage")
   }
-  if (currentEnv === deploy_envs.VERCEL) {
-    initVercelStorage();
+  if (currentEnv === envs.VERCEL) {
+    console.log("Using Vercel Blob Storage")
   }
+
+  initialized = true
 }
 
-function initLocalStorage() {
-  console.log("Using LOCAL storage")
+export async function check(filename: string): Promise<boolean> {
+  return existsLocal(filename);
 }
 
-function initGCRStorage() {
-  console.log("Using GCR storage")
+export async function read(filename: string): Promise<string> {
+  return readLocal(filename)
 }
 
-function initVercelStorage() {
-  console.log("Using VERCEL storage")
+export async function store(filename: string, data: string): Promise<void> {
+  return writeLocal(filename, data)
 }

@@ -1,15 +1,21 @@
-export enum deploy_envs {
+export enum envs {
   LOCAL = 'LOCAL',
   GCR = 'GCR',
   VERCEL = 'VERCEL'
 }
 
-export let currentEnv = deploy_envs.LOCAL
+let currentEnv = envs.LOCAL
 
-export function setDeployEnv() {
+export function initDeployEnv() {
   if ('K_SERVICE' in process.env) {
-    currentEnv = deploy_envs.GCR
+    currentEnv = envs.GCR
   } else if ('VERCEL_ENV' in process.env) {
-    currentEnv=  deploy_envs.VERCEL
+    currentEnv = envs.VERCEL
   }
+  console.log(currentEnv)
+  return currentEnv
+}
+
+export function getDeployEnv() {
+  return currentEnv
 }
