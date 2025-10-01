@@ -13,7 +13,7 @@ export default async function tidesFromStation(stationId: string) {
   ]
 
   const nowDate = new Date()
-  const backdateHours = 12
+  const backdateHours = 7
   const reqDate = subHours(nowDate, backdateHours)
 
   const month = String(reqDate.getMonth() + 1).padStart(2, '0')
@@ -22,7 +22,7 @@ export default async function tidesFromStation(stationId: string) {
   const minutes = String(reqDate.getMinutes()).padStart(2, '0')
 
   const dateString = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
-  const range = `48`
+  const range = (48 + backdateHours).toString()
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
     `&station=${stationId}&begin_date=${dateString}&range=${range}`)
