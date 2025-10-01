@@ -1,7 +1,7 @@
 import {subHours} from "date-fns";
-import {by_id} from "@/app/lib/stations/by_id";
+import {station_by_id} from "@/app/lib/station_by_id";
 
-export default async function by_station(station_id: string) {
+export default async function tides_by_station(station_id: string) {
   const weekDays = [
     'Sun',
     'Mon',
@@ -62,7 +62,7 @@ export default async function by_station(station_id: string) {
       tides.push(tide)
     }
 
-    const station_data = await by_id(station_id)
+    const station_data = await station_by_id(station_id)
     out_data = {
       req_timestamp: now_date.toISOString(),
       resp_lat: station_data.lat.toFixed(5),

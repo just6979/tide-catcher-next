@@ -1,5 +1,5 @@
-import {envs, initDeployEnv} from "@/app/lib/env";
-import {existsLocal, readLocal, writeLocal} from "./storage/local"
+import {envs, initDeployEnv} from "@/app/lib/deploy_env";
+import {existsLocal, readLocal, writeLocal} from "./storage_local"
 
 let initialized = false
 
