@@ -33,7 +33,7 @@ export default function Stations() {
       <ul>
         {noaaStations.map((station) => (
           <li key={station["id"]}>
-            <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["org_id"]}`} target="_blank">
+            <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["id"]}`} target="_blank">
               {station["id"]}
             </a> {station["name"]}
           </li>
