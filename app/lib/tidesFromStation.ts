@@ -12,68 +12,68 @@ export default async function tidesFromStation(stationId: string) {
     'Sat'
   ]
 
-  const now_date = new Date()
+  const nowDate = new Date()
   const backdateHours = 12
-  const reqDate = subHours(now_date, backdateHours)
+  const reqDate = subHours(nowDate, backdateHours)
 
   const month = String(reqDate.getMonth() + 1).padStart(2, '0')
   const day = String(reqDate.getDate() + 1).padStart(2, '0')
   const hours = String(reqDate.getHours()).padStart(2, '0')
   const minutes = String(reqDate.getMinutes()).padStart(2, '0')
 
-  const date_string = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
+  const dateString = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
   const range = `48`
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
-    `&station=${stationId}&begin_date=${date_string}&range=${range}`)
+    `&station=${stationId}&begin_date=${dateString}&range=${range}`)
 
-  const external_response = await fetch(
+  const noaaResponse = await fetch(
     url,
     {cache: 'force-cache'}
   )
-  const data = await external_response.json()
+  const data = await noaaResponse.json()
 
-  let out_data
+  let outData
   if ('error' in data) {
-    out_data = {
-      req_time: now_date.toISOString(),
+    outData = {
+      reqTime: nowDate.toISOString(),
       message: "Error calling NOAA CO-OPS Data Retrieval API.",
       url: url,
-      co_ops_response: data
+      noaaApiResponse: data
     }
   } else {
     const tides = []
     for (const i in data.predictions) {
       const prediction = data.predictions[i]
-      const in_date: string = prediction.t
-      const tide_date = new Date(in_date)
+      const inDate: string = prediction.t
+      const tideDate = new Date(inDate)
       const tide = {
-        source_date: in_date,
-        date: `${(tide_date.getMonth() + 1).toString().padStart(2, '0')}/` +
-          `${tide_date.getDate().toString().padStart(2, '0')}`,
-        day: weekDays[tide_date.getDay()],
+        sourceDate: inDate,
+        date: `${(tideDate.getMonth() + 1).toString().padStart(2, '0')}/` +
+          `${tideDate.getDate().toString().padStart(2, '0')}`,
+        day: weekDays[tideDate.getDay()],
         height: Number(prediction.v),
-        iso_date: tide_date.toISOString(),
-        prior: tide_date < now_date ? 'prior' : 'future',
-        time: `${tide_date.getHours().toString().padStart(2, '0')}:` +
-          `${tide_date.getMinutes().toString().padStart(2, '0')}`,
+        isoDate: tideDate.toISOString(),
+        prior: tideDate < nowDate ? 'prior' : 'future',
+        time: `${tideDate.getHours().toString().padStart(2, '0')}:` +
+          `${tideDate.getMinutes().toString().padStart(2, '0')}`,
         type: prediction.type === 'H' ? 'high' : 'low'
       }
       tides.push(tide)
     }
 
-    const station_data = await stationFromId(stationId)
-    out_data = {
-      req_timestamp: now_date.toISOString(),
-      resp_lat: station_data.lat,
-      resp_lon: station_data.lon,
-      station_id: stationId,
-      station_name: station_data.name,
-      station_tz: station_data.station_tz,
+    const stationData = await stationFromId(stationId)
+    outData = {
+      reqTimestamp: nowDate.toISOString(),
+      respLat: stationData.lat,
+      respLon: stationData.lon,
+      stationId: stationId,
+      stationName: stationData.name,
+      stationTz: stationData.stationTz,
       status: 200,
       tides: tides
     }
   }
 
-  return out_data
+  return outData
 }

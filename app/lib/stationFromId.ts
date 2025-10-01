@@ -12,6 +12,6 @@ export async function stationFromId(stationId: string) {
     lat: stationData.lat,
     lon: stationData.lng,
     source: stationData.self,
-    station_tz: stationData.timezonecorr
+    stationTz: stationData.timezonecorr
   }
 }

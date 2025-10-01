@@ -1,10 +1,10 @@
 import tidesFromStation from "@/app/lib/tidesFromStation"
 
 export async function GET() {
-  const station_id = '8441241' /* Plum Island South */
-  const response_data = await tidesFromStation(station_id)
+  const stationId = '8441241' /* Plum Island South */
+  const responseData = await tidesFromStation(stationId)
 
-  return new Response(JSON.stringify(response_data), {
+  return new Response(JSON.stringify(responseData), {
     headers: {'Content-Type': 'application/json'},
   })
 }

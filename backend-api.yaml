@@ -229,30 +229,30 @@ components:
       description: A set of Tides from a station
       type: object
       properties:
-        req_lat:
+        reqLat:
           type: number
           format: float
           description: Requested latitude
-        req_lon:
+        reqLon:
           type: number
           format: float
           description: Requested longitude
-        req_timestamp:
+        reqTimestamp:
           type: string
           format: date-time
           description: Requested timestamp
-        resp_lat:
+        respLat:
           type: number
           format: float
           description: Responded latitude
-        resp_lon:
+        respLon:
           type: number
           format: float
           description: Responded longitude
         station:
           type: string
           description: Name of the tide station
-        station_tz:
+        stationTz:
           type: string
           description: Timezone of the station
         status:
@@ -264,12 +264,12 @@ components:
             $ref: "#/components/schemas/Tide"
       example:
         {
-          "req_timestamp": "2025-10-01T16:20:58.872Z",
-          "resp_lat": "42.71014",
-          "resp_lon": "-70.78861",
-          "station_id": "8441241",
-          "station_name": "Plum Island South",
-          "station_tz": -5,
+          "reqTimestamp": "2025-10-01T16:20:58.872Z",
+          "respLat": "42.71014",
+          "respLon": "-70.78861",
+          "stationId": "8441241",
+          "stationName": "Plum Island South",
+          "stationTz": -5,
           "status": 200,
           "tides": [
             {

@@ -31,8 +31,8 @@ export default async function stationsFromLocation(location: string, count: numb
         outData.push(station)
       }
       return {
-        req_lat: lat,
-        req_lon: lon,
+        reqLat: lat,
+        reqLon: lon,
         stations: outData
       }
     }

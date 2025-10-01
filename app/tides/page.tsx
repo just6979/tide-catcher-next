@@ -12,13 +12,13 @@ export default function Tides() {
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState({
     tides: [],
-    req_lat: '',
-    req_lon: '',
-    req_timestamp: '',
-    resp_lat: 0,
-    resp_lon: 0,
-    station_name: '',
-    station_id: ''
+    reqLat: '',
+    reqLon: '',
+    reqTimestamp: '',
+    respLat: 0,
+    respLon: 0,
+    stationName: '',
+    stationId: ''
   })
 
   useEffect(() => {
@@ -33,12 +33,12 @@ export default function Tides() {
 
       },
       error => {
-        const error_map = ['',
+        const errorMap = ['',
           'PERMISSION_DENIED. No location permission granted. Check site settings.',
           'POSITION_UNAVAILABLE: Error acquiring location data. Try again.',
           'TIMEOUTNo location data acquired in the time allotted.'
         ]
-        setLocationError(error_map[error.code])
+        setLocationError(errorMap[error.code])
         setLocating(false)
       },
       {
@@ -70,24 +70,24 @@ export default function Tides() {
   if (isLoading) return <p>Loading Tides Data for ({`${location.latitude},${location.longitude}`})...</p>
   if (!data) return <p>No Tides Data found.</p>
 
-  /* Google Maps URL format is /maps/place/<pin_lat>,<pin_lon>/@<center_lat>,<center_lon>,<zoomlevel>z */
+  /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
   const requestLocationUrl =
-    `https://www.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
+    `https://www.google.com/maps/place/${data.reqLat},${data.reqLon}/@${data.reqLat},${data.reqLon},12z`
   const responseLocationUrl =
-    `https://www.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
+    `https://www.google.com/maps/place/${data.respLat},${data.respLon}/@${data.respLat},${data.respLon},12z`
 
-  const stationUrl = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.station_id}`
-  const reqTime = new Date(data.req_timestamp).toLocaleString()
+  const stationUrl = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.stationId}`
+  const reqTime = new Date(data.reqTimestamp).toLocaleString()
 
   return (
     <div>
       <table id="tides">
-        <caption className="top">{data.station_name}</caption>
+        <caption className="top">{data.stationName}</caption>
         <tbody>
         {data.tides.map((tide) => {
           const tideType: string = tide["type"];
           return (
-            <tr key={tide["iso_date"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
+            <tr key={tide["isoDate"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
               <td className="type">{tide["type"]}</td>
               <td className="time">{tide["time"]}</td>
               <td className="day">{tide["day"]}</td>
@@ -106,16 +106,16 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Request Location</td>
-          <td><a href={requestLocationUrl} target="_blank">{data.req_lat},{data.req_lon}</a>
+          <td><a href={requestLocationUrl} target="_blank">{data.reqLat},{data.reqLon}</a>
           </td>
         </tr>
         <tr>
           <td>Response Station</td>
-          <td><a href={stationUrl} target="_blank">{data.station_name}</a></td>
+          <td><a href={stationUrl} target="_blank">{data.stationName}</a></td>
         </tr>
         <tr>
           <td>Response Location</td>
-          <td><a href={responseLocationUrl} target="_blank">{data.resp_lat},{data.resp_lon}</a></td>
+          <td><a href={responseLocationUrl} target="_blank">{data.respLat},{data.respLon}</a></td>
         </tr>
         </tbody>
       </table>
