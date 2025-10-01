@@ -8,5 +8,10 @@ export default async function by_location(location: string) {
   }
 
   const station_id = nearby_data['station_id']
-  return await by_station(station_id)
+  const out_data = await by_station(station_id);
+
+  return {
+    ...nearby_data,
+    ...out_data
+  }
 }

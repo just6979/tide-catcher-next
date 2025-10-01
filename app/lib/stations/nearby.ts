@@ -18,6 +18,8 @@ export default async function nearby(location: string, initial_range: number = 1
       const first_station = stations_list[0]
       const station_id = first_station['stationId']
       return {
+        req_lat: lat,
+        req_lon: lon,
         station_id: station_id,
       }
 
