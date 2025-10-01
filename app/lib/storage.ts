@@ -1,4 +1,4 @@
-import {envs, initDeployEnv} from "@/app/lib/deployEnv";
+import {envs, initDeployEnv} from "@/app/lib/deployEnv"
 import {existsLocal, readLocal, writeLocal} from "./storageLocal"
 
 let initialized = false
@@ -23,7 +23,7 @@ export function initStorage() {
 }
 
 export async function check(filename: string): Promise<boolean> {
-  return existsLocal(filename);
+  return existsLocal(filename)
 }
 
 export async function read(filename: string): Promise<string> {

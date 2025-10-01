@@ -1,8 +1,8 @@
-import tidesByLocation from "@/app/lib/tidesByLocation";
+import tidesByLocation from "@/app/lib/tidesByLocation"
 
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
-  const location = (await params).location[0];
-  const response_data= await tidesByLocation(location);
+  const location = (await params).location[0]
+  const response_data= await tidesByLocation(location)
 
   return new Response(JSON.stringify(response_data), {
     headers: {'Content-Type': 'application/json'},

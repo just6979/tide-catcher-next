@@ -1,5 +1,5 @@
 import stationsNearby from "@/app/lib/stationsNearby"
-import tidesByStation from "@/app/lib/tidesByStation";
+import tidesByStation from "@/app/lib/tidesByStation"
 
 export default async function tidesByLocation(location: string) {
   const lat = Number(location.split(',')[0])
@@ -14,7 +14,7 @@ export default async function tidesByLocation(location: string) {
   const station = stations[0]
   const stationId = station['id']
 
-  const outData = await tidesByStation(stationId);
+  const outData = await tidesByStation(stationId)
 
   return {
     req_lat: lat,

@@ -1,4 +1,4 @@
-import {access, constants, readFile, writeFile} from "node:fs/promises";
+import {access, constants, readFile, writeFile} from "node:fs/promises"
 
 const localStorageDir = `./.storage`
 
@@ -9,12 +9,12 @@ function buildFilename(filename: string) {
 export async function existsLocal(filename: string) {
   console.log(`${__filename}: checking ${filename}...`)
   try {
-    await access(buildFilename(filename), constants.R_OK);
-    console.log(`${__filename}: YES: ${filename} exists`);
-    return true;
+    await access(buildFilename(filename), constants.R_OK)
+    console.log(`${__filename}: YES: ${filename} exists`)
+    return true
   } catch {
-    console.error(`${__filename}: NO: ${filename} does not exist`);
-    return false;
+    console.error(`${__filename}: NO: ${filename} does not exist`)
+    return false
   }
 }
 
