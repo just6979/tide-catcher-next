@@ -17,7 +17,7 @@ export default async function tidesFromStation(stationId: string) {
   const reqDate = subHours(nowDate, backdateHours)
 
   const month = String(reqDate.getMonth() + 1).padStart(2, '0')
-  const day = String(reqDate.getDate() + 1).padStart(2, '0')
+  const day = String(reqDate.getDate()).padStart(2, '0')
   const hours = String(reqDate.getHours()).padStart(2, '0')
   const minutes = String(reqDate.getMinutes()).padStart(2, '0')
 
