@@ -1,7 +1,7 @@
 import {subHours} from "date-fns";
 import {stationById} from "@/app/lib/stationById";
 
-export default async function tidesByStation(station_id: string) {
+export default async function tidesByStation(stationId: string) {
   const weekDays = [
     'Sun',
     'Mon',
@@ -14,17 +14,18 @@ export default async function tidesByStation(station_id: string) {
 
   const now_date = new Date()
   const backdateHours = 12;
-  const req_date = subHours(now_date, backdateHours)
+  const reqDate = subHours(now_date, backdateHours)
 
-  const month = String(req_date.getMonth() + 1).padStart(2, '0')
-  const hours = String(req_date.getHours()).padStart(2, '0');
-  const minutes = String(req_date.getMinutes()).padStart(2, '0');
+  const month = String(reqDate.getMonth() + 1).padStart(2, '0')
+  const day = String(reqDate.getDate() + 1).padStart(2, '0')
+  const hours = String(reqDate.getHours()).padStart(2, '0');
+  const minutes = String(reqDate.getMinutes()).padStart(2, '0');
 
-  const date_string = `${req_date.getFullYear()}${month}${req_date.getDate()} ${hours}:${minutes}`;
+  const date_string = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`;
   const range = `48`;
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
-    `&station=${station_id}&begin_date=${date_string}&range=${range}`)
+    `&station=${stationId}&begin_date=${date_string}&range=${range}`)
 
   const external_response = await fetch(
     url,
@@ -61,13 +62,14 @@ export default async function tidesByStation(station_id: string) {
       tides.push(tide)
     }
 
-    const station_data = await stationById(station_id)
+    const station_data = await stationById(stationId)
     out_data = {
       req_timestamp: now_date.toISOString(),
-      resp_lat: station_data.lat.toFixed(5),
-      resp_lon: station_data.lon.toFixed(5),
-      station_id: station_id,
+      resp_lat: station_data.lat,
+      resp_lon: station_data.lon,
+      station_id: stationId,
       station_name: station_data.name,
+      station_tz: station_data.station_tz,
       status: 200,
       tides: tides
     }

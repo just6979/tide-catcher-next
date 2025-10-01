@@ -1,19 +1,28 @@
-### tides by default location
-# 42.7101,-70.7886
-http://localhost:8080/api/tides/by-location
-
-### tides by location
-http://localhost:8080/api/tides/by-location/42.7101,-70.7886
-
-### tides by default station
-# 8441241
-http://localhost:8080/api/tides/by-station
-
-### tides by station
-http://localhost:8080/api/tides/by-station/8441241
-
-### stations
-http://localhost:8080/api/stations
 
 ### station by id
-http://localhost:8080/api/stations/8441241
+{{host}}/api/station/{{station}}
+
+### station by default id: 8441241
+{{host}}/api/station
+
+### stations by location
+{{host}}/api/stations/by-location/{{location}}
+
+### stations by default location: 42.71014,-70.78861
+{{host}}/api/stations/by-location
+
+### all stations
+{{host}}/api/stations
+
+### tides by id
+{{host}}/api/tides/by-station/{{station}}
+
+### tides by default id: 8441241
+{{host}}/api/tides/by-station
+
+### tides by location
+{{host}}/api/tides/by-location/{{location}}
+
+### tides by default location: 42.71014,-70.78861
+{{host}}/api/tides/by-location
+

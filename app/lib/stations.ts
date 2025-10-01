@@ -1,6 +1,6 @@
 import {check, initStorage, read, write} from "@/app/lib/storage";
 
-export async function stationsAll() {
+export async function stations() {
   initStorage()
 
   let stationsData

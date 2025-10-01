@@ -1,6 +1,6 @@
-export default async function stationsNearby(location: string, initialRange: number = 10) {
-  const lat = location.split(',')[0]
-  const lon = location.split(',')[1]
+export default async function stationsNearby(location: string, count: number = 1, initialRange: number = 10) {
+  const lat = Number(location.split(',')[0])
+  const lon = Number(location.split(',')[1])
 
   let range = initialRange
   let attempts = 4
@@ -14,14 +14,27 @@ export default async function stationsNearby(location: string, initialRange: num
 
     const stationsList = nearbyData['stationList']
     if (stationsList != null) {
-      const firstStation = stationsList[0]
-      const stationId = firstStation['stationId']
+      const outData = []
+      for (let i = 0; i < count; i++) {
+        if (i > stationsList.length - 1) {
+          break
+        }
+        const firstStation = stationsList[i]
+        const station = {
+          id: firstStation['stationId'],
+          lat: Number(firstStation['lat']),
+          lon: Number(firstStation['lon']),
+          name: firstStation['stationName'],
+          eTidesName: firstStation['etidesStnName'],
+          tz: Number(firstStation['timeZoneCorr'])
+        }
+        outData.push(station)
+      }
       return {
         req_lat: lat,
         req_lon: lon,
-        station_id: stationId,
+        stations: outData
       }
-
     }
     attempts -= 1
     range *= 2

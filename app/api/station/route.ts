@@ -1,8 +1,8 @@
-import {stations} from "@/app/lib/stations"
+import {stationById} from "@/app/lib/stationById"
 
 export async function GET() {
-  // fetch all stations from NOAA
-  const response_data = await stations()
+  const station_id = '8441241'
+  const response_data = await stationById(station_id)
 
   return new Response(JSON.stringify(response_data), {
     headers: {'Content-Type': 'application/json'},
