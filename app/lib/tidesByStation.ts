@@ -25,7 +25,6 @@ export default async function tidesByStation(station_id: string) {
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
     `&station=${station_id}&begin_date=${date_string}&range=${range}`)
-  console.log(url)
 
   const external_response = await fetch(
     url,

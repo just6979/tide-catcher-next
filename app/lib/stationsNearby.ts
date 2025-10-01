@@ -8,7 +8,6 @@ export default async function stationsNearby(location: string, initialRange: num
   while (attempts > 0) {
     const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
       `lat=${lat}&lon=${lon}&radius=${range}`
-    console.log(url)
     const nearbyResponse = await fetch(url, {cache: 'force-cache'}
     )
     const nearbyData = await nearbyResponse.json()
