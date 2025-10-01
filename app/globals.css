@@ -116,6 +116,10 @@ th, td {
   padding-inline-start: 2em;
 }
 
+#coming-soon .todo-done {
+  text-decoration: line-through;
+}
+
 #notes {
   border-top: dotted thin;
 }
