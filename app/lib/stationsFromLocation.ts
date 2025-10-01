@@ -1,4 +1,4 @@
-export default async function stationsNearby(location: string, count: number = 1, initialRange: number = 10) {
+export default async function stationsFromLocation(location: string, count: number = 1, initialRange: number = 10) {
   const lat = Number(location.split(',')[0])
   const lon = Number(location.split(',')[1])
 

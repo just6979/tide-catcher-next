@@ -1,4 +1,4 @@
-export async function stationById(stationId: string) {
+export async function stationFromId(stationId: string) {
   const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`
   const externalResponse = await fetch(url, {cache: 'force-cache'})
 

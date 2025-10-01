@@ -6,23 +6,23 @@
 {{host}}/api/station
 
 ### stations by location
-{{host}}/api/stations/by-location/{{location}}
+{{host}}/api/stations/location/{{location}}
 
 ### stations by default location: 42.71014,-70.78861
-{{host}}/api/stations/by-location
+{{host}}/api/stations/location
 
 ### all stations
 {{host}}/api/stations
 
 ### tides by id
-{{host}}/api/tides/by-station/{{station}}
+{{host}}/api/tides/station/{{station}}
 
 ### tides by default id: 8441241
-{{host}}/api/tides/by-station
+{{host}}/api/tides/station
 
 ### tides by location
-{{host}}/api/tides/by-location/{{location}}
+{{host}}/api/tides/location/{{location}}
 
 ### tides by default location: 42.71014,-70.78861
-{{host}}/api/tides/by-location
+{{host}}/api/tides/location
 

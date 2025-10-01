@@ -51,7 +51,7 @@ export default function Tides() {
 
   useEffect(() => {
     if (!location.latitude || !location.longitude) return
-    fetch(`/api/tides/by-location/${location.latitude},${location.longitude}`)
+    fetch(`/api/tides/location/${location.latitude},${location.longitude}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

@@ -29,7 +29,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StationResponse"
 
-  /api/stations/by-location/{location}:
+  /api/stations/location/{location}:
     get:
       description: closest stations to the given location
       parameters:
@@ -58,7 +58,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StationsResponse"
 
-  /api/tides/by-station/{id}:
+  /api/tides/station/{id}:
     get:
       description: list of next tides for the given station
       parameters:
@@ -76,7 +76,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/TidesResponse"
 
-  /api/tides/by-location/{location}:
+  /api/tides/location/{location}:
     get:
       description: list of next tides for the closest station
       parameters:
