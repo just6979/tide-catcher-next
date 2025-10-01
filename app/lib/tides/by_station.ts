@@ -1,6 +1,6 @@
 import {subHours} from "date-fns";
 
-export default async function tides_by_station(station: string) {
+export default async function by_station(station: string) {
   const weekDays = [
     'Sun',
     'Mon',
@@ -72,7 +72,5 @@ export default async function tides_by_station(station: string) {
     }
   }
 
-  return new Response(JSON.stringify(out_data), {
-    headers: {'Content-Type': 'application/json'},
-  })
+  return out_data
 }

@@ -1,5 +1,10 @@
-import tides_by_station from "@/app/api/tides/by-station/helper"
+import by_station from "@/app/lib/tides/by_station"
 
 export async function GET() {
-  return tides_by_station('8441241') /* Plum Island Sound */
+  const station_id = '8441241'; /* Plum Island Sound */
+  const response_data = await by_station(station_id)
+
+  return new Response(JSON.stringify(response_data), {
+    headers: {'Content-Type': 'application/json'},
+  })
 }

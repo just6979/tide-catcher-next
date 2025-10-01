@@ -1,6 +1,10 @@
-import tides_by_location from "@/app/api/tides/by-location/helper";
+import by_location from "@/app/lib/tides/by_location";
 
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
   const location = (await params).location;
-  return tides_by_location(location);
+  const response_data= await by_location(location);
+
+  return new Response(JSON.stringify(response_data), {
+    headers: {'Content-Type': 'application/json'},
+  })
 }
