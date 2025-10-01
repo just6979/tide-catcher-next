@@ -1,10 +1,12 @@
-export default async function by_location(location: string) {
-  const external_response = await fetch(
-    'https://tide-catcher.appspot.com/json/tides/by-location/' + location,
-    {cache: 'force-cache'}
-  )
-  const data = await external_response.json();
-  delete data.wti_copyright
+import nearby from "@/app/lib/stations/nearby"
+import by_station from "@/app/lib/tides/by_station";
 
-  return data
+export default async function by_location(location: string) {
+  const station_id = await nearby(location)
+  if (station_id == null) {
+    return {
+      'error': `No station found near location (${location}).`
+    }
+  }
+  return await by_station(station_id)
 }
