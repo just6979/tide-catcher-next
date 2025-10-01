@@ -70,7 +70,7 @@ export default function Tides() {
   if (isLoading) return <p>Loading Tides Data for ({`${location.latitude},${location.longitude}`})...</p>
   if (!data) return <p>No Tides Data found.</p>
 
-  /* URL format is pin_lat,pin_long/@center_lat,center_long,zoomlevel */
+  /* Google Maps URL format is /maps/place/<pin_lat>,<pin_lon>/@<center_lat>,<center_lon>,<zoomlevel>z */
   const request_location_url =
     `https://www.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
   const response_location_url =
@@ -111,7 +111,7 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Response Station</td>
-          <td><a href={station_url} target="_blank">{data.station_name} {data.station_id}</a></td>
+          <td><a href={station_url} target="_blank">{data.station_name}</a></td>
         </tr>
         <tr>
           <td>Response Location</td>

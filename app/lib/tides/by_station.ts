@@ -13,7 +13,8 @@ export default async function by_station(station_id: string) {
   ]
 
   const now_date = new Date()
-  const req_date = subHours(now_date, 12)
+  const backdateHours = 12;
+  const req_date = subHours(now_date, backdateHours)
 
   const month = String(req_date.getMonth() + 1).padStart(2, '0')
   const hours = String(req_date.getHours()).padStart(2, '0');
@@ -48,7 +49,7 @@ export default async function by_station(station_id: string) {
       const tide_date = new Date(in_date)
       const tide = {
         source_date: in_date,
-        date: `${(tide_date.getMonth() + 1).toString().padStart(2, '0')}-` +
+        date: `${(tide_date.getMonth() + 1).toString().padStart(2, '0')}/` +
           `${tide_date.getDate().toString().padStart(2, '0')}`,
         day: weekDays[tide_date.getDay()],
         height: Number(prediction.v),
