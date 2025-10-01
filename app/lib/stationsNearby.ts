@@ -1,26 +1,26 @@
-export default async function stations_nearby(location: string, initial_range: number = 10) {
+export default async function stationsNearby(location: string, initialRange: number = 10) {
   const lat = location.split(',')[0]
   const lon = location.split(',')[1]
 
-  let range = initial_range
+  let range = initialRange
   let attempts = 4
 
   while (attempts > 0) {
     const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
       `lat=${lat}&lon=${lon}&radius=${range}`
     console.log(url)
-    const nearby_response = await fetch(url, {cache: 'force-cache'}
+    const nearbyResponse = await fetch(url, {cache: 'force-cache'}
     )
-    const nearby_data = await nearby_response.json()
+    const nearbyData = await nearbyResponse.json()
 
-    const stations_list = nearby_data['stationList']
-    if (stations_list != null) {
-      const first_station = stations_list[0]
-      const station_id = first_station['stationId']
+    const stationsList = nearbyData['stationList']
+    if (stationsList != null) {
+      const firstStation = stationsList[0]
+      const stationId = firstStation['stationId']
       return {
         req_lat: lat,
         req_lon: lon,
-        station_id: station_id,
+        station_id: stationId,
       }
 
     }

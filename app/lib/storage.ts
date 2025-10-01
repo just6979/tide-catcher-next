@@ -1,5 +1,5 @@
-import {envs, initDeployEnv} from "@/app/lib/deploy_env";
-import {existsLocal, readLocal, writeLocal} from "./storage_local"
+import {envs, initDeployEnv} from "@/app/lib/deployEnv";
+import {existsLocal, readLocal, writeLocal} from "./storageLocal"
 
 let initialized = false
 
@@ -30,6 +30,6 @@ export async function read(filename: string): Promise<string> {
   return readLocal(filename)
 }
 
-export async function store(filename: string, data: string): Promise<void> {
+export async function write(filename: string, data: string): Promise<void> {
   return writeLocal(filename, data)
 }

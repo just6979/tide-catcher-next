@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 
 export default function Stations() {
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState({
+  const [stationsData, setStationsData] = useState({
     stations: []
   })
 
@@ -12,15 +12,15 @@ export default function Stations() {
     fetch("/api/stations")
       .then((res) => res.json())
       .then((data) => {
-        setData(data)
+        setStationsData(data)
         setIsLoading(false)
       })
   }, [])
 
   if (isLoading) return <p>Loading Stations List...</p>
-  if (!data) return <p>No Stations List found.</p>
+  if (!stationsData) return <p>No Stations List found.</p>
 
-  const stations = data.stations
+  const stations = stationsData.stations
 
   return (
     <div id="stations">

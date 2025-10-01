@@ -1,6 +1,6 @@
-import {check, initStorage, read, store} from "@/app/lib/storage";
+import {check, initStorage, read, write} from "@/app/lib/storage";
 
-export async function stations_all() {
+export async function stationsAll() {
   initStorage()
 
   let stationsData
@@ -19,8 +19,8 @@ export async function stations_all() {
     console.log(`${__filename}: No cached stations.json found`)
     const stationsUrl = 'https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json?type=tidepredictions'
     console.log(`${__filename}: Fetching new stations.json from ${stationsUrl}`)
-    const external_response = await fetch(stationsUrl)
-    stationsData = await external_response.json();
+    const externalResponse = await fetch(stationsUrl)
+    stationsData = await externalResponse.json();
   }
 
   const stations = stationsData['stations'].map((station: {
@@ -35,11 +35,11 @@ export async function stations_all() {
     lon: station.lng
   }));
 
-  const out_data = {count: stationsData['count'], stations: stations};
+  const outData = {count: stationsData['count'], stations: stations};
 
   if (!isCached) {
     console.log(`${__filename}: Caching stations.json`)
-    await store('stations.json', JSON.stringify(out_data));
+    await write('stations.json', JSON.stringify(outData));
   }
-  return out_data;
+  return outData;
 }

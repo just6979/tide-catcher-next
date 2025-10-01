@@ -71,13 +71,13 @@ export default function Tides() {
   if (!data) return <p>No Tides Data found.</p>
 
   /* Google Maps URL format is /maps/place/<pin_lat>,<pin_lon>/@<center_lat>,<center_lon>,<zoomlevel>z */
-  const request_location_url =
+  const requestLocationUrl =
     `https://www.google.com/maps/place/${data.req_lat},${data.req_lon}/@${data.req_lat},${data.req_lon},12z`
-  const response_location_url =
+  const responseLocationUrl =
     `https://www.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
 
-  const station_url = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.station_id}`
-  const req_time = new Date(data.req_timestamp).toLocaleString()
+  const stationUrl = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.station_id}`
+  const reqTime = new Date(data.req_timestamp).toLocaleString()
 
   return (
     <div>
@@ -102,20 +102,20 @@ export default function Tides() {
         <tbody>
         <tr>
           <td>Request Time</td>
-          <td>{req_time}</td>
+          <td>{reqTime}</td>
         </tr>
         <tr>
           <td>Request Location</td>
-          <td><a href={request_location_url} target="_blank">{data.req_lat},{data.req_lon}</a>
+          <td><a href={requestLocationUrl} target="_blank">{data.req_lat},{data.req_lon}</a>
           </td>
         </tr>
         <tr>
           <td>Response Station</td>
-          <td><a href={station_url} target="_blank">{data.station_name}</a></td>
+          <td><a href={stationUrl} target="_blank">{data.station_name}</a></td>
         </tr>
         <tr>
           <td>Response Location</td>
-          <td><a href={response_location_url} target="_blank">{data.resp_lat},{data.resp_lon}</a></td>
+          <td><a href={responseLocationUrl} target="_blank">{data.resp_lat},{data.resp_lon}</a></td>
         </tr>
         </tbody>
       </table>

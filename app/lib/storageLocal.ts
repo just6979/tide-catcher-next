@@ -2,14 +2,14 @@ import {access, constants, readFile, writeFile} from "node:fs/promises";
 
 const localStorageDir = `./.storage`
 
-function buildFN(filename: string) {
+function buildFilename(filename: string) {
   return `${localStorageDir}/${filename}`
 }
 
 export async function existsLocal(filename: string) {
   console.log(`${__filename}: checking ${filename}...`)
   try {
-    await access(buildFN(filename), constants.R_OK);
+    await access(buildFilename(filename), constants.R_OK);
     console.log(`${__filename}: YES: ${filename} exists`);
     return true;
   } catch {
@@ -21,7 +21,7 @@ export async function existsLocal(filename: string) {
 export async function readLocal(filename: string): Promise<string> {
   console.log(`${__filename}: Reading ${filename}`)
   try {
-    return (await readFile(buildFN(filename), {encoding: 'utf8'})).toString()
+    return (await readFile(buildFilename(filename), {encoding: 'utf8'})).toString()
   } catch (err) {
     console.log(`${__filename}: Unable to read ${filename}: ${err}`)
     return ''
@@ -31,7 +31,7 @@ export async function readLocal(filename: string): Promise<string> {
 export async function writeLocal(filename: string, data: string): Promise<void> {
   console.log(`${__filename}: Storing ${filename}`)
   try {
-    return await writeFile(buildFN(filename), data)
+    return await writeFile(buildFilename(filename), data)
   } catch (err) {
     console.log(`${__filename}: Unable to store ${filename}: ${err}`)
   }
