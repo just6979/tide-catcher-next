@@ -20,18 +20,16 @@ export default function Stations() {
   if (isLoading) return <p>Loading Stations List...</p>
   if (!data) return <p>No Stations List found.</p>
 
-  const noaaStations = data.stations.filter((station: { noaa: string; }) =>
-    station.noaa != ''
-  )
+  const stations = data.stations
 
   return (
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {noaaStations.length} stations available.
+        {stations.length} stations available.
       </p>
       <ul>
-        {noaaStations.map((station) => (
+        {stations.map((station) => (
           <li key={station["id"]}>
             <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["id"]}`} target="_blank">
               {station["id"]}
