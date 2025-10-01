@@ -17,7 +17,8 @@ export default function Tides() {
     req_timestamp: '',
     resp_lat: 0,
     resp_lon: 0,
-    station: ''
+    station_name: '',
+    station_id: ''
   })
 
   useEffect(() => {
@@ -75,13 +76,13 @@ export default function Tides() {
   const response_location_url =
     `https://www.google.com/maps/place/${data.resp_lat},${data.resp_lon}/@${data.resp_lat},${data.resp_lon},12z`
 
-  const station_url =
-    `https://www.google.com/search?q=noaa+${data.station}`
+  const station_url = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.station_id}`
+  const req_time = new Date(data.req_timestamp).toLocaleString()
 
   return (
     <div>
       <table id="tides">
-        <caption className="top">{data['station']}</caption>
+        <caption className="top">{data.station_name}</caption>
         <tbody>
         {data.tides.map((tide) => {
           const tideType: string = tide["type"];
@@ -101,7 +102,7 @@ export default function Tides() {
         <tbody>
         <tr>
           <td>Request Time</td>
-          <td>{data.req_timestamp}</td>
+          <td>{req_time}</td>
         </tr>
         <tr>
           <td>Request Location</td>
@@ -110,7 +111,7 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Response Station</td>
-          <td><a href={station_url} target="_blank">{data.station}</a></td>
+          <td><a href={station_url} target="_blank">{data.station_name} {data.station_id}</a></td>
         </tr>
         <tr>
           <td>Response Location</td>

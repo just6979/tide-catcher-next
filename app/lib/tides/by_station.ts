@@ -1,6 +1,7 @@
 import {subHours} from "date-fns";
+import {by_id} from "@/app/lib/stations/by_id";
 
-export default async function by_station(station: string) {
+export default async function by_station(station_id: string) {
   const weekDays = [
     'Sun',
     'Mon',
@@ -22,7 +23,7 @@ export default async function by_station(station: string) {
   const range = `48`;
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
-    `&station=${station}&begin_date=${dateString}&range=${range}`)
+    `&station=${station_id}&begin_date=${dateString}&range=${range}`)
   console.log(url)
 
   const external_response = await fetch(
@@ -60,13 +61,13 @@ export default async function by_station(station: string) {
       tides.push(tide)
     }
 
+    const station_data = await by_id(station_id)
     out_data = {
-      req_time: now_date.toISOString(),
-      resp_lat: 42.7101,
-      resp_lon: -70.7886,
-      station_id: station,
-      station: "Plum Island Sound (south end), Massachusetts",
-      station_tz: "America/New_York",
+      req_timestamp: now_date.toISOString(),
+      resp_lat: station_data.lat.toFixed(5),
+      resp_lon: station_data.lon.toFixed(5),
+      station_id: station_id,
+      station_name: station_data.name,
       status: 200,
       tides: tides
     }
