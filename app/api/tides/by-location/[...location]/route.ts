@@ -1,7 +1,7 @@
 import by_location from "@/app/lib/tides/by_location";
 
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
-  const location = (await params).location;
+  const location = (await params).location[0];
   const response_data= await by_location(location);
 
   return new Response(JSON.stringify(response_data), {
