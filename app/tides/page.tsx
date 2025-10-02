@@ -86,12 +86,12 @@ export default function Tides() {
         <caption className="top">{data.stationName}</caption>
         <tbody>
         {data.tides.map((tide: Tide) => {
-          const tideType: string = tide['type'].toUpperCase()
-          const arrow: string = tideType == 'HIGH' ? '\u2B9D' : '\u00A0\u2B9F'
+          const tideType: string = tide['type']
+          const arrow: string = tideType == 'high' ? '⤴' : '⤵'
           return (
             <tr key={tide['isoDate']}
                 className={(tide['prior'] === 'prior' ? 'prior ' : 'future ') + tideType.toLowerCase()}>
-              <td className="type">{tideType} {arrow}</td>
+              <td className="type">{arrow} {tideType.toUpperCase().padEnd(4,'\u00A0')}</td>
               <td className="time">{tide['time']}</td>
               <td className="day">{tide['day']}</td>
               <td className="date">{tide['date']}</td>
