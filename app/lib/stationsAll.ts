@@ -1,5 +1,5 @@
 import {check, initStorage, read, write} from "@/app/lib/storage"
-import {processTidePredStations} from "@/app/lib/processStations";
+import {processTidePredStations} from "@/app/lib/processStations"
 
 export async function stationsAll(forceFetch = false) {
   initStorage()
@@ -27,10 +27,10 @@ export async function stationsAll(forceFetch = false) {
   const stationsResponse = await fetch(stationsUrl)
   stationsData = await stationsResponse.json()
 
-  const stations = stationsData['stationList'];
+  const stations = stationsData['stationList']
   if (stations != null) {
     const count = stations.length
-    const stationsData = processTidePredStations(stations, count);
+    const stationsData = processTidePredStations(stations, count)
     await write('stations.json', JSON.stringify(stationsData))
     return stationsData
   }

@@ -1,27 +1,27 @@
 export interface Station {
-  id: string;
-  lat: number;
-  lon: number;
-  name: string;
-  eTidesName: string;
-  tz: number;
+  id: string
+  lat: number
+  lon: number
+  name: string
+  eTidesName: string
+  tz: number
 }
 
 interface TidePredStation {
-  stationId: string;
-  lat: number;
-  lon: number;
-  stationName: string;
-  etidesStnName: string;
-  timeZoneCorr: number;
+  stationId: string
+  lat: number
+  lon: number
+  stationName: string
+  etidesStnName: string
+  timeZoneCorr: number
 }
 
 interface StationById {
-  id: string;
-  lat: number;
-  lng: number;
-  name: string;
-  timezonecorr: number;
+  id: string
+  lat: number
+  lng: number
+  name: string
+  timezonecorr: number
 }
 
 function makeStation(
@@ -34,7 +34,7 @@ function makeStation(
     name: name,
     eTidesName: eTidesName,
     tz: Number(tz)
-  };
+  }
 }
 
 export function processTidePredStations(stationsIn: TidePredStation[], count: number, lat = 0, lon = 0) {
