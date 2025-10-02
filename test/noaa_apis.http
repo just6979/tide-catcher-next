@@ -4,7 +4,7 @@ GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations.json?type=t
 ### 8441241 plum island south
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241.json
 
-### 8441241 stationsNearby stations
+### 8441241 nearby stations
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241/nearby.json
 
 ### 8441241 tides hilo 7 days
@@ -13,8 +13,14 @@ GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=2025092
 ### 8441241 tides hilo 1 days
 GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=24&station=8441241&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json
 
-### tide prediction stations stationsNearby plum island south
+### tide prediction stations nearby, plum island south
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-70.7886&radius=10
 
-### tide prediction stations
+### tide prediction stations nearby, single
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-70.7886&radius=1
+
+### tide prediction stations nearby, empty
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-75.7886&radius=1
+
+### tide prediction stations, all
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json

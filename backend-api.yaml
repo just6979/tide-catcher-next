@@ -29,6 +29,24 @@ paths:
               schema:
                 $ref: "#/components/schemas/StationResponse"
 
+  /api/station/location/{location}:
+    get:
+      description: closest single station to the given location
+      parameters:
+        - in: path
+          name: location
+          schema:
+            type: string
+            example: "42.71014,-70.78861"
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StationResponse"
+
   /api/stations/location/{location}:
     get:
       description: closest stations to the given location
@@ -37,7 +55,7 @@ paths:
           name: location
           schema:
             type: string
-            example: "42.665,-70.9119"
+            example: "42.71014,-70.78861"
           required: false
       responses:
         '200':
@@ -84,7 +102,7 @@ paths:
           name: location
           schema:
             type: string
-            example: "42.665,-70.9119"
+            example: "42.71014,-70.78861"
           required: false
       responses:
         '200':
