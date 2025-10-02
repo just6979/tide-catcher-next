@@ -1,8 +1,12 @@
 'use client'
 
-import {useEffect, useState} from "react";
+import Link from 'next/link'
+import {useSearchParams} from 'next/navigation'
+import {useEffect, useState} from 'react'
 
 export default function Stations() {
+  const isRefreshed = useSearchParams().has('refreshed')
+
   const [isLoading, setIsLoading] = useState(true)
   const [stationsData, setStationsData] = useState({
     count: 0,
@@ -10,7 +14,7 @@ export default function Stations() {
   })
 
   useEffect(() => {
-    fetch("/api/stations")
+    fetch('/api/stations')
       .then((res) => res.json())
       .then((data) => {
         setStationsData(data)
@@ -27,14 +31,16 @@ export default function Stations() {
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {stationsData['count']} stations available.
+        {stationsData['count']} stations available <span id="refresh">
+        (<Link href="/stations/refresh" replace>{isRefreshed ? 'Refresh Again' : 'Refresh'}</Link>)
+      </span>
       </p>
       <ul>
         {stations.map((station) => (
-          <li key={station["id"]}>
-            {station["name"]} | <a
-            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["id"]}`} target="_blank">
-            {station["id"]}
+          <li key={station['id']}>
+            {station['name']} | <a
+            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station['id']}`} target="_blank">
+            {station['id']}
           </a>
           </li>
         ))}

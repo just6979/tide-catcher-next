@@ -1,11 +1,8 @@
-import {check, initStorage, read, write} from "@/app/lib/storage"
-import {processTidePredStations} from "@/app/lib/processStations"
+import {check, initStorage, read, write} from '@/app/lib/storage'
+import {processTidePredStations} from '@/app/lib/processStations'
 
 export async function stationsAll(forceFetch = false) {
   initStorage()
-
-  let found = false
-  let stationsData
 
   if (!forceFetch) {
     console.log(`${__filename}: Checking for cached stations.json`)
@@ -20,12 +17,17 @@ export async function stationsAll(forceFetch = false) {
     }
   }
 
-  console.log(`${__filename}: No cached stations.json found`)
+  if (forceFetch) {
+    console.log(`${__filename}: Forcing refresh of stations.json upon request`)
+  } else {
+    console.log(`${__filename}: Forcing refresh of stations.json because no cache found`)
+  }
+
   const stationsUrl = 'https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json'
   console.log(`${__filename}: Fetching new stations.json from ${stationsUrl}`)
 
   const stationsResponse = await fetch(stationsUrl)
-  stationsData = await stationsResponse.json()
+  const stationsData = await stationsResponse.json()
 
   const stations = stationsData['stationList']
   if (stations != null) {

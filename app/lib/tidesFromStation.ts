@@ -1,6 +1,5 @@
 import {subHours} from "date-fns"
 import {stationFromId} from "@/app/lib/stationFromId"
-import type {Station} from "@/app/lib/processStations"
 
 export default async function tidesFromStation(stationId: string) {
   const weekDays = [

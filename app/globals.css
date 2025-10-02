@@ -124,6 +124,10 @@ th, td {
   border-top: dotted thin;
 }
 
+#refresh {
+  font-size: 75%;
+}
+
 #stations {
   text-align: start;
   font-size: 66%;
