@@ -70,7 +70,7 @@ th, td {
 
 .prior {
   font-size: 66%;
-  filter: contrast(50%) saturate(50%) blur(0.5);
+  filter: contrast(50%) saturate(50%) blur(0.5px);
 }
 
 tbody > .future {
@@ -82,7 +82,6 @@ tbody > .future ~ .future{
   font-weight: normal;
   filter: none;
 }
-
 
 .high {
   background-color: var(--high-row-bg);
