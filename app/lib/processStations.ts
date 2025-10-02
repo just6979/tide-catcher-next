@@ -1,28 +1,4 @@
-export interface Station {
-  id: string
-  lat: number
-  lon: number
-  name: string
-  eTidesName: string
-  tz: number
-}
-
-interface TidePredStation {
-  stationId: string
-  lat: number
-  lon: number
-  stationName: string
-  etidesStnName: string
-  timeZoneCorr: number
-}
-
-interface StationById {
-  id: string
-  lat: number
-  lng: number
-  name: string
-  timezonecorr: number
-}
+import {Station, StationById, TidePredStation} from '@/app/lib/types'
 
 function makeStation(
   id: string, lat: number, lon: number, name: string, eTidesName: string, tz: number
