@@ -88,7 +88,7 @@ export default function Tides() {
           const tideType: string = tide['type'].toUpperCase()
           const arrow: string = tideType == 'HIGH' ? '\u2B9D' : '\u00A0\u2B9F'
           return (
-            <tr key={tide['isoDate']} className={(tide['prior'] === 'prior' ? 'prior ' : '') + tideType.toLowerCase()}>
+            <tr key={tide['isoDate']} className={(tide['prior'] === 'prior' ? 'prior ' : 'future ') + tideType.toLowerCase()}>
               <td className="type">{tideType} {arrow}</td>
               <td className="time">{tide['time']}</td>
               <td className="day">{tide['day']}</td>

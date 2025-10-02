@@ -73,6 +73,17 @@ th, td {
   filter: contrast(50%) saturate(50%) blur(0.5);
 }
 
+tbody > .future {
+  font-weight: bold;
+  filter: saturate(150%);
+}
+
+tbody > .future ~ .future{
+  font-weight: normal;
+  filter: none;
+}
+
+
 .high {
   background-color: var(--high-row-bg);
 }
