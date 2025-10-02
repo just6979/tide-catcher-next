@@ -1,7 +1,7 @@
 import {check, initStorage, read, write} from "@/app/lib/storage"
 import {processTidePredStations} from "@/app/lib/processStations";
 
-export async function stations(forceFetch = false) {
+export async function stationsAll(forceFetch = false) {
   initStorage()
 
   let found = false
