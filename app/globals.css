@@ -39,7 +39,7 @@ a {
 #header h1 {
   margin: 0;
   padding-bottom: 0.25em;
-  border-bottom: dashed thin;
+  border-bottom: dotted thin;
 }
 
 #header a {
@@ -92,7 +92,7 @@ tbody > .future ~ .future{
 }
 
 #request-info {
-  margin: 1em 0em;
+  margin: 1em 0;
   font-size: 66%
 }
 
@@ -110,13 +110,14 @@ tbody > .future ~ .future{
 }
 
 #footer {
+  border-top: dashed thin;
   font-size: 50%;
   text-align: start;
   margin: 1em;
 }
 
 #coming-soon {
-  border-top: dashed thin;
+  border-top: dotted thin;
 }
 
 #coming-soon ul {
