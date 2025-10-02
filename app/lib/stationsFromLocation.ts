@@ -13,7 +13,6 @@ export default async function stationsFromLocation(location: string, count = Inf
     const stationsData = await stationsResponse.json()
 
     const stations = stationsData['stationList']
-    console.log(stationsData)
     if (stations != null) {
       return processTidePredStations(stations, count, lat, lon)
     }
