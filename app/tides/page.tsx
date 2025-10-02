@@ -1,6 +1,6 @@
 'use client'
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react'
 
 export default function Tides() {
   const [isLocating, setLocating] = useState(true)
@@ -85,14 +85,14 @@ export default function Tides() {
         <caption className="top">{data.stationName}</caption>
         <tbody>
         {data.tides.map((tide: any) => {
-          const tideType: string = tide["type"].toUpperCase()
+          const tideType: string = tide['type'].toUpperCase()
           const arrow: string = tideType == 'HIGH' ? '\u2B9D' : '\u00A0\u2B9F'
           return (
-            <tr key={tide["isoDate"]} className={tide['prior'] === "prior" ? "prior" : tideType.toLowerCase()}>
+            <tr key={tide['isoDate']} className={(tide['prior'] === 'prior' ? 'prior ' : '') + tideType.toLowerCase()}>
               <td className="type">{tideType} {arrow}</td>
-              <td className="time">{tide["time"]}</td>
-              <td className="day">{tide["day"]}</td>
-              <td className="date">{tide["date"]}</td>
+              <td className="time">{tide['time']}</td>
+              <td className="day">{tide['day']}</td>
+              <td className="date">{tide['date']}</td>
             </tr>
           )
         })}

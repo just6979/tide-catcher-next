@@ -1,10 +1,8 @@
 :root {
   --background: lightblue;
   --foreground: black;
-  --high-row-bg: lightyellow;
-  --low-row-bg: lightgreen;
-  --past-row-bg: lightgray;
-  --past-row-fg: darkgray;
+  --high-row-bg: cornflowerblue;
+  --low-row-bg: tan;
 }
 
 html,
@@ -71,9 +69,8 @@ th, td {
 }
 
 .prior {
-  font-size: 75%;
-  color: var(--past-row-fg);
-  background-color: var(--past-row-bg);
+  font-size: 66%;
+  filter: contrast(50%) saturate(50%) blur(0.5);
 }
 
 .high {
