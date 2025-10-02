@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 export default function Stations() {
   const [isLoading, setIsLoading] = useState(true)
   const [stationsData, setStationsData] = useState({
+    count: 0,
     stations: []
   })
 
@@ -26,14 +27,15 @@ export default function Stations() {
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {stations.length} stations available.
+        {stationsData['count']} stations available.
       </p>
       <ul>
         {stations.map((station) => (
           <li key={station["id"]}>
-            <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["id"]}`} target="_blank">
-              {station["id"]}
-            </a> {station["name"]}
+            {station["name"]} | <a
+            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station["id"]}`} target="_blank">
+            {station["id"]}
+          </a>
           </li>
         ))}
       </ul>

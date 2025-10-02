@@ -1,41 +1,23 @@
-export default async function stationsFromLocation(location: string, count: number = 1, initialRange: number = 10) {
+import {processTidePredStations} from "@/app/lib/processStations";
+
+export default async function stationsFromLocation(location: string, count = Infinity, initialRange = 10) {
   const lat = Number(location.split(',')[0])
   const lon = Number(location.split(',')[1])
-
   let range = initialRange
   let attempts = 4
 
   while (attempts > 0) {
     const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
-      `lat=${lat}&lon=${lon}&radius=${range}`
-    const nearbyResponse = await fetch(url, {cache: 'force-cache'}
-    )
-    const nearbyData = await nearbyResponse.json()
+      `lat=${lat}&lon=${lon}&range=${range}`
+    const stationsResponse = await fetch(url, {cache: 'force-cache'})
+    const stationsData = await stationsResponse.json()
 
-    const stationsList = nearbyData['stationList']
-    if (stationsList != null) {
-      const outData = []
-      for (let i = 0; i < count; i++) {
-        if (i > stationsList.length - 1) {
-          break
-        }
-        const firstStation = stationsList[i]
-        const station = {
-          id: firstStation['stationId'],
-          lat: Number(firstStation['lat']),
-          lon: Number(firstStation['lon']),
-          name: firstStation['stationName'],
-          eTidesName: firstStation['etidesStnName'],
-          tz: Number(firstStation['timeZoneCorr'])
-        }
-        outData.push(station)
-      }
-      return {
-        reqLat: lat,
-        reqLon: lon,
-        stations: outData
-      }
+    const stations = stationsData['stationList']
+    console.log(stationsData)
+    if (stations != null) {
+      return processTidePredStations(stations, count, lat, lon)
     }
+
     attempts -= 1
     range *= 2
   }

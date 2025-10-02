@@ -1,5 +1,6 @@
 import {subHours} from "date-fns"
 import {stationFromId} from "@/app/lib/stationFromId"
+import type {Station} from "@/app/lib/processStations"
 
 export default async function tidesFromStation(stationId: string) {
   const weekDays = [
@@ -62,14 +63,19 @@ export default async function tidesFromStation(stationId: string) {
       tides.push(tide)
     }
 
-    const stationData = await stationFromId(stationId)
+    const stationsData = await stationFromId(stationId)
+    if ('error' in stationsData) {
+      return stationsData
+    }
+
+    const station = stationsData['stations'][0]
     outData = {
       reqTimestamp: nowDate.toISOString(),
-      respLat: stationData.lat,
-      respLon: stationData.lon,
+      respLat: station.lat,
+      respLon: station.lon,
       stationId: stationId,
-      stationName: stationData.name,
-      stationTz: stationData.stationTz,
+      stationName: station.name,
+      stationTz: station.tz,
       status: 200,
       tides: tides
     }

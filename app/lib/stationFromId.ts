@@ -1,17 +1,14 @@
-export async function stationFromId(stationId: string) {
-  const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${stationId}.json`
-  const externalResponse = await fetch(url, {cache: 'force-cache'})
+import {processStationsById} from "@/app/lib/processStations";
 
-  const inData = await externalResponse.json()
+export async function stationFromId(id: string) {
+  const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${id}.json`
+  const stationsResponse = await fetch(url, {cache: 'force-cache'})
+  const stationsData = await stationsResponse.json()
 
-  const stationData = inData['stations'][0]
-
-  return {
-    id: stationData.id,
-    name: stationData.name,
-    lat: stationData.lat,
-    lon: stationData.lng,
-    source: stationData.self,
-    stationTz: stationData.timezonecorr
+  const stations = stationsData['stations']
+  if (stations != null) {
+    return processStationsById(stations);
   }
+
+  return {error: `No stations found with ID: ${id}.`}
 }
