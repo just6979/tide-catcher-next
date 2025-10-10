@@ -70,7 +70,7 @@ export default function Tides() {
       {locationError}
     </p>
   )
-  if (isLoading) return <p>Loading Tides Data for ({`${location.latitude},${location.longitude}`})...</p>
+  if (isLoading) return <p>Loading Tides Data for [{`${location.latitude},${location.longitude}`}]...</p>
   if (!data) return <p>No Tides Data found.</p>
 
   /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
@@ -111,16 +111,16 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Request Location</td>
-          <td><a href={requestLocationUrl} target="_blank">{data.reqLat},{data.reqLon}</a>
+          <td><a href={requestLocationUrl} target="_blank">[{data.reqLat},{data.reqLon}]</a>
           </td>
         </tr>
         <tr>
-          <td>Response Station</td>
+          <td>Response <a href='/stations'>Station</a></td>
           <td><a href={stationUrl} target="_blank">{data.stationName}</a></td>
         </tr>
         <tr>
           <td>Response Location</td>
-          <td><a href={responseLocationUrl} target="_blank">{data.respLat},{data.respLon}</a></td>
+          <td><a href={responseLocationUrl} target="_blank">[{data.respLat},{data.respLon}]</a></td>
         </tr>
         </tbody>
       </table>
