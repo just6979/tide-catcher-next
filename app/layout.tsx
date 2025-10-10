@@ -1,11 +1,11 @@
-import type {Metadata, Viewport} from "next"
-import {ReactNode, Suspense} from "react";
+import type {Metadata, Viewport} from 'next'
+import {ReactNode, Suspense} from 'react'
 
 import Header from '@/app/header'
-import Loading from "@/app/loading";
+import Loading from '@/app/loading'
 import Footer from '@/app/footer'
 
-import "./globals.css"
+import './globals.css'
 
 export const metadata: Metadata = {
   title: {

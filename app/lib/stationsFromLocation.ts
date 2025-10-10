@@ -1,4 +1,4 @@
-import {processTidePredStations} from "@/app/lib/processStations"
+import {processTidePredStations} from '@/app/lib/processStations'
 
 export default async function stationsFromLocation(location: string, count = Infinity, initialRange = 10) {
   const lat = Number(location.split(',')[0])

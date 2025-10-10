@@ -1,5 +1,5 @@
-import {subHours} from "date-fns"
-import {stationFromId} from "@/app/lib/stationFromId"
+import {subHours} from 'date-fns'
+import {stationFromId} from '@/app/lib/stationFromId'
 
 export default async function tidesFromStation(stationId: string) {
   const weekDays = [
@@ -37,7 +37,7 @@ export default async function tidesFromStation(stationId: string) {
   if ('error' in data) {
     outData = {
       reqTime: nowDate.toISOString(),
-      message: "Error calling NOAA CO-OPS Data Retrieval API.",
+      message: 'Error calling NOAA CO-OPS Data Retrieval API.',
       url: url,
       noaaApiResponse: data
     }

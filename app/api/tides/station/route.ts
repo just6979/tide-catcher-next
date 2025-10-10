@@ -1,4 +1,4 @@
-import tidesFromStation from "@/app/lib/tidesFromStation"
+import tidesFromStation from '@/app/lib/tidesFromStation'
 
 export async function GET() {
   const stationId = '8441241' /* Plum Island South */

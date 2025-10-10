@@ -1,4 +1,4 @@
-import {access, constants, readFile, writeFile} from "node:fs/promises"
+import {access, constants, readFile, writeFile} from 'node:fs/promises'
 
 const localStorageDir = `./.storage`
 

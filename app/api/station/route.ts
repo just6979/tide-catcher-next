@@ -1,4 +1,4 @@
-import {stationFromId} from "@/app/lib/stationFromId"
+import {stationFromId} from '@/app/lib/stationFromId'
 
 export async function GET() {
   const stationId = '8441241'

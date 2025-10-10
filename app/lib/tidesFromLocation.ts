@@ -1,5 +1,5 @@
-import stationsFromLocation from "@/app/lib/stationsFromLocation"
-import tidesFromStation from "@/app/lib/tidesFromStation"
+import stationsFromLocation from '@/app/lib/stationsFromLocation'
+import tidesFromStation from '@/app/lib/tidesFromStation'
 
 export default async function tidesFromLocation(location: string) {
   const lat = Number(location.split(',')[0])

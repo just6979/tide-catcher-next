@@ -1,4 +1,4 @@
-import stationsFromLocation from "@/app/lib/stationsFromLocation"
+import stationsFromLocation from '@/app/lib/stationsFromLocation'
 
 export async function GET() {
   const location = '42.71014,-70.78861' /* Plum Island South */

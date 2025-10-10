@@ -16,7 +16,7 @@ function makeStation(
 export function processTidePredStations(stationsIn: TidePredStation[], count: number, lat = 0, lon = 0) {
   const stationsOut: Station[] = []
   for (let i = 0; i < Math.min(count, stationsIn.length); i++) {
-    const station = stationsIn[i];
+    const station = stationsIn[i]
     stationsOut.push(makeStation(
       station['stationId'],
       station['lat'],

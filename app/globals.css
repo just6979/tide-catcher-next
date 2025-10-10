@@ -78,7 +78,7 @@ tbody > .future {
   filter: saturate(150%);
 }
 
-tbody > .future ~ .future{
+tbody > .future ~ .future {
   font-weight: normal;
   filter: none;
 }

@@ -1,4 +1,4 @@
-import {stationFromId} from "@/app/lib/stationFromId"
+import {stationFromId} from '@/app/lib/stationFromId'
 
 export async function GET(request: Request, {params}: { params: Promise<{ id: string }> }) {
   const stationId = (await params).id

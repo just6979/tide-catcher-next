@@ -1,4 +1,4 @@
-import {processStationsById} from "@/app/lib/processStations"
+import {processStationsById} from '@/app/lib/processStations'
 
 export async function stationFromId(id: string) {
   const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${id}.json`
