@@ -14,7 +14,7 @@ export default async function stationsFromLocation(location: string, count = Inf
 
     const stations = stationsData['stationList']
     if (stations != null) {
-      return processTidePredStations(stations, count, lat, lon)
+      return processTidePredStations(stations, count, location)
     }
 
     attempts -= 1

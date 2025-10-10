@@ -1,33 +1,32 @@
 import {Station, StationById, TidePredStation} from '@/app/lib/types'
 
 function makeStation(
-  id: string, lat: number, lon: number, name: string, eTidesName: string, tz: number
+  id: string, location: string, name: string, eTidesName: string, tz: number
 ): Station {
   return {
     id: id,
-    lat: Number(lat),
-    lon: Number(lon),
+    location: location,
     name: name,
     eTidesName: eTidesName,
     tzOffset: Number(tz)
   }
 }
 
-export function processTidePredStations(stationsIn: TidePredStation[], count: number, lat = 0, lon = 0) {
+export function processTidePredStations(stationsIn: TidePredStation[], count: number, reqLocation: string = '0,0') {
   const stationsOut: Station[] = []
   for (let i = 0; i < Math.min(count, stationsIn.length); i++) {
     const station = stationsIn[i]
+    const stationLocation = `${station['lat']},${station['lon']}`
     stationsOut.push(makeStation(
       station['stationId'],
-      station['lat'],
-      station['lon'],
+      stationLocation,
       station['stationName'],
       station['etidesStnName'],
       station['timeZoneCorr']
     ))
   }
   return {
-    reqLat: lat, reqLng: lon,
+    reqLocation: reqLocation,
     count: stationsOut.length,
     stations: stationsOut
   }
@@ -35,13 +34,13 @@ export function processTidePredStations(stationsIn: TidePredStation[], count: nu
 
 export function processStationsById(stations: StationById[]) {
   const station = stations[0]
+  const stationLocation = `${station['lat']},${station['lng']}`
   return {
-    reqLat: 0, reqLng: 0,
+    reqLocation: '0,0',
     count: 1,
     stations: [makeStation(
       station['id'],
-      station['lat'],
-      station['lng'],
+      stationLocation,
       station['name'],
       station['name'],
       station['timezonecorr']

@@ -68,13 +68,12 @@ export default async function tidesFromStation(stationId: string) {
 
     const station = stationsData['stations'][0]
     outData = {
+      reqLocation: '0,0',
       reqTimestamp: nowDate.toISOString(),
-      respLat: station.lat,
-      respLon: station.lon,
+      stationLocation: station.location,
       stationId: stationId,
       stationName: station.name,
       stationTzOffset: station.tzOffset,
-      status: 200,
       tides: tides
     }
   }

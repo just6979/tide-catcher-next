@@ -38,10 +38,11 @@ export default function Stations() {
       <ul>
         {stations.map((station) => (
           <li key={station['id']}>
-            {station['name']} | <a
-            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station['id']}`} target="_blank">
-            {station['id']}
-          </a>
+            <a href={`https://www.google.com/maps/place/${station['location']}/@${station['location']},12z`}
+               target="_blank">{station['name']}
+            </a> | <a
+            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station['id']}`}
+            target="_blank">{station['id']}</a>
           </li>
         ))}
       </ul>

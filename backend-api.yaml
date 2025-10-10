@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: tide-catcher-next-backend
   description: Backend API serving the Tide Catcher Next frontend
-  version: '1.0'
+  version: '1.1'
 servers:
   - url: 'http://localhost:8080'
     description: Development
@@ -141,8 +141,7 @@ components:
       example:
         {
           "id": "8441241",
-          "lat": 42.71014,
-          "lon": -70.78861,
+          "location": "42.71014,-70.78861",
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
           tzOffset: -5
@@ -162,13 +161,12 @@ components:
             $ref: "#/components/schemas/Station"
       example:
         {
-          "status": "OK",
+          "reqLocation": "42.71014,-70.78861",
           "station_count": 1,
           "stations": [
             {
               "id": "8441241",
-              "lat": 42.71014,
-              "lon": -70.78861,
+              "location": "42.71014,-70.78861",
               "name": "Plum Island South",
               "eTidesName": "Plum Island Sound (south end)",
               "tzOffset": -5
@@ -253,13 +251,12 @@ components:
             $ref: "#/components/schemas/Tide"
       example:
         {
+          "reqLocation": "42.71014,-70.78861",
           "reqTimestamp": "2025-10-01T16:20:58.872Z",
-          "respLat": "42.71014",
-          "respLon": "-70.78861",
+          "stationLocation": "42.71014,-70.78861",
           "stationId": "8441241",
           "stationName": "Plum Island South",
           "stationTzOffset": -5,
-          "status": 200,
           "tides": [
             {
               "source_date": "2025-10-02 01:59",

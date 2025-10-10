@@ -17,14 +17,12 @@ export default function Tides() {
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState({
-    tides: [],
-    reqLat: '',
-    reqLon: '',
+    reqLocation: '',
     reqTimestamp: '',
-    respLat: 0,
-    respLon: 0,
+    stationLocation: '',
     stationName: '',
-    stationId: ''
+    stationId: '',
+    tides: []
   })
 
   useEffect(() => {
@@ -73,11 +71,6 @@ export default function Tides() {
   if (!data) return <p>No Tides Data found.</p>
 
   /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
-  const requestLocationUrl = `https://www.google.com/maps/place/${location}/@${location},12z`
-  const responseLocationUrl =
-    `https://www.google.com/maps/place/${data.respLat},${data.respLon}/@${data.respLat},${data.respLon},12z`
-
-  const stationUrl = `https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.stationId}`
   const reqTime = new Date(data.reqTimestamp).toLocaleString()
 
   return (
@@ -108,17 +101,20 @@ export default function Tides() {
           <td>{reqTime}</td>
         </tr>
         <tr>
-          <td>Request Location</td>
-          <td><a href={requestLocationUrl} target="_blank">[{location}]</a>
+          <td>Your Location</td>
+          <td><a href={`https://www.google.com/maps/place/${location}/@${location},12z`}
+                 target="_blank">[{location}]</a>
           </td>
         </tr>
         <tr>
-          <td>Response <a href="/stations">Station</a></td>
-          <td><a href={stationUrl} target="_blank">{data.stationName}</a></td>
+          <td>Tides <a href="/stations">Station</a></td>
+          <td><a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.stationId}`}
+                 target="_blank">{data.stationId}</a></td>
         </tr>
         <tr>
-          <td>Response Location</td>
-          <td><a href={responseLocationUrl} target="_blank">[{data.respLat},{data.respLon}]</a></td>
+          <td>Tides Location</td>
+          <td><a href={`https://www.google.com/maps/place/${data.stationLocation}/@${data.stationLocation},12z`}
+                 target="_blank">[{data.stationLocation}]</a></td>
         </tr>
         </tbody>
       </table>

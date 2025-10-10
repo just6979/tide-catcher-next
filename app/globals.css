@@ -144,4 +144,5 @@ tbody > .future ~ .future {
 
 #stations ul {
   padding-inline-start: 2em;
+  line-height: 125%;
 }

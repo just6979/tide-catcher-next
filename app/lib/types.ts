@@ -1,7 +1,6 @@
 export interface Station {
   id: string
-  lat: number
-  lon: number
+  location: string
   name: string
   eTidesName: string
   tzOffset: number
