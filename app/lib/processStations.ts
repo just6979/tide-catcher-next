@@ -9,7 +9,7 @@ function makeStation(
     lon: Number(lon),
     name: name,
     eTidesName: eTidesName,
-    tz: Number(tz)
+    tzOffset: Number(tz)
   }
 }
 

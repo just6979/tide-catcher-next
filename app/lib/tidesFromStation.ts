@@ -54,7 +54,6 @@ export default async function tidesFromStation(stationId: string) {
         day: weekDays[tideDate.getDay()],
         height: Number(prediction.v),
         isoDate: tideDate.toISOString(),
-        prior: tideDate < nowDate ? 'prior' : 'future',
         time: `${tideDate.getHours().toString().padStart(2, '0')}:` +
           `${tideDate.getMinutes().toString().padStart(2, '0')}`,
         type: prediction.type === 'H' ? 'high' : 'low'
@@ -74,7 +73,7 @@ export default async function tidesFromStation(stationId: string) {
       respLon: station.lon,
       stationId: stationId,
       stationName: station.name,
-      stationTz: station.tz,
+      stationTzOffset: station.tzOffset,
       status: 200,
       tides: tides
     }

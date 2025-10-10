@@ -1,12 +1,12 @@
 openapi: 3.1.0
 info:
   title: tide-catcher-next-backend
-  description: tide-catcher-next-backend
-  version: 1.0
+  description: Backend API serving the Tide Catcher Next frontend
+  version: '1.0'
 servers:
   - url: 'http://localhost:8080'
     description: Development
-  - url: 'https://tide-catcher-next.justinwhite.net'
+  - url: 'https://tide-catcher.justinwhite.net'
     description: Production
   - url: 'https://tide-catcher-next.vercel.app'
     description: Alternate
@@ -27,11 +27,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StationResponse"
+                $ref: "#/components/schemas/StationsResponse"
 
   /api/station/location/{location}:
     get:
-      description: closest single station to the given location
+      description: closest single station to the given location, if any, within 10-160 miles
       parameters:
         - in: path
           name: location
@@ -45,11 +45,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StationResponse"
+                $ref: "#/components/schemas/StationsResponse"
 
   /api/stations/location/{location}:
     get:
-      description: closest stations to the given location
+      description: closest stations to the given location, if any, within 10-160 miles
       parameters:
         - in: path
           name: location
@@ -63,7 +63,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/StationResponse"
+                $ref: "#/components/schemas/StationsResponse"
 
   /api/stations:
     get:
@@ -132,48 +132,20 @@ components:
         name:
           type: string
           description: Name of the station
-        noaa:
-          type: boolean
-          description: Indicates if the station is a NOAA station
-        org:
+        eTimesName:
           type: string
-          description: Organization managing the station
-        org_id:
-          type: string
-          description: Organization-specific ID of the station
+          description: Name used by the NOAA Tide Predictions website
+        tzOffset:
+          type: number
+          description: timezone offset in hours from UTC of the station
       example:
         {
-          "id": "NOAA:8441241",
-          "lat": 42.7101,
-          "lon": -70.7886,
-          "name": "Plum Island Sound (south end), Massachusetts",
-          "noaa": true,
-          "org": "NOAA",
-          "org_id": "8441241"
-        }
-
-    StationResponse:
-      description: One Station
-      type: object
-      properties:
-        status:
-          type: string
-        station:
-          $ref: "#/components/schemas/Station"
-      example:
-        {
-          "status": "OK",
-          "station": [
-            {
-              "id": "NOAA:8441241",
-              "lat": 42.7101,
-              "lon": -70.7886,
-              "name": "Plum Island Sound (south end), Massachusetts",
-              "noaa": true,
-              "org": "NOAA",
-              "org_id": "8441241"
-            }
-          ]
+          "id": "8441241",
+          "lat": 42.71014,
+          "lon": -70.78861,
+          "name": "Plum Island South",
+          "eTidesName": "Plum Island South",
+          tzOffset: -5
         }
 
     StationsResponse:
@@ -194,13 +166,12 @@ components:
           "station_count": 1,
           "stations": [
             {
-              "id": "NOAA:8441241",
-              "lat": 42.7101,
-              "lon": -70.7886,
-              "name": "Plum Island Sound (south end), Massachusetts",
-              "noaa": true,
-              "org": "NOAA",
-              "org_id": "8441241"
+              "id": "8441241",
+              "lat": 42.71014,
+              "lon": -70.78861,
+              "name": "Plum Island South",
+              "eTidesName": "Plum Island Sound (south end)",
+              "tzOffset": -5
             }
           ]
         }
@@ -234,13 +205,13 @@ components:
           description: Type of tide (e.g., "Low", "High")
       example:
         {
-          "date": "06-11",
-          "day": "Wed",
-          "height": 0.483,
-          "iso-date": "2025-06-11T18:31:50-04:00",
-          "prior": "prior",
-          "time": "18:31",
-          "type": "Low"
+          "source_date": "2025-10-02 01:59",
+          "date": "10/02",
+          "day": "Thu",
+          "height": 0.369,
+          "iso_date": "2025-10-02T05:59:00.000Z",
+          "time": "01:59",
+          "type": "low"
         }
 
     TidesResponse:
@@ -287,7 +258,7 @@ components:
           "respLon": "-70.78861",
           "stationId": "8441241",
           "stationName": "Plum Island South",
-          "stationTz": -5,
+          "stationTzOffset": -5,
           "status": 200,
           "tides": [
             {
@@ -296,7 +267,6 @@ components:
               "day": "Thu",
               "height": 0.369,
               "iso_date": "2025-10-02T05:59:00.000Z",
-              "prior": "future",
               "time": "01:59",
               "type": "low"
             }

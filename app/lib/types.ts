@@ -4,7 +4,7 @@ export interface Station {
   lon: number
   name: string
   eTidesName: string
-  tz: number
+  tzOffset: number
 }
 
 export interface TidePredStation {
