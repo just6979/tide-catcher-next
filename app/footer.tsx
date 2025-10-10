@@ -1,21 +1,24 @@
 export default function Footer() {
   return (
     <div id="footer">
-      <h3>About</h3>
-      <ul>
-        <li>Created by <a href="mailto:jw@justinwhite.net">Justin White</a> (C) 2025</li>
-        <li>Tide data retrieved from <a href="https://tidesandcurrents.noaa.gov" target="_blank">
-          NOAA Tides & Currents</a>
-        </li>
-        <li>
-          Built with <a
-          href="https://nextjs.org" target="_blank">Next.js</a>
-          , <a href="https://react.dev" target="_blank">React</a>
-          , <a href="https://cloud.google.com/run" target="_blank">Google Cloud Run</a>
-        </li>
-        <li><a href="https://github.com/just6979/tide-catcher-next" target="_blank">Open-source</a>
-          , hosted on <a href="https://github.com/" target="_blank">Github</a></li>
-      </ul>
+      <div id="about">
+        <h3>About</h3>
+        <ul>
+          <li>Created by <a href="mailto:jw@justinwhite.net">Justin White</a> (C) 2025</li>
+          <li>Tide data retrieved from <a href="https://tidesandcurrents.noaa.gov" target="_blank">
+            NOAA Tides & Currents</a>
+          </li>
+          <li>
+            Built with <a
+            href="https://nextjs.org" target="_blank">Next.js</a>
+            , <a href="https://react.dev" target="_blank">React</a>
+            , <a href="https://cloud.google.com/run" target="_blank">Google Cloud Run</a>
+          </li>
+          <li><a href="https://github.com/just6979/tide-catcher-next" target="_blank">Open-source</a>
+            , hosted on <a href="https://github.com/" target="_blank">Github</a></li>
+        </ul>
+      </div>
+
       <div id="coming-soon">
         <h3>Coming Soon</h3>
 
