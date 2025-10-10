@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react'
 import {Tide} from '@/app/lib/types'
 
 export default function Tides() {
+  const nowTime = new Date()
+
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState({
     latitude: '',
@@ -88,10 +90,10 @@ export default function Tides() {
         {data.tides.map((tide: Tide) => {
           const tideType: string = tide['type']
           const arrow: string = tideType == 'high' ? '⤴' : '⤵'
+          const prior = new Date(tide['isoDate']) < nowTime ? 'prior' : 'future'
           return (
-            <tr key={tide['isoDate']}
-                className={(tide['prior'] === 'prior' ? 'prior ' : 'future ') + tideType.toLowerCase()}>
-              <td className="type">{arrow} {tideType.toUpperCase().padEnd(4,'\u00A0')}</td>
+            <tr key={tide['isoDate']} className={`${prior} ${tideType}`}>
+              <td className="type">{arrow} {tideType.toUpperCase().padEnd(4, '\u00A0')}</td>
               <td className="time">{tide['time']}</td>
               <td className="day">{tide['day']}</td>
               <td className="date">{tide['date']}</td>
