@@ -3,6 +3,12 @@
 import {useEffect, useState} from 'react'
 import {Tide} from '@/app/lib/types'
 
+const navigationErrorMap = ['',
+  'PERMISSION_DENIED. No location permission granted. Check site settings.',
+  'POSITION_UNAVAILABLE: Error acquiring location data. Try again.',
+  'TIMEOUTNo location data acquired in the time allotted.'
+]
+
 export default function Tides() {
   const nowTime = new Date()
 
@@ -25,6 +31,7 @@ export default function Tides() {
   })
 
   useEffect(() => {
+    console.log('getting location')
     navigator.geolocation.getCurrentPosition(
       position => {
         setLocating(true)
@@ -36,12 +43,9 @@ export default function Tides() {
 
       },
       error => {
-        const errorMap = ['',
-          'PERMISSION_DENIED. No location permission granted. Check site settings.',
-          'POSITION_UNAVAILABLE: Error acquiring location data. Try again.',
-          'TIMEOUTNo location data acquired in the time allotted.'
-        ]
-        setLocationError(errorMap[error.code])
+        console.log('error getting location')
+        console.log(navigationErrorMap[error.code])
+        setLocationError(navigationErrorMap[error.code])
         setLocating(false)
       },
       {
