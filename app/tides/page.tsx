@@ -29,8 +29,9 @@ export default function Tides() {
     console.log('getting location')
     navigator.geolocation.getCurrentPosition(
       position => {
-        setLocation(`${(position.coords.latitude.toFixed(5))},${(position.coords.longitude.toFixed(5))}`)
-        console.log(`found location: [${location}]`)
+        const loc = `${(position.coords.latitude.toFixed(5))},${(position.coords.longitude.toFixed(5))}`
+        setLocation(loc)
+        console.log(`found location: [${loc}]`)
         setLocating(false)
 
       },
