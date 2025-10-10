@@ -13,10 +13,7 @@ export default function Tides() {
   const nowTime = new Date()
 
   const [isLocating, setLocating] = useState(true)
-  const [location, setLocation] = useState({
-    latitude: '',
-    longitude: ''
-  })
+  const [location, setLocation] = useState('')
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState({
@@ -34,11 +31,8 @@ export default function Tides() {
     console.log('getting location')
     navigator.geolocation.getCurrentPosition(
       position => {
-        setLocating(true)
-        setLocation({
-          latitude: position.coords.latitude.toFixed(5),
-          longitude: position.coords.longitude.toFixed(5)
-        })
+        setLocation(`${(position.coords.latitude.toFixed(5))},${(position.coords.longitude.toFixed(5))}`)
+        console.log(`found location: [${location}]`)
         setLocating(false)
 
       },
@@ -57,8 +51,9 @@ export default function Tides() {
   }, [])
 
   useEffect(() => {
-    if (!location.latitude || !location.longitude) return
-    fetch(`/api/tides/location/${location.latitude},${location.longitude}`)
+    if (!location) return
+    console.log(`getting tides for [${location}]`)
+    fetch(`/api/tides/location/${location}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)
@@ -74,12 +69,11 @@ export default function Tides() {
       {locationError}
     </p>
   )
-  if (isLoading) return <p>Loading Tides Data for [{`${location.latitude},${location.longitude}`}]...</p>
+  if (isLoading) return <p>Loading Tides Data for [{location}]...</p>
   if (!data) return <p>No Tides Data found.</p>
 
   /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
-  const requestLocationUrl =
-    `https://www.google.com/maps/place/${data.reqLat},${data.reqLon}/@${data.reqLat},${data.reqLon},12z`
+  const requestLocationUrl = `https://www.google.com/maps/place/${location}/@${location},12z`
   const responseLocationUrl =
     `https://www.google.com/maps/place/${data.respLat},${data.respLon}/@${data.respLat},${data.respLon},12z`
 
@@ -115,11 +109,11 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Request Location</td>
-          <td><a href={requestLocationUrl} target="_blank">[{data.reqLat},{data.reqLon}]</a>
+          <td><a href={requestLocationUrl} target="_blank">[{location}]</a>
           </td>
         </tr>
         <tr>
-          <td>Response <a href='/stations'>Station</a></td>
+          <td>Response <a href="/stations">Station</a></td>
           <td><a href={stationUrl} target="_blank">{data.stationName}</a></td>
         </tr>
         <tr>
