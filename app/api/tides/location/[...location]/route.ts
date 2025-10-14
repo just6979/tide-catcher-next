@@ -1,4 +1,4 @@
-import tidesFromLocation from '@/app/lib/tidesFromLocation'
+import {tidesFromLocation} from '@/app/lib/tidesFromLocation'
 
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
   const location = (await params).location[0]

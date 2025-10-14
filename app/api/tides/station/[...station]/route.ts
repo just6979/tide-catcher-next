@@ -1,4 +1,4 @@
-import tidesFromStation from '@/app/lib/tidesFromStation'
+import {tidesFromStation} from '@/app/lib/tidesFromStation'
 
 export async function GET(request: Request, {params}: { params: Promise<{ station: string }> }) {
   const stationId = (await params).station[0]

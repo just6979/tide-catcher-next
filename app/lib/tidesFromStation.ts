@@ -1,7 +1,38 @@
 import {subHours} from 'date-fns'
+import {Station, TidesResponse} from '@/app/lib/types'
 import {stationFromId} from '@/app/lib/stationFromId'
 
-export default async function tidesFromStation(stationId: string) {
+export async function tidesFromStation(stationId: string): Promise<TidesResponse> {
+  const nowDate = new Date()
+  const location = '0,0'
+
+  const stationData = await stationFromId(stationId)
+
+  if (stationData.status !== 'OK') {
+    return {
+      status: stationData.status,
+      message: `Error calling NOAA API: ${stationData.message}`,
+      reqLocation: location,
+      reqTimestamp: nowDate.toISOString(),
+      stationLocation: '',
+      stationId: '',
+      stationName: '',
+      stationTzOffset: 0,
+      tides: []
+    }
+  }
+
+  const stations = stationData['stations']
+  const station = stations[0]
+
+  const outData = await processTides(station, nowDate)
+  return {
+    ...outData,
+    reqLocation: location
+  }
+}
+
+export async function processTides(station: Station, nowDate: Date): Promise<TidesResponse> {
   const weekDays = [
     'Sun',
     'Mon',
@@ -12,7 +43,6 @@ export default async function tidesFromStation(stationId: string) {
     'Sat'
   ]
 
-  const nowDate = new Date()
   const backdateHours = 7
   const reqDate = subHours(nowDate, backdateHours)
 
@@ -25,7 +55,8 @@ export default async function tidesFromStation(stationId: string) {
   const range = (48 + backdateHours).toString()
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
-    `&station=${stationId}&begin_date=${dateString}&range=${range}`)
+    `&station=${(station.id)}&begin_date=${dateString}&range=${range}`)
+
 
   const noaaResponse = await fetch(
     url,
@@ -33,13 +64,17 @@ export default async function tidesFromStation(stationId: string) {
   )
   const data = await noaaResponse.json()
 
-  let outData
   if ('error' in data) {
-    outData = {
-      reqTime: nowDate.toISOString(),
-      message: 'Error calling NOAA CO-OPS Data Retrieval API.',
-      url: url,
-      noaaApiResponse: data
+    return {
+      status: 'Error',
+      message: `Error calling NOAA API: ${data['error']['message']}`,
+      reqLocation: '0,0',
+      reqTimestamp: nowDate.toISOString(),
+      stationLocation: station.location,
+      stationId: station.id,
+      stationName: station.name,
+      stationTzOffset: station.tzOffset,
+      tides: []
     }
   } else {
     const tides = []
@@ -61,22 +96,16 @@ export default async function tidesFromStation(stationId: string) {
       tides.push(tide)
     }
 
-    const stationsData = await stationFromId(stationId)
-    if ('error' in stationsData) {
-      return stationsData
-    }
-
-    const station = stationsData['stations'][0]
-    outData = {
+    return {
+      status: 'OK',
+      message: '',
       reqLocation: '0,0',
       reqTimestamp: nowDate.toISOString(),
       stationLocation: station.location,
-      stationId: stationId,
+      stationId: station.id,
       stationName: station.name,
       stationTzOffset: station.tzOffset,
       tides: tides
     }
   }
-
-  return outData
 }
