@@ -1,33 +1,26 @@
-export default class Coords {
-  protected _lat: number
-  protected _lon: number
+export default interface Coords {
+  lat: number
+  lon: number
+}
 
-  constructor(lat: number = 0, lon: number = 0) {
-    this._lat = lat
-    this._lon = lon
-  }
+export const ZERO_COORDS: Coords = coordsFromLatLon(0, 0)
 
-  static fromLocationString(location: string) {
-    return this.fromLatLongStringArray(location.split(','))
-  }
+export function coordsFromLatLon(lat: number, lon: number): Coords {
+  return {lat, lon}
 
-  static fromLatLongStringArray(location: string[]) {
-    return this.fromLatLongStrings(location[0], location[1])
+}
+export function coordsFromString(locationString: string): Coords {
+  const location = locationString.split(',')
+  if (location.length != 2) {
+    return ZERO_COORDS
   }
+  return coordsFromLatLon(Number(location[0]), Number(location[1]))
+}
 
-  static fromLatLongStrings(lat: string, lon: string) {
-    return new Coords(Number(lat), Number(lon))
-  }
+export function coordsToString(coords: Coords): string {
+  return `${coords.lat.toFixed(5)},${coords.lon.toFixed(5)}`
+}
 
-  get lat(): number {
-    return this._lat
-  }
-
-  get lon(): number {
-    return this._lon
-  }
-
-  toString() {
-    return `${this._lat},${this._lon}`
-  }
+export function coordsToBracketString(coords: Coords): string {
+  return `[${coordsToString(coords)}]`
 }

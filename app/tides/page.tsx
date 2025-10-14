@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react'
 import {Tide, TidesResponse} from '@/app/lib/types'
-import Coords from '@/app/lib/Coords'
+import {coordsToBracketString, coordsToString, ZERO_COORDS} from '@/app/lib/Coords'
 
 const navigationErrorMap = ['',
   'PERMISSION_DENIED. No location permission granted. Check site settings.',
@@ -15,11 +15,11 @@ export default function Tides() {
 
   const initialData: TidesResponse = {
     message: '',
-    reqLocation: new Coords(),
+    reqLocation: ZERO_COORDS,
     reqTimestamp: '',
     station: {
       id: '',
-      location: new Coords(),
+      location: ZERO_COORDS,
       name: '',
       eTidesName: '',
       tzOffset: 0
@@ -112,8 +112,8 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Your Location</td>
-          <td><a href={`https://www.google.com/maps/place/${location}/@${location},12z`}
-                 target="_blank">[{data.reqLocation.toString()}]</a>
+          <td><a href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
+                 target="_blank">{coordsToBracketString(data.reqLocation)}</a>
           </td>
         </tr>
         <tr>
@@ -124,8 +124,8 @@ export default function Tides() {
         <tr>
           <td>Tides Location</td>
           <td><a
-            href={`https://www.google.com/maps/place/${data.station.location}/@${data.station.location},12z`}
-            target="_blank">[{data.station.location.toString()}]</a></td>
+            href={`https://www.google.com/maps/place/${coordsToString(data.station.location)}/@${coordsToString(data.station.location)},12z`}
+            target="_blank">{coordsToBracketString(data.station.location)}</a></td>
         </tr>
         </tbody>
       </table>

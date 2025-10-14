@@ -1,5 +1,5 @@
 import {NoaaStationById, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
-import Coords from '@/app/lib/Coords'
+import Coords, {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/Coords'
 
 function makeStation(
   id: string, location: Coords, name: string, eTidesName: string, tz: number
@@ -14,7 +14,7 @@ function makeStation(
 }
 
 export function makeStationsResponse(
-  stationsOut: Station[], location = new Coords(), status = 'OK', message = ''
+  stationsOut: Station[], location = ZERO_COORDS, status = 'OK', message = ''
 ): StationsResponse {
   return {
     status: status,
@@ -26,14 +26,14 @@ export function makeStationsResponse(
 }
 
 export function makeStationsError(
-  message: string, location = new Coords()
+  message: string, location = ZERO_COORDS
 ): StationsResponse {
   return makeStationsResponse([], location, 'Error', message)
 }
 
 
 export function processTidePredStations(
-  stations: NoaaTidePredStation[], count = Infinity, location = new Coords()
+  stations: NoaaTidePredStation[], count = Infinity, location = ZERO_COORDS
 ): StationsResponse {
   if (stations == null) {
     return makeStationsResponse([], location)
@@ -44,7 +44,7 @@ export function processTidePredStations(
     const station = stations[i]
     stationsOut.push(makeStation(
       station.stationId,
-      new Coords(station.lat, station.lon),
+      coordsFromLatLon(station.lat, station.lon),
       station.stationName,
       station.etidesStnName,
       station.timeZoneCorr
@@ -62,7 +62,7 @@ export function processStationsById(
   const station = stations[0]
   return makeStationsResponse([makeStation(
     station.id,
-    new Coords(station.lat, station.lng),
+    coordsFromLatLon(station.lat, station.lng),
     station.name,
     station.name,
     station.timezonecorr

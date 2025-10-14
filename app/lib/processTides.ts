@@ -1,7 +1,7 @@
 import {subHours} from 'date-fns'
 
 import {Station, TidesResponse} from '@/app/lib/types'
-import Coords from '@/app/lib/Coords'
+import {ZERO_COORDS} from '@/app/lib/Coords'
 
 export async function processTides(station: Station, nowDate: Date): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -27,7 +27,7 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
     return {
       status: 'Error',
       message: `Error calling NOAA API: ${data['error']['message']}`,
-      reqLocation: new Coords(),
+      reqLocation: ZERO_COORDS,
       reqTimestamp: nowDate.toISOString(),
       station: station,
       tides: []
@@ -56,7 +56,7 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
   return {
     status: 'OK',
     message: '',
-    reqLocation: new Coords(),
+    reqLocation: ZERO_COORDS,
     reqTimestamp: nowDate.toISOString(),
     station: station,
     tides: tides

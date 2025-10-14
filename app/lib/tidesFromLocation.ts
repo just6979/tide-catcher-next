@@ -2,7 +2,7 @@ import {processTides} from '@/app/lib/processTides'
 import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
 
 import {TidesResponse} from '@/app/lib/types'
-import Coords from '@/app/lib/Coords'
+import Coords, {ZERO_COORDS} from '@/app/lib/Coords'
 
 export async function tidesFromLocation(location: Coords): Promise<TidesResponse> {
   const nowDate = new Date()
@@ -16,7 +16,7 @@ export async function tidesFromLocation(location: Coords): Promise<TidesResponse
       reqLocation: location,
       reqTimestamp: nowDate.toISOString(),
       station: {
-        location: new Coords(),
+        location: ZERO_COORDS,
         id: '',
         name: '',
         eTidesName: '',
