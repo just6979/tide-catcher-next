@@ -3,7 +3,7 @@ import {subHours} from 'date-fns'
 import {ZERO_COORDS} from '@/app/lib/coords'
 import type {Station, TidesResponse} from '@/app/lib/types'
 
-export default async function tidesProcessing(station: Station, nowDate: Date): Promise<TidesResponse> {
+export default async function tidesProcessing(station: Station, nowDate: Date, tzOffset = 0): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   const backdateHours = 7
@@ -17,7 +17,7 @@ export default async function tidesProcessing(station: Station, nowDate: Date): 
   const dateString = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
   const range = (48 + backdateHours).toString()
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
-    'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
+    'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=gmt' +
     `&station=${(station.id)}&begin_date=${dateString}&range=${range}`)
 
   const noaaResponse = await fetch(url, {cache: 'force-cache'})

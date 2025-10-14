@@ -1,10 +1,12 @@
+import {UTCDate} from '@date-fns/utc'
+
 import {ZERO_COORDS} from '@/app/lib/coords'
 import tidesProcessing from '@/app/lib/tidesProcessing'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import type {Coords, TidesResponse} from '@/app/lib/types'
 
-export async function tidesFromCoords(location: Coords): Promise<TidesResponse> {
-  const nowDate = new Date()
+export async function tidesFromCoords(location: Coords, tzOffset = 0): Promise<TidesResponse> {
+  const nowDate = new UTCDate()
 
   const nearbyData = await stationsFromCoords(location, 1)
 
@@ -28,7 +30,7 @@ export async function tidesFromCoords(location: Coords): Promise<TidesResponse> 
   const stations = nearbyData['stations']
   const station = stations[0]
 
-  const outData = await tidesProcessing(station, nowDate)
+  const outData = await tidesProcessing(station, nowDate, tzOffset)
 
   return {
     ...outData,
