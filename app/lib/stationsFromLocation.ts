@@ -1,6 +1,7 @@
-import {processTidePredStations} from '@/app/lib/processStations'
+import {makeStationsError, processTidePredStations} from '@/app/lib/processStations'
+import {StationsResponse} from '@/app/lib/types'
 
-export default async function stationsFromLocation(location: string, count = Infinity, initialRange = 10) {
+export default async function stationsFromLocation(location: string, count = Infinity, initialRange = 10): Promise<StationsResponse> {
   const lat = Number(location.split(',')[0])
   const lon = Number(location.split(',')[1])
   let range = initialRange / 2
@@ -21,7 +22,6 @@ export default async function stationsFromLocation(location: string, count = Inf
 
   } while (attempts > 0)
 
-  return {
-    error: `No stations found within ${range} miles of location (${location}).`
-  }
+  // no stations found after maxing out the range
+  return makeStationsError(`No stations found within ${range} miles of location (${location}).`, location)
 }

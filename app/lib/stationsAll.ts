@@ -1,7 +1,8 @@
 import {check, initStorage, read, write} from '@/app/lib/storage'
-import {processTidePredStations} from '@/app/lib/processStations'
+import {makeStationsError, processTidePredStations} from '@/app/lib/processStations'
+import {StationsResponse} from '@/app/lib/types'
 
-export async function stationsAll(forceFetch = false) {
+export async function stationsAll(forceFetch = false): Promise<StationsResponse> {
   initStorage()
 
   if (!forceFetch) {
@@ -37,7 +38,5 @@ export async function stationsAll(forceFetch = false) {
     return stationsData
   }
 
-  return {
-    error: `No stations found.`
-  }
+  return makeStationsError('No stations found.')
 }

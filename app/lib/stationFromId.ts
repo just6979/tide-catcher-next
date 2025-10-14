@@ -1,6 +1,7 @@
-import {processStationsById} from '@/app/lib/processStations'
+import {makeStationsError, processStationsById,} from '@/app/lib/processStations'
+import {StationsResponse} from '@/app/lib/types'
 
-export async function stationFromId(id: string) {
+export async function stationFromId(id: string): Promise<StationsResponse> {
   const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${id}.json`
   const stationsResponse = await fetch(url, {cache: 'force-cache'})
   const stationsData = await stationsResponse.json()
@@ -10,5 +11,5 @@ export async function stationFromId(id: string) {
     return processStationsById(stations)
   }
 
-  return {error: `No stations found with ID: ${id}.`}
+  return makeStationsError(`No stations found for ID: ${id}`)
 }
