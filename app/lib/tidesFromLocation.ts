@@ -16,7 +16,7 @@ export default async function tidesFromLocation(location: string) {
   const outData = await tidesFromStation(stationId)
 
   return {
-    reqLocation: location,
-    ...outData
+    ...outData,
+    reqLocation: location
   }
 }
