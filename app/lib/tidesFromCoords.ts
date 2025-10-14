@@ -1,12 +1,12 @@
-import {ZERO_COORDS} from '@/app/lib/Coords'
-import {processTides} from '@/app/lib/processTides'
-import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
+import {ZERO_COORDS} from '@/app/lib/coords'
+import tidesProcessing from '@/app/lib/tidesProcessing'
+import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import type {Coords, TidesResponse} from '@/app/lib/types'
 
-export async function tidesFromLocation(location: Coords): Promise<TidesResponse> {
+export async function tidesFromCoords(location: Coords): Promise<TidesResponse> {
   const nowDate = new Date()
 
-  const nearbyData = await stationsFromLocation(location, 1)
+  const nearbyData = await stationsFromCoords(location, 1)
 
   if (nearbyData.status !== 'OK') {
     return {
@@ -28,7 +28,7 @@ export async function tidesFromLocation(location: Coords): Promise<TidesResponse
   const stations = nearbyData['stations']
   const station = stations[0]
 
-  const outData = await processTides(station, nowDate)
+  const outData = await tidesProcessing(station, nowDate)
 
   return {
     ...outData,

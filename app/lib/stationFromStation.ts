@@ -1,5 +1,5 @@
-import {coordsFromLatLon} from '@/app/lib/Coords'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/processStations'
+import {coordsFromLatLon} from '@/app/lib/coords'
+import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
 import type {StationsResponse} from '@/app/lib/types'
 
 interface NoaaStationById {
@@ -10,7 +10,7 @@ interface NoaaStationById {
   timezonecorr: number
 }
 
-export async function stationFromId(id: string): Promise<StationsResponse> {
+export async function stationFromStation(id: string): Promise<StationsResponse> {
   const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${id}.json`
   const stationsResponse = await fetch(url, {cache: 'force-cache'})
   const stationsData = await stationsResponse.json()

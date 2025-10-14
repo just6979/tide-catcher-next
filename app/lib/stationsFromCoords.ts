@@ -1,5 +1,5 @@
-import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/Coords'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/processStations'
+import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
+import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
 import type {Coords, Station, StationsResponse} from '@/app/lib/types'
 
 interface NoaaTidePredStation {
@@ -11,7 +11,7 @@ interface NoaaTidePredStation {
   timeZoneCorr: number
 }
 
-export async function stationsFromLocation(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
+export async function stationsFromCoords(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
   let range = initialRange / 2
   let attempts = 5
 

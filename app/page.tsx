@@ -1,5 +1,5 @@
-import Tides from '@/app/tides/page'
+import TidesFromLocation from '@/app/tides/page'
 
 export default async function Home() {
-  return <Tides/>
+  return <TidesFromLocation/>
 }

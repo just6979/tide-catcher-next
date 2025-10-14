@@ -1,4 +1,4 @@
-import {ZERO_COORDS} from '@/app/lib/Coords'
+import {ZERO_COORDS} from '@/app/lib/coords'
 import type {Coords, Station, StationsResponse} from '@/app/lib/types'
 
 export function makeStation(

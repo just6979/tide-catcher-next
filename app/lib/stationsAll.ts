@@ -1,5 +1,5 @@
-import {makeStationsError} from '@/app/lib/processStations'
-import {processTidePredStations} from '@/app/lib/stationsFromLocation'
+import {makeStationsError} from '@/app/lib/statonsProcessing'
+import {processTidePredStations} from '@/app/lib/stationsFromCoords'
 import {check, initStorage, read, write} from '@/app/lib/storage'
 import type {StationsResponse} from '@/app/lib/types'
 

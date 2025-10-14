@@ -1,9 +1,9 @@
 import {subHours} from 'date-fns'
 
-import {ZERO_COORDS} from '@/app/lib/Coords'
+import {ZERO_COORDS} from '@/app/lib/coords'
 import type {Station, TidesResponse} from '@/app/lib/types'
 
-export async function processTides(station: Station, nowDate: Date): Promise<TidesResponse> {
+export default async function tidesProcessing(station: Station, nowDate: Date): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   const backdateHours = 7

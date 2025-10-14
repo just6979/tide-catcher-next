@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {coordsToString, ZERO_COORDS} from '@/app/lib/Coords'
+import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
 import type {Tide, TidesResponse} from '@/app/lib/types'
 
 const navigationErrorMap = ['',
@@ -10,7 +10,7 @@ const navigationErrorMap = ['',
   'TIMEOUTNo location data acquired in the time allotted.'
 ]
 
-export default function Tides() {
+export default function TidesFromLocation() {
   const nowTime = new Date()
 
   const initialData: TidesResponse = {
