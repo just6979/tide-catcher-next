@@ -146,3 +146,11 @@ tbody > .future ~ .future {
   padding-inline-start: 2em;
   line-height: 125%;
 }
+
+.single-station {
+  margin: 0;
+}
+
+.single-station caption {
+  font-size: 133%;
+}
