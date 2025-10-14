@@ -1,6 +1,7 @@
 import {redirect} from 'next/navigation'
-import {stationsAll} from '@/app/lib/stationsAll'
 import {revalidatePath} from 'next/cache'
+
+import {stationsAll} from '@/app/lib/stationsAll'
 
 export async function GET() {
   await stationsAll(true)

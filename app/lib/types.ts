@@ -1,20 +1,6 @@
-import Coords from '@/app/lib/Coords'
-
-export interface NoaaTidePredStation {
-  stationId: string
+export interface Coords {
   lat: number
   lon: number
-  stationName: string
-  etidesStnName: string
-  timeZoneCorr: number
-}
-
-export interface NoaaStationById {
-  id: string
-  lat: number
-  lng: number
-  name: string
-  timezonecorr: number
 }
 
 export interface Station {

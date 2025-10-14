@@ -1,14 +1,11 @@
-export default interface Coords {
-  lat: number
-  lon: number
-}
+import {Coords} from '@/app/lib/types'
 
 export const ZERO_COORDS: Coords = coordsFromLatLon(0, 0)
 
 export function coordsFromLatLon(lat: number, lon: number): Coords {
   return {lat, lon}
-
 }
+
 export function coordsFromString(locationString: string): Coords {
   const location = locationString.split(',')
   if (location.length != 2) {

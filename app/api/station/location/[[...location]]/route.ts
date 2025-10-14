@@ -1,6 +1,5 @@
-import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
-
 import {coordsFromString} from '@/app/lib/Coords'
+import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
 
 export async function GET(request: Request, {params}: { params: Promise<{ location: string }> }) {
   const {location} = await params

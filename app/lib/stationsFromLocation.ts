@@ -1,7 +1,15 @@
-import {makeStationsError, processTidePredStations} from '@/app/lib/processStations'
+import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/Coords'
+import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/processStations'
+import type {Coords, Station, StationsResponse} from '@/app/lib/types'
 
-import {StationsResponse} from '@/app/lib/types'
-import Coords from '@/app/lib/Coords'
+interface NoaaTidePredStation {
+  stationId: string
+  lat: number
+  lon: number
+  stationName: string
+  etidesStnName: string
+  timeZoneCorr: number
+}
 
 export async function stationsFromLocation(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
   let range = initialRange / 2
@@ -24,4 +32,25 @@ export async function stationsFromLocation(location: Coords, count = Infinity, i
 
   // no stations found after maxing out the range
   return makeStationsError(`No stations found within ${range} miles of location (${location}).`, location)
+}
+
+export function processTidePredStations(
+  stations: NoaaTidePredStation[], count = Infinity, location = ZERO_COORDS
+): StationsResponse {
+  if (stations == null) {
+    return makeStationsResponse([], location)
+  }
+
+  const stationsOut: Station[] = []
+  for (let i = 0; i < Math.min(count, stations.length); i++) {
+    const station = stations[i]
+    stationsOut.push(makeStation(
+      station.stationId,
+      coordsFromLatLon(station.lat, station.lon),
+      station.stationName,
+      station.etidesStnName,
+      station.timeZoneCorr
+    ))
+  }
+  return makeStationsResponse(stationsOut, location)
 }

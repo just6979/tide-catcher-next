@@ -1,7 +1,7 @@
-import {makeStationsError, processTidePredStations} from '@/app/lib/processStations'
+import {makeStationsError} from '@/app/lib/processStations'
+import {processTidePredStations} from '@/app/lib/stationsFromLocation'
 import {check, initStorage, read, write} from '@/app/lib/storage'
-
-import {StationsResponse} from '@/app/lib/types'
+import type {StationsResponse} from '@/app/lib/types'
 
 export async function stationsAll(forceFetch = false): Promise<StationsResponse> {
   initStorage()
