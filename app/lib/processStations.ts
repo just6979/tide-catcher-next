@@ -1,11 +1,11 @@
-import {Station, StationById, StationsResponse, TidePredStation} from '@/app/lib/types'
+import {Coords, Station, StationById, StationsResponse, TidePredStation} from '@/app/lib/types'
 
 function makeStation(
-  id: string, lat: number, lon: number, name: string, eTidesName: string, tz: number
+  id: string, location: Coords, name: string, eTidesName: string, tz: number
 ): Station {
   return {
     id: id,
-    location: `${lat.toFixed(5)},${lon.toFixed(5)}`,
+    location: location,
     name: name,
     eTidesName: eTidesName,
     tzOffset: Number(tz)
@@ -13,38 +13,42 @@ function makeStation(
 }
 
 export function makeStationsResponse(
-  stationsOut: Station[], reqLocation = '0,0', status = 'OK', message = ''
+  stationsOut: Station[], location = new Coords(), status = 'OK', message = ''
 ): StationsResponse {
   return {
     status: status,
     message: message,
-    reqLocation: reqLocation,
+    reqLocation: location,
     count: stationsOut.length,
     stations: stationsOut
   }
 }
 
 export function makeStationsError(
-  message: string, reqLocation = '0,0'
+  message: string, location = new Coords()
 ): StationsResponse {
-  return makeStationsResponse([], 'Error', reqLocation, message)
+  return makeStationsResponse([], location, 'Error', message)
 }
 
 export function processTidePredStations(
-  stationsIn: TidePredStation[], count = Infinity, reqLocation = '0,0'
+  stationsIn: TidePredStation[], count = Infinity, location = new Coords()
 ): StationsResponse {
+  if (stationsIn == null) {
+    return makeStationsResponse([], location)
+  }
+
   const stationsOut: Station[] = []
   for (let i = 0; i < Math.min(count, stationsIn.length); i++) {
     const station = stationsIn[i]
     stationsOut.push(makeStation(
       station['stationId'],
-      station['lat'], station['lon'],
+      new Coords(station.lat, station.lon),
       station['stationName'],
       station['etidesStnName'],
       station['timeZoneCorr']
     ))
   }
-  return makeStationsResponse(stationsOut, reqLocation)
+  return makeStationsResponse(stationsOut, location)
 }
 
 export function processStationsById(
@@ -56,10 +60,9 @@ export function processStationsById(
   const station = stations[0]
   return makeStationsResponse([makeStation(
     station['id'],
-    station['lat'], station['lng'],
+    new Coords(station.lat, station.lng),
     station['name'],
     station['name'],
     station['timezonecorr']
   )])
-
 }

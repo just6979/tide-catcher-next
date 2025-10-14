@@ -1,6 +1,33 @@
+export class Coords {
+  lat: number
+  lon: number
+
+  constructor(lat: number = 0, lon: number = 0) {
+    this.lat = lat
+    this.lon = lon
+  }
+
+  fromLocationString(location: string) {
+    this.lat = Number(location.split(',')[0])
+    this.lon = Number(location.split(',')[1])
+    return this
+  }
+
+  fromLatLongStrings(lat: string, lon: string) {
+    this.lat = Number(lat)
+    this.lon = Number(lon)
+    return this
+  }
+
+  toString() {
+    return `${this.lat},${this.lon}`
+  }
+}
+
+
 export interface Station {
   id: string
-  location: string
+  location: Coords
   name: string
   eTidesName: string
   tzOffset: number
@@ -36,7 +63,7 @@ export interface Tide {
 export interface StationsResponse {
   status: string,
   message: string,
-  reqLocation: string,
+  reqLocation: Coords
   count: number,
   stations: Station[]
 }
@@ -44,9 +71,9 @@ export interface StationsResponse {
 export interface TidesResponse {
   status: string,
   message: string,
-  reqLocation: string,
+  reqLocation: Coords
   reqTimestamp: string,
-  stationLocation: string,
+  stationLocation: Coords
   stationId: string,
   stationName: string,
   stationTzOffset: number,

@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {Tide} from '@/app/lib/types'
+import {Coords, Tide} from '@/app/lib/types'
 
 const navigationErrorMap = ['',
   'PERMISSION_DENIED. No location permission granted. Check site settings.',
@@ -17,9 +17,9 @@ export default function Tides() {
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState({
-    reqLocation: '',
+    reqLocation: new Coords(),
     reqTimestamp: '',
-    stationLocation: '',
+    stationLocation: new Coords(),
     stationName: '',
     stationId: '',
     tides: []
@@ -114,8 +114,9 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Tides Location</td>
-          <td><a href={`https://www.google.com/maps/place/${data.stationLocation}/@${data.stationLocation},12z`}
-                 target="_blank">[{data.stationLocation}]</a></td>
+          <td><a
+            href={`https://www.google.com/maps/place/${data.stationLocation.toString()}/@${data.stationLocation.toString()},12z`}
+            target="_blank">[{data.stationLocation.toString()}]</a></td>
         </tr>
         </tbody>
       </table>

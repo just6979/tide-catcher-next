@@ -4,19 +4,26 @@ import Link from 'next/link'
 import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
 
+import {Coords, StationsResponse} from '@/app/lib/types'
+
 export default function Stations() {
   const isRefreshed = useSearchParams().has('refreshed')
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [stationsData, setStationsData] = useState({
+  const initialStationsData: StationsResponse = {
+    status: '',
+    message: '',
+    reqLocation: new Coords(),
     count: 0,
     stations: []
-  })
+  }
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [stationsData, setStationsData] = useState(initialStationsData)
 
   useEffect(() => {
     fetch('/api/stations')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: StationsResponse) => {
         setStationsData(data)
         setIsLoading(false)
       })
@@ -31,18 +38,19 @@ export default function Stations() {
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {stationsData['count']} stations available <span id="refresh">
+        {stationsData.count} stations available <span id="refresh">
         (<Link href="/stations/refresh" replace>{isRefreshed ? 'Refresh Again' : 'Refresh'}</Link>)
       </span>
       </p>
       <ul>
         {stations.map((station) => (
-          <li key={station['id']}>
-            <a href={`https://www.google.com/maps/place/${station['location']}/@${station['location']},12z`}
-               target="_blank">{station['name']}
+          <li key={station.id}>
+            <a
+              href={`https://www.google.com/maps/place/${station.location.toString()}/@${station.location.toString()},12z`}
+              target="_blank">{station.name}
             </a> | <a
-            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station['id']}`}
-            target="_blank">{station['id']}</a>
+            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}
+            target="_blank">{station.id}</a>
           </li>
         ))}
       </ul>

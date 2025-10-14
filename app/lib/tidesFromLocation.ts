@@ -1,9 +1,9 @@
 import {processTides} from '@/app/lib/processTides'
 import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
 
-import {TidesResponse} from '@/app/lib/types'
+import {Coords, TidesResponse} from '@/app/lib/types'
 
-export async function tidesFromLocation(location: string): Promise<TidesResponse> {
+export async function tidesFromLocation(location: Coords): Promise<TidesResponse> {
   const nowDate = new Date()
 
   const nearbyData = await stationsFromLocation(location)
@@ -14,7 +14,7 @@ export async function tidesFromLocation(location: string): Promise<TidesResponse
       message: `Error calling NOAA API: ${nearbyData.message}`,
       reqLocation: location,
       reqTimestamp: nowDate.toISOString(),
-      stationLocation: '',
+      stationLocation: new Coords(),
       stationId: '',
       stationName: '',
       stationTzOffset: 0,
