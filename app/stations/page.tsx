@@ -5,7 +5,7 @@ import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
 
 import {coordsToString, ZERO_COORDS} from '@/app/lib/Coords'
-import {StationsResponse} from '@/app/lib/types'
+import type {StationsResponse} from '@/app/lib/types'
 
 export default function Stations() {
   const isRefreshed = useSearchParams().has('refreshed')
@@ -47,11 +47,15 @@ export default function Stations() {
         {stations.map((station) => (
           <li key={station.id}>
             <a
+              href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}
+              target="_blank">
+              {station.id}
+            </a> | {station.name} | [
+            <a
               href={`https://www.google.com/maps/place/${coordsToString(station.location)}/@${coordsToString(station.location)},12z`}
-              target="_blank">{station.name}
-            </a> | <a
-            href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}
-            target="_blank">{station.id}</a>
+              target="_blank">
+              {coordsToString(station.location)}
+            </a>]
           </li>
         ))}
       </ul>

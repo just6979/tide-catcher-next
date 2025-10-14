@@ -1,9 +1,8 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {Tide} from '@/app/lib/types/Tides'
-import {coordsToBracketString, coordsToString, ZERO_COORDS} from '@/app/lib/Coords'
-import {TidesResponse} from '@/app/lib/types'
+import {coordsToString, ZERO_COORDS} from '@/app/lib/Coords'
+import type {Tide, TidesResponse} from '@/app/lib/types'
 
 const navigationErrorMap = ['',
   'PERMISSION_DENIED. No location permission granted. Check site settings.',
@@ -87,7 +86,7 @@ export default function Tides() {
   return (
     <div>
       <table id="tides">
-        <caption className="top">{data.station.name}</caption>
+        <caption>{data.station.name}</caption>
         <tbody>
         {data.tides.map((tide: Tide) => {
           const tideType: string = tide['type']
@@ -105,7 +104,7 @@ export default function Tides() {
         </tbody>
       </table>
 
-      <table id="request-info">
+      <table className="request-info">
         <tbody>
         <tr>
           <td>Request Time</td>
@@ -113,8 +112,10 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Your Location</td>
-          <td><a href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
-                 target="_blank">{coordsToBracketString(data.reqLocation)}</a>
+          <td>[<a
+            href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
+            target="_blank">{coordsToString(data.reqLocation)}
+          </a>]
           </td>
         </tr>
         <tr>
@@ -124,9 +125,11 @@ export default function Tides() {
         </tr>
         <tr>
           <td>Tides Location</td>
-          <td><a
+          <td>[<a
             href={`https://www.google.com/maps/place/${coordsToString(data.station.location)}/@${coordsToString(data.station.location)},12z`}
-            target="_blank">{coordsToBracketString(data.station.location)}</a></td>
+            target="_blank">{coordsToString(data.station.location)}
+          </a>]
+          </td>
         </tr>
         </tbody>
       </table>

@@ -8,7 +8,6 @@
 html,
 body {
   max-width: 500px;
-  overflow-x: hidden;
   padding: 0.5em 0;
   margin: auto;
 }
@@ -91,21 +90,22 @@ tbody > .future ~ .future {
   background-color: var(--low-row-bg);
 }
 
-#request-info {
+.request-info {
   margin: 1em 0;
-  font-size: 66%
+  font-size: 66%;
 }
 
-#request-info td:first-child {
+.request-info td:first-child {
   border-right: dotted thin;
   white-space: nowrap;
 }
 
-#request-info td:first-child {
+.request-info td:first-child {
+  width: 50%;
   text-align: end;
 }
 
-#request-info td {
+.request-info td {
   text-align: start;
 }
 
