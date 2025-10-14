@@ -73,9 +73,6 @@ export interface TidesResponse {
   message: string,
   reqLocation: Coords
   reqTimestamp: string,
-  stationLocation: Coords
-  stationId: string,
-  stationName: string,
-  stationTzOffset: number,
+  station: Station,
   tides: Tide[]
 }

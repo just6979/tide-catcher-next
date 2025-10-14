@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {Coords, Tide} from '@/app/lib/types'
+import {Coords, Tide, TidesResponse} from '@/app/lib/types'
 
 const navigationErrorMap = ['',
   'PERMISSION_DENIED. No location permission granted. Check site settings.',
@@ -12,18 +12,26 @@ const navigationErrorMap = ['',
 export default function Tides() {
   const nowTime = new Date()
 
+  const initialData: TidesResponse = {
+    message: '',
+    reqLocation: new Coords(),
+    reqTimestamp: '',
+    station: {
+      id: '',
+      location: new Coords(),
+      name: '',
+      eTidesName: '',
+      tzOffset: 0
+    },
+    status: '',
+    tides: []
+  }
+
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState('')
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState({
-    reqLocation: new Coords(),
-    reqTimestamp: '',
-    stationLocation: new Coords(),
-    stationName: '',
-    stationId: '',
-    tides: []
-  })
+  const [data, setData] = useState(initialData)
 
   useEffect(() => {
     console.log('getting location')
@@ -54,7 +62,7 @@ export default function Tides() {
     console.log(`getting tides for [${location}]`)
     fetch(`/api/tides/location/${location}`)
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: TidesResponse) => {
         setData(data)
         setLoading(false)
       })
@@ -72,12 +80,12 @@ export default function Tides() {
   if (!data) return <p>No Tides Data found.</p>
 
   /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
-  const reqTime = new Date(data.reqTimestamp).toLocaleString()
 
+  const reqTime = new Date(data.reqTimestamp).toLocaleString()
   return (
     <div>
       <table id="tides">
-        <caption className="top">{data.stationName}</caption>
+        <caption className="top">{data.station.name}</caption>
         <tbody>
         {data.tides.map((tide: Tide) => {
           const tideType: string = tide['type']
@@ -104,19 +112,19 @@ export default function Tides() {
         <tr>
           <td>Your Location</td>
           <td><a href={`https://www.google.com/maps/place/${location}/@${location},12z`}
-                 target="_blank">[{location}]</a>
+                 target="_blank">[{data.reqLocation.toString()}]</a>
           </td>
         </tr>
         <tr>
           <td>Tides <a href="/stations">Station</a></td>
-          <td><a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${data.stationId}`}
-                 target="_blank">{data.stationId}</a></td>
+          <td><a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${(data.station.id)}`}
+                 target="_blank">{data.station.id}</a></td>
         </tr>
         <tr>
           <td>Tides Location</td>
           <td><a
-            href={`https://www.google.com/maps/place/${data.stationLocation.toString()}/@${data.stationLocation.toString()},12z`}
-            target="_blank">[{data.stationLocation.toString()}]</a></td>
+            href={`https://www.google.com/maps/place/${data.station.location}/@${data.station.location},12z`}
+            target="_blank">[{data.station.location.toString()}]</a></td>
         </tr>
         </tbody>
       </table>

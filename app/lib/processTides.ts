@@ -40,10 +40,7 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
       message: `Error calling NOAA API: ${data['error']['message']}`,
       reqLocation: new Coords(),
       reqTimestamp: nowDate.toISOString(),
-      stationLocation: station.location,
-      stationId: station.id,
-      stationName: station.name,
-      stationTzOffset: station.tzOffset,
+      station: station,
       tides: []
     }
   } else {
@@ -66,15 +63,13 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
       tides.push(tide)
     }
 
+    console.log(station)
     return {
       status: 'OK',
       message: '',
       reqLocation: new Coords(),
       reqTimestamp: nowDate.toISOString(),
-      stationLocation: station.location,
-      stationId: station.id,
-      stationName: station.name,
-      stationTzOffset: station.tzOffset,
+      station: station,
       tides: tides
     }
   }

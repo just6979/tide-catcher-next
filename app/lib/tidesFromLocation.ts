@@ -14,10 +14,13 @@ export async function tidesFromLocation(location: Coords): Promise<TidesResponse
       message: `Error calling NOAA API: ${nearbyData.message}`,
       reqLocation: location,
       reqTimestamp: nowDate.toISOString(),
-      stationLocation: new Coords(),
-      stationId: '',
-      stationName: '',
-      stationTzOffset: 0,
+      station: {
+        location: new Coords(),
+        id: '',
+        name: '',
+        eTidesName: '',
+        tzOffset: 0
+      },
       tides: []
     }
   }
