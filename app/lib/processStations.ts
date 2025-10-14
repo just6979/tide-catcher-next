@@ -1,11 +1,11 @@
 import {Station, StationById, StationsResponse, TidePredStation} from '@/app/lib/types'
 
 function makeStation(
-  id: string, location: string, name: string, eTidesName: string, tz: number
+  id: string, lat: number, lon: number, name: string, eTidesName: string, tz: number
 ): Station {
   return {
     id: id,
-    location: location,
+    location: `${lat.toFixed(5)},${lon.toFixed(5)}`,
     name: name,
     eTidesName: eTidesName,
     tzOffset: Number(tz)
@@ -36,10 +36,9 @@ export function processTidePredStations(
   const stationsOut: Station[] = []
   for (let i = 0; i < Math.min(count, stationsIn.length); i++) {
     const station = stationsIn[i]
-    const stationLocation = `${station['lat']},${station['lon']}`
     stationsOut.push(makeStation(
       station['stationId'],
-      stationLocation,
+      station['lat'], station['lon'],
       station['stationName'],
       station['etidesStnName'],
       station['timeZoneCorr']
@@ -57,7 +56,7 @@ export function processStationsById(
   const station = stations[0]
   return makeStationsResponse([makeStation(
     station['id'],
-    `${station['lat']},${station['lng']}`,
+    station['lat'], station['lng'],
     station['name'],
     station['name'],
     station['timezonecorr']
