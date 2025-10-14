@@ -4,8 +4,6 @@ import {StationsResponse} from '@/app/lib/types'
 import Coords from '@/app/lib/Coords'
 
 export async function stationsFromLocation(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
-  const lat = location.lat
-  const lon = location.lon
   let range = initialRange / 2
   let attempts = 5
 
@@ -13,7 +11,7 @@ export async function stationsFromLocation(location: Coords, count = Infinity, i
     range *= 2
     attempts -= 1
     const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
-      `lat=${lat}&lon=${lon}&range=${range}`
+      `lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     const stationsResponse = await fetch(url, {cache: 'force-cache'})
     const stationsData = await stationsResponse.json()
 

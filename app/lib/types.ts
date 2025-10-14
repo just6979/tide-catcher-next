@@ -26,28 +26,28 @@ export interface Station {
 }
 
 export interface Tide {
-  sourceDate: string,
+  sourceDate: string
   date: string
-  day: string,
-  height: number,
-  isoDate: string,
-  time: string,
+  day: string
+  height: number
+  isoDate: string
+  time: string
   type: string
 }
 
 export interface StationsResponse {
-  status: string,
-  message: string,
+  status: string
+  message: string
   reqLocation: Coords
-  count: number,
+  count: number
   stations: Station[]
 }
 
 export interface TidesResponse {
-  status: string,
-  message: string,
+  status: string
+  message: string
   reqLocation: Coords
-  reqTimestamp: string,
-  station: Station,
+  reqTimestamp: string
+  station: Station
   tides: Tide[]
 }
