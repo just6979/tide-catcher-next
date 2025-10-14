@@ -1,5 +1,5 @@
 import {processTides} from '@/app/lib/processTides'
-import stationsFromLocation from '@/app/lib/stationsFromLocation'
+import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
 
 import {TidesResponse} from '@/app/lib/types'
 

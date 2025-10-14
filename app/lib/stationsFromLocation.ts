@@ -1,7 +1,8 @@
 import {makeStationsError, processTidePredStations} from '@/app/lib/processStations'
+
 import {StationsResponse} from '@/app/lib/types'
 
-export default async function stationsFromLocation(location: string, count = Infinity, initialRange = 10): Promise<StationsResponse> {
+export async function stationsFromLocation(location: string, count = Infinity, initialRange = 10): Promise<StationsResponse> {
   const lat = Number(location.split(',')[0])
   const lon = Number(location.split(',')[1])
   let range = initialRange / 2
