@@ -1,6 +1,6 @@
 import {stationFromId} from '@/app/lib/stationFromId'
 
-export async function GET(request: Request, {params}: { params: Promise<{ station: string }> }) {
+export async function GET(request: Request, {params}: { params: Promise<{ station?: string[] | undefined }> }) {
   const {station} = await params
   const stationId = station && station.length > 0 ? station[0] : '8441241'
 
