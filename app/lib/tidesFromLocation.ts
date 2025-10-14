@@ -1,5 +1,6 @@
+import {processTides} from '@/app/lib/processTides'
 import stationsFromLocation from '@/app/lib/stationsFromLocation'
-import {processTides} from '@/app/lib/tidesFromStation'
+
 import {TidesResponse} from '@/app/lib/types'
 
 export async function tidesFromLocation(location: string): Promise<TidesResponse> {
