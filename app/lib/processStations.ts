@@ -1,4 +1,4 @@
-import {Coords, Station, StationById, StationsResponse, TidePredStation} from '@/app/lib/types'
+import {Coords, NoaaStationById, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
 
 function makeStation(
   id: string, location: Coords, name: string, eTidesName: string, tz: number
@@ -31,38 +31,38 @@ export function makeStationsError(
 }
 
 export function processTidePredStations(
-  stationsIn: TidePredStation[], count = Infinity, location = new Coords()
+  stations: NoaaTidePredStation[], count = Infinity, location = new Coords()
 ): StationsResponse {
-  if (stationsIn == null) {
+  if (stations == null) {
     return makeStationsResponse([], location)
   }
 
   const stationsOut: Station[] = []
-  for (let i = 0; i < Math.min(count, stationsIn.length); i++) {
-    const station = stationsIn[i]
+  for (let i = 0; i < Math.min(count, stations.length); i++) {
+    const station = stations[i]
     stationsOut.push(makeStation(
-      station['stationId'],
+      station.stationId,
       new Coords(station.lat, station.lon),
-      station['stationName'],
-      station['etidesStnName'],
-      station['timeZoneCorr']
+      station.stationName,
+      station.etidesStnName,
+      station.timeZoneCorr
     ))
   }
   return makeStationsResponse(stationsOut, location)
 }
 
 export function processStationsById(
-  stations: StationById[]
+  stations: NoaaStationById[]
 ): StationsResponse {
   if (stations == null) {
     return makeStationsResponse([])
   }
   const station = stations[0]
   return makeStationsResponse([makeStation(
-    station['id'],
+    station.id,
     new Coords(station.lat, station.lng),
-    station['name'],
-    station['name'],
-    station['timezonecorr']
+    station.name,
+    station.name,
+    station.timezonecorr
   )])
 }

@@ -8,9 +8,11 @@ export class Coords {
   }
 
   fromLocationString(location: string) {
-    this.lat = Number(location.split(',')[0])
-    this.lon = Number(location.split(',')[1])
-    return this
+    return this.fromLatLongStringArray(location.split(','))
+  }
+
+  fromLatLongStringArray(location: string[]) {
+    return this.fromLatLongStrings(location[0], location[1])
   }
 
   fromLatLongStrings(lat: string, lon: string) {
@@ -24,16 +26,7 @@ export class Coords {
   }
 }
 
-
-export interface Station {
-  id: string
-  location: Coords
-  name: string
-  eTidesName: string
-  tzOffset: number
-}
-
-export interface TidePredStation {
+export interface NoaaTidePredStation {
   stationId: string
   lat: number
   lon: number
@@ -42,12 +35,20 @@ export interface TidePredStation {
   timeZoneCorr: number
 }
 
-export interface StationById {
+export interface NoaaStationById {
   id: string
   lat: number
   lng: number
   name: string
   timezonecorr: number
+}
+
+export interface Station {
+  id: string
+  location: Coords
+  name: string
+  eTidesName: string
+  tzOffset: number
 }
 
 export interface Tide {

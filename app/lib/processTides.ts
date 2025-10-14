@@ -3,15 +3,7 @@ import {subHours} from 'date-fns'
 import {Coords, Station, TidesResponse} from '@/app/lib/types'
 
 export async function processTides(station: Station, nowDate: Date): Promise<TidesResponse> {
-  const weekDays = [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat'
-  ]
+  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   const backdateHours = 7
   const reqDate = subHours(nowDate, backdateHours)
@@ -27,11 +19,7 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
     'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=lst_ldt' +
     `&station=${(station.id)}&begin_date=${dateString}&range=${range}`)
 
-
-  const noaaResponse = await fetch(
-    url,
-    {cache: 'force-cache'}
-  )
+  const noaaResponse = await fetch(url, {cache: 'force-cache'})
   const data = await noaaResponse.json()
 
   if ('error' in data) {
@@ -43,34 +31,33 @@ export async function processTides(station: Station, nowDate: Date): Promise<Tid
       station: station,
       tides: []
     }
-  } else {
-    const tides = []
-    for (const i in data.predictions) {
-      const prediction = data.predictions[i]
-      const inDate: string = prediction.t
-      const tideDate = new Date(inDate)
-      const tide = {
-        sourceDate: inDate,
-        date: `${(tideDate.getMonth() + 1).toString().padStart(2, '0')}/` +
-          `${tideDate.getDate().toString().padStart(2, '0')}`,
-        day: weekDays[tideDate.getDay()],
-        height: Number(prediction.v),
-        isoDate: tideDate.toISOString(),
-        time: `${tideDate.getHours().toString().padStart(2, '0')}:` +
-          `${tideDate.getMinutes().toString().padStart(2, '0')}`,
-        type: prediction.type === 'H' ? 'high' : 'low'
-      }
-      tides.push(tide)
-    }
+  }
 
-    console.log(station)
-    return {
-      status: 'OK',
-      message: '',
-      reqLocation: new Coords(),
-      reqTimestamp: nowDate.toISOString(),
-      station: station,
-      tides: tides
+  const tides = []
+  for (const i in data.predictions) {
+    const prediction = data.predictions[i]
+    const inDate: string = prediction.t
+    const tideDate = new Date(inDate)
+    const tide = {
+      sourceDate: inDate,
+      date: `${(tideDate.getMonth() + 1).toString().padStart(2, '0')}/` +
+        `${tideDate.getDate().toString().padStart(2, '0')}`,
+      day: weekDays[tideDate.getDay()],
+      height: Number(prediction.v),
+      isoDate: tideDate.toISOString(),
+      time: `${tideDate.getHours().toString().padStart(2, '0')}:` +
+        `${tideDate.getMinutes().toString().padStart(2, '0')}`,
+      type: prediction.type === 'H' ? 'high' : 'low'
     }
+    tides.push(tide)
+  }
+
+  return {
+    status: 'OK',
+    message: '',
+    reqLocation: new Coords(),
+    reqTimestamp: nowDate.toISOString(),
+    station: station,
+    tides: tides
   }
 }

@@ -6,7 +6,7 @@ import {Coords, TidesResponse} from '@/app/lib/types'
 export async function tidesFromLocation(location: Coords): Promise<TidesResponse> {
   const nowDate = new Date()
 
-  const nearbyData = await stationsFromLocation(location)
+  const nearbyData = await stationsFromLocation(location, 1)
 
   if (nearbyData.status !== 'OK') {
     return {
