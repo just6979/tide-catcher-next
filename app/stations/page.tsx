@@ -4,7 +4,8 @@ import Link from 'next/link'
 import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
 
-import {Coords, StationsResponse} from '@/app/lib/types'
+import {StationsResponse} from '@/app/lib/types'
+import Coords from '@/app/lib/Coords'
 
 export default function Stations() {
   const isRefreshed = useSearchParams().has('refreshed')

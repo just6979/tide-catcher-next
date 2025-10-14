@@ -1,30 +1,4 @@
-export class Coords {
-  lat: number
-  lon: number
-
-  constructor(lat: number = 0, lon: number = 0) {
-    this.lat = lat
-    this.lon = lon
-  }
-
-  fromLocationString(location: string) {
-    return this.fromLatLongStringArray(location.split(','))
-  }
-
-  fromLatLongStringArray(location: string[]) {
-    return this.fromLatLongStrings(location[0], location[1])
-  }
-
-  fromLatLongStrings(lat: string, lon: string) {
-    this.lat = Number(lat)
-    this.lon = Number(lon)
-    return this
-  }
-
-  toString() {
-    return `${this.lat},${this.lon}`
-  }
-}
+import Coords from '@/app/lib/Coords'
 
 export interface NoaaTidePredStation {
   stationId: string

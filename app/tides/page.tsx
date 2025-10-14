@@ -1,7 +1,8 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {Coords, Tide, TidesResponse} from '@/app/lib/types'
+import {Tide, TidesResponse} from '@/app/lib/types'
+import Coords from '@/app/lib/Coords'
 
 const navigationErrorMap = ['',
   'PERMISSION_DENIED. No location permission granted. Check site settings.',

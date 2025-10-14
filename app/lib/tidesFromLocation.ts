@@ -1,7 +1,8 @@
 import {processTides} from '@/app/lib/processTides'
 import {stationsFromLocation} from '@/app/lib/stationsFromLocation'
 
-import {Coords, TidesResponse} from '@/app/lib/types'
+import {TidesResponse} from '@/app/lib/types'
+import Coords from '@/app/lib/Coords'
 
 export async function tidesFromLocation(location: Coords): Promise<TidesResponse> {
   const nowDate = new Date()

@@ -1,4 +1,5 @@
-import {Coords, NoaaStationById, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
+import {NoaaStationById, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
+import Coords from '@/app/lib/Coords'
 
 function makeStation(
   id: string, location: Coords, name: string, eTidesName: string, tz: number
@@ -29,6 +30,7 @@ export function makeStationsError(
 ): StationsResponse {
   return makeStationsResponse([], location, 'Error', message)
 }
+
 
 export function processTidePredStations(
   stations: NoaaTidePredStation[], count = Infinity, location = new Coords()
