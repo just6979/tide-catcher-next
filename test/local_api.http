@@ -26,8 +26,8 @@
 ### all stations
 {{host}}/api/stations
 
-### all stations
-#{{host}}/api/stations/refresh
+//### all stations refresh
+//{{host}}/api/stations/refresh
 
 ### tides by id
 {{host}}/api/tides/station/{{station}}
