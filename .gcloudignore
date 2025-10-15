@@ -16,4 +16,6 @@
 # Node.js dependencies:
 node_modules/
 
+http-client/
+
 #!include .gitignore

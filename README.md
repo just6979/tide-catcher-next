@@ -21,6 +21,25 @@ at [Github](https://github.com/just6979/tide-catcher-next)
 * Fetches tide info from various APIs
   from [NOAA Tides & Currents](https://tidesandcurrents.noaa.gov/web_services_info.html)
 
+# API
+
+The front-end fetches it's data from a
+[thin wrapper](https://github.com/just6979/tide-catcher-next/blob/main/backend-api.yaml) over the
+[NOAA Web Services APIs](https://tidesandcurrents.noaa.gov/web_services_info.html).
+
+I'm using a wrapper because this front-end originally pulled data from
+[my old Flask back-end](https://tide-catcher.appspot.com) so that I couple spin this one up quickly.
+That back-end was intended to cache results per station along with computing nearest stations,
+until [WorldTides](https://www.worldtides.info) changed their API to only do the nearest search
+behind the scenes. They also virtually killed their free-tier:
+originally 1000 calls per month per free account, now 100 total per free account.
+
+The NOAA data is public and free (and fast!), though I still plan on doing caching
+just to save on both outgoing bandwidth and the latency of making extra fetches.
+
+[More info](https://github.com/just6979/tide-catcher-next/blob/main/API.md)
+and [API Spec](https://github.com/just6979/tide-catcher-next/blob/main/backend-api.yaml)
+
 ## TODO
 
 * Backend

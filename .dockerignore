@@ -9,4 +9,4 @@ README.md
 .gitignore
 .gcloudignore
 .storage
-test
+http-client
