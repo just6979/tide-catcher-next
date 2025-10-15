@@ -50,7 +50,7 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
   for (const i in data.predictions) {
     const prediction = data.predictions[i]
     const predDate: string = `${prediction.t}${useLocalTime ? '' : 'Z'}`
-    const tideDate = new UTCDate(predDate)
+    const tideDate = new UTCDate(Date.parse(predDate))
     const localDate = new TZDateMini(tideDate, offset)
     const tide = {
       sourceDate: predDate,
