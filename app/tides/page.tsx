@@ -64,7 +64,7 @@ export default function TidesFromLocation() {
     console.log(`getting tides for [${location}]`)
     fetch(`/api/tides/location/${location}`, {
       headers: {
-        'X-Tidecatcher-Tz-Offset': now.getTimezoneOffset().toString()
+        'X-Tidecatcher-Tz-Offset': (now.getTimezoneOffset() * -1).toString()
       }
     })
       .then((res) => res.json())
