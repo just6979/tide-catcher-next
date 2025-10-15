@@ -59,12 +59,12 @@ export default function TidesFromLocation() {
   }, [])
 
   useEffect(() => {
-    const now = new Date();
+    const now = new Date()
     if (!location) return
     console.log(`getting tides for [${location}]`)
     fetch(`/api/tides/location/${location}`, {
       headers: {
-        'X-Tidecatcher-Tz-Offset': (now.getTimezoneOffset() / -60).toString()
+        'X-Tidecatcher-Tz-Offset': now.getTimezoneOffset().toString()
       }
     })
       .then((res) => res.json())

@@ -8,10 +8,24 @@ GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241.jso
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/8441241/nearby.json
 
 ### 8441241 tides hilo 7 days
-GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=168&station=8441241&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json
+GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?
+    begin_date=20250926&range=168&station=8441241&product=predictions&
+    datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json
 
-### 8441241 tides hilo 1 days
-GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20250926&range=24&station=8441241&product=predictions&datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json
+### UTC 8441241 tides hilo 1 days
+GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?
+    begin_date={{begin_date}}T04:00&range=24&station=8441241&product=predictions&
+    datum=MLLW&time_zone=gmt&interval=hilo&units=english&format=json
+
+### LST/LDT 8441241 tides hilo 1 days
+GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?
+    begin_date={{begin_date}}&range=24&station=8441241&product=predictions&
+    datum=MLLW&time_zone=lst_ldt&interval=hilo&units=english&format=json
+
+### LST 8441241 tides hilo 1 days
+GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?
+    begin_date={{begin_date}}&range=24&station=8441241&product=predictions&
+    datum=MLLW&time_zone=lst&interval=hilo&units=english&format=json
 
 ### tide prediction stations nearby, plum island south
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-70.7886&radius=10

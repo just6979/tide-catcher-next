@@ -5,8 +5,8 @@ import tidesProcessing from '@/app/lib/tidesProcessing'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import type {Coords, TidesResponse} from '@/app/lib/types'
 
-export async function tidesFromCoords(location: Coords, tzOffset = 0): Promise<TidesResponse> {
-  const nowDate = new UTCDate()
+export async function tidesFromCoords(location: Coords, tzOffset?: string): Promise<TidesResponse> {
+  const utcNow = new UTCDate()
 
   const nearbyData = await stationsFromCoords(location, 1)
 
@@ -15,7 +15,7 @@ export async function tidesFromCoords(location: Coords, tzOffset = 0): Promise<T
       status: nearbyData.status,
       message: `Error calling NOAA API: ${nearbyData.message}`,
       reqLocation: location,
-      reqTimestamp: nowDate.toISOString(),
+      reqTimestamp: utcNow.toISOString(),
       station: {
         location: ZERO_COORDS,
         id: '',
@@ -30,7 +30,7 @@ export async function tidesFromCoords(location: Coords, tzOffset = 0): Promise<T
   const stations = nearbyData['stations']
   const station = stations[0]
 
-  const outData = await tidesProcessing(station, nowDate, tzOffset)
+  const outData = await tidesProcessing(station, utcNow, tzOffset)
 
   return {
     ...outData,

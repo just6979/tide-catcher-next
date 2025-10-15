@@ -1,24 +1,36 @@
-import {subHours} from 'date-fns'
+import {formatISO, subHours} from 'date-fns'
+import {TZDateMini} from '@date-fns/tz'
+import {UTCDate} from '@date-fns/utc'
 
 import {ZERO_COORDS} from '@/app/lib/coords'
 import type {Station, TidesResponse} from '@/app/lib/types'
 
-export default async function tidesProcessing(station: Station, nowDate: Date, tzOffset = 0): Promise<TidesResponse> {
+export default async function tidesProcessing(station: Station, utcNow: Date, tzOffset?: string): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+  let offset = undefined
+  let noaaTz = 'lst_ldt'
+  let useLocalTime = true
+  if (tzOffset != undefined) {
+    offset = buildTzOffsetStr(tzOffset)
+    noaaTz = 'gmt'
+    useLocalTime = false
+  }
+
   const backdateHours = 7
-  const reqDate = subHours(nowDate, backdateHours)
+  const reqDate = subHours(utcNow, backdateHours)
 
   const month = String(reqDate.getMonth() + 1).padStart(2, '0')
   const day = String(reqDate.getDate()).padStart(2, '0')
   const hours = String(reqDate.getHours()).padStart(2, '0')
   const minutes = String(reqDate.getMinutes()).padStart(2, '0')
 
-  const dateString = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
+  const beginData = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
   const range = (48 + backdateHours).toString()
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
-    'product=predictions&interval=hilo&datum=MLLW&format=json&units=metric&time_zone=gmt' +
-    `&station=${(station.id)}&begin_date=${dateString}&range=${range}`)
+    'product=predictions&format=json&units=metric&interval=hilo&datum=MLLW&' +
+    `station=${station.id}&time_zone=${noaaTz}&begin_date=${beginData}&range=${range}`
+  )
 
   const noaaResponse = await fetch(url, {cache: 'force-cache'})
   const data = await noaaResponse.json()
@@ -28,7 +40,7 @@ export default async function tidesProcessing(station: Station, nowDate: Date, t
       status: 'Error',
       message: `Error calling NOAA API: ${data['error']['message']}`,
       reqLocation: ZERO_COORDS,
-      reqTimestamp: nowDate.toISOString(),
+      reqTimestamp: utcNow.toISOString(),
       station: station,
       tides: []
     }
@@ -37,18 +49,20 @@ export default async function tidesProcessing(station: Station, nowDate: Date, t
   const tides = []
   for (const i in data.predictions) {
     const prediction = data.predictions[i]
-    const inDate: string = prediction.t
-    const tideDate = new Date(inDate)
+    const predDate: string = `${prediction.t}${useLocalTime ? '' : 'Z'}`
+    const tideDate = new UTCDate(predDate)
+    const localDate = new TZDateMini(tideDate, offset)
     const tide = {
-      sourceDate: inDate,
-      date: `${(tideDate.getMonth() + 1).toString().padStart(2, '0')}/` +
-        `${tideDate.getDate().toString().padStart(2, '0')}`,
-      day: weekDays[tideDate.getDay()],
-      height: Number(prediction.v),
-      isoDate: tideDate.toISOString(),
-      time: `${tideDate.getHours().toString().padStart(2, '0')}:` +
-        `${tideDate.getMinutes().toString().padStart(2, '0')}`,
-      type: prediction.type === 'H' ? 'high' : 'low'
+      sourceDate: predDate,
+      isoDate: formatISO(tideDate),
+      localDate: formatISO(localDate),
+      type: prediction.type === 'H' ? 'high' : 'low',
+      time: `${localDate.getHours().toString().padStart(2, '0')}:` +
+        `${localDate.getMinutes().toString().padStart(2, '0')}`,
+      day: weekDays[localDate.getDay()],
+      date: `${(localDate.getMonth() + 1).toString().padStart(2, '0')}/` +
+        `${localDate.getDate().toString().padStart(2, '0')}`,
+      height: Number(prediction.v)
     }
     tides.push(tide)
   }
@@ -57,8 +71,19 @@ export default async function tidesProcessing(station: Station, nowDate: Date, t
     status: 'OK',
     message: '',
     reqLocation: ZERO_COORDS,
-    reqTimestamp: nowDate.toISOString(),
+    reqTimestamp: utcNow.toISOString(),
     station: station,
     tides: tides
   }
+}
+
+function buildTzOffsetStr(offsetIn?: string): string {
+  const offset = Number(offsetIn)
+  const offsetAbs = Math.abs(offset)
+  const offsetHours = Math.floor(offsetAbs / 60)
+  const offsetMinutes = offsetAbs % 60
+  const offsetSign = offset < 0 ? '-' : '+'
+  const offsetHoursStr = offsetHours.toString().padStart(2, '0')
+  const offsetMinutesStr = offsetMinutes.toString().padStart(2, '0')
+  return `${offsetSign}${offsetHoursStr}${offsetMinutesStr}`
 }

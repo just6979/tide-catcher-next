@@ -6,8 +6,7 @@ export async function GET(request: Request, {params}: { params: Promise<{ locati
   const reqLocation = location && location.length > 0 ? location[0] : '42.71014,-70.78861' /* Plum Island South */
 
   const headersList = request.headers
-  const tzHeader = headersList.get('X-Tidecatcher-Tz-Offset')
-  const tzOffset = tzHeader ? Number(tzHeader) : 0
+  const tzOffset = headersList.get('X-Tidecatcher-Tz-Offset') || undefined
 
   const responseData = await tidesFromCoords(coordsFromString(reqLocation), tzOffset)
 
