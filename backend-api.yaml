@@ -1,8 +1,10 @@
 openapi: 3.1.0
+
 info:
   title: tide-catcher-next-backend
   description: Backend API serving the Tide Catcher Next frontend
   version: '1.1'
+
 servers:
   - url: 'http://localhost:8080'
     description: Development
@@ -10,7 +12,19 @@ servers:
     description: Production
   - url: 'https://tide-catcher-next.vercel.app'
     description: Alternate
+
 paths:
+  /api/station:
+    get:
+      description: metadata for the default station
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StationsResponse"
+
   /api/station/{station}:
     get:
       description: metadata for given station
@@ -20,10 +34,21 @@ paths:
           schema:
             type: string
             example: "8441241"
-          required: false
+          required: true
       responses:
-        "200":
+        200:
           description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StationsResponse"
+
+  /api/station/location:
+    get:
+      description: closest single station to the default location, if any, within 10-160 miles
+      responses:
+        200:
+          description: OK
           content:
             application/json:
               schema:
@@ -38,9 +63,31 @@ paths:
           schema:
             type: string
             example: "42.71014,-70.78861"
-          required: false
+          required: true
       responses:
-        '200':
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StationsResponse"
+
+  /api/stations:
+    get:
+      description: list of all cached stations
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StationsResponse"
+
+  /api/stations/location:
+    get:
+      description: closest stations to the default location, if any, within 10-160 miles
+      responses:
+        200:
           description: OK
           content:
             application/json:
@@ -56,38 +103,33 @@ paths:
           schema:
             type: string
             example: "42.71014,-70.78861"
-          required: false
+          required: true
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/StationsResponse"
 
-  /api/stations:
+  /api/stations/refresh:
     get:
       description: list of all cached stations
       responses:
-        "200":
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StationsResponse"
+        303:
+          description: "redirect"
+          headers:
+            Location:
+              content:
+                text/plain:
+                  schema:
+                    const: /api/stations
 
-  /api/tides/station/{id}:
+  /api/tides/location:
     get:
-      description: list of next tides for the given station
-      parameters:
-        - in: path
-          name: station
-          schema:
-            type: string
-            example: "8441241"
-          required: false
+      description: list of next tides for the closest station to the default location
       responses:
-        '200':
+        200:
           description: OK
           content:
             application/json:
@@ -96,16 +138,45 @@ paths:
 
   /api/tides/location/{location}:
     get:
-      description: list of next tides for the closest station
+      description: list of next tides for the closest station to the given location
       parameters:
         - in: path
           name: location
           schema:
             type: string
             example: "42.71014,-70.78861"
-          required: false
+          required: true
       responses:
-        '200':
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TidesResponse"
+
+  /api/tides/station:
+    get:
+      description: list of next tides for the default station
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TidesResponse"
+
+  /api/tides/station/{station}:
+    get:
+      description: list of next tides for the given station
+      parameters:
+        - in: path
+          name: station
+          schema:
+            type: string
+            example: "8441241"
+          required: true
+      responses:
+        200:
           description: OK
           content:
             application/json:
@@ -114,6 +185,20 @@ paths:
 
 components:
   schemas:
+
+    Location:
+      description: Structured latitude and longitude
+      type: object
+      properties:
+        lat:
+          type: number
+          format: float
+          description: Latitude
+        lon:
+          type: number
+          format: float
+          description: Longitude
+
     Station:
       description: Station entity
       type: object
@@ -121,14 +206,10 @@ components:
         id:
           type: string
           description: Unique ID of the station
-        lat:
-          type: number
-          format: float
-          description: Latitude of the station
-        lon:
-          type: number
-          format: float
-          description: Longitude of the station
+        location:
+          type: object
+          items:
+            $ref: "#/components/schemas/Location"
         name:
           type: string
           description: Name of the station
@@ -141,10 +222,13 @@ components:
       example:
         {
           "id": "8441241",
-          "location": "42.71014,-70.78861",
+          "location": {
+            "lat": 42.71014,
+            "lon": -70.78861
+          },
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
-          tzOffset: -5
+          "tzOffset": -5
         }
 
     StationsResponse:
@@ -153,7 +237,13 @@ components:
       properties:
         status:
           type: string
-        station_count:
+        message:
+          type: string
+        reqLocation:
+          type: object
+          items:
+            $ref: "#/components/schemas/Location"
+        count:
           type: integer
         stations:
           type: array
@@ -161,14 +251,22 @@ components:
             $ref: "#/components/schemas/Station"
       example:
         {
-          "reqLocation": "42.71014,-70.78861",
-          "station_count": 1,
+          "status": "OK",
+          "message": "",
+          "reqLocation": {
+            "lat": 42.71014,
+            "lon": -70.78861
+          },
+          "count": 1,
           "stations": [
             {
               "id": "8441241",
-              "location": "42.71014,-70.78861",
+              "location": {
+                "lat": 42.71014,
+                "lon": -70.78861
+              },
               "name": "Plum Island South",
-              "eTidesName": "Plum Island Sound (south end)",
+              "eTidesName": "Plum Island South",
               "tzOffset": -5
             }
           ]
@@ -178,94 +276,98 @@ components:
       description: Tide entity
       type: object
       properties:
-        date:
+        source-date:
           type: string
-          description: Date of the tide
-        day:
-          type: string
-          description: Day of the week
-        height:
-          type: number
-          format: float
-          description: Height of the tide
+          description: Date exactly from NOAA API
         iso-date:
           type: string
           format: date-time
           description: ISO formatted date and time of the tide
-        prior:
+        local-date:
           type: string
-          description: Indicates if the tide is "prior" or "next"
-        time:
-          type: string
-          description: Time of the tide
+          format: date-time
+          description: ISO formatted date and time of the tide, possibly in a different timezone as iso-date
         type:
           type: string
           description: Type of tide (e.g., "Low", "High")
+        time:
+          type: string
+          description: Time of the tide
+        day:
+          type: string
+          description: day of the week of the tide
+        date:
+          type: string
+          description: <month>:<day> of the time
+        height:
+          type: number
+          format: float
+          description: Height of the tide
       example:
         {
-          "source_date": "2025-10-02 01:59",
-          "date": "10/02",
-          "day": "Thu",
-          "height": 0.369,
-          "iso_date": "2025-10-02T05:59:00.000Z",
-          "time": "01:59",
-          "type": "low"
+          "sourceDate": "2025-10-15 13:16",
+          "isoDate": "2025-10-15T17:16:00Z",
+          "localDate": "2025-10-15T13:16:00-04:00",
+          "type": "low",
+          "time": "13:16",
+          "day": "Wed",
+          "date": "10/15",
+          "height": 0.311
         }
 
     TidesResponse:
       description: A set of Tides from a station
       type: object
       properties:
-        reqLat:
-          type: number
-          format: float
-          description: Requested latitude
-        reqLon:
-          type: number
-          format: float
-          description: Requested longitude
+        status:
+          type: string
+        message:
+          type: string
         reqTimestamp:
           type: string
           format: date-time
           description: Requested timestamp
-        respLat:
-          type: number
-          format: float
-          description: Responded latitude
-        respLon:
-          type: number
-          format: float
-          description: Responded longitude
+        reqLocation:
+          type: object
+          items:
+            $ref: "#/components/schemas/Location"
         station:
-          type: string
-          description: Name of the tide station
-        stationTz:
-          type: string
-          description: Timezone of the station
-        status:
-          type: integer
-          description: HTTP status code
+          type: object
+          items:
+            $ref: "#/components/schemas/Station"
         tides:
           type: array
           items:
             $ref: "#/components/schemas/Tide"
       example:
         {
-          "reqLocation": "42.71014,-70.78861",
-          "reqTimestamp": "2025-10-01T16:20:58.872Z",
-          "stationLocation": "42.71014,-70.78861",
-          "stationId": "8441241",
-          "stationName": "Plum Island South",
-          "stationTzOffset": -5,
+          "status": "OK",
+          "message": "",
+          "reqTimestamp": "2025-10-15T19:22:58.605Z",
+          "reqLocation": {
+            "lat": 42.71014,
+            "lon": -70.78861
+          },
+          "station": {
+            "id": "8441241",
+            "location": {
+              "lat": 42.71013888888889,
+              "lon": -70.78861111111111
+            },
+            "name": "Plum Island South",
+            "eTidesName": "Plum Island Sound (south end)",
+            "tzOffset": -5
+          },
           "tides": [
             {
-              "source_date": "2025-10-02 01:59",
-              "date": "10/02",
-              "day": "Thu",
-              "height": 0.369,
-              "iso_date": "2025-10-02T05:59:00.000Z",
-              "time": "01:59",
-              "type": "low"
+              "sourceDate": "2025-10-15 13:16",
+              "isoDate": "2025-10-15T17:16:00Z",
+              "localDate": "2025-10-15T13:16:00-04:00",
+              "type": "low",
+              "time": "13:16",
+              "day": "Wed",
+              "date": "10/15",
+              "height": 0.311
             }
           ]
         }
