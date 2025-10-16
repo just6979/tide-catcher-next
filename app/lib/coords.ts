@@ -1,6 +1,6 @@
 import {Coords} from '@/app/lib/types'
 
-export const ZERO_COORDS: Coords = coordsFromLatLon(0, 0)
+export const ZERO_COORDS: Coords = {lat: 0, lon: 0}
 
 export function coordsFromLatLon(lat: number, lon: number): Coords {
   if (lat < -90 || lat > 90) {
@@ -11,7 +11,7 @@ export function coordsFromLatLon(lat: number, lon: number): Coords {
     console.warn(`coordsFromString: Potentially invalid longitude: ${lon}\`)`)
     // don't error out on longitude because the range is more geopolitical than physical
   }
-  return {lat, lon}
+  return {lat: lat, lon: lon}
 }
 
 export function coordsFromString(locationString: string): Coords {
