@@ -13,10 +13,11 @@ export interface Station {
 
 export interface Tide {
   sourceDate: string
+  isoDate: string
+  localDate: string
   date: string
   day: string
   height: number
-  isoDate: string
   time: string
   type: string
 }
