@@ -75,6 +75,13 @@ paths:
   /api/stations:
     get:
       description: list of all cached stations
+      parameters:
+        - in: query
+          name: refreshed
+          schema:
+            type: boolean
+          required: false
+          description: indicates that we arrived here from the /stations/refresh redirect?
       responses:
         200:
           description: "OK"
