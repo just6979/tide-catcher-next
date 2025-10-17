@@ -29,12 +29,7 @@ paths:
     get:
       description: metadata for given station
       parameters:
-        - in: path
-          name: station
-          schema:
-            type: string
-            example: "8441241"
-          required: true
+        - $ref: "#/components/parameters/stationPath"
       responses:
         200:
           description: "OK"
@@ -58,12 +53,7 @@ paths:
     get:
       description: closest single station to the given location, if any, within 10-160 miles
       parameters:
-        - in: path
-          name: location
-          schema:
-            type: string
-            example: "42.710,-70.788"
-          required: true
+        - $ref: "#/components/parameters/locationPath"
       responses:
         200:
           description: OK
@@ -92,7 +82,7 @@ paths:
 
   /api/stations/location:
     get:
-      description: closest stations to the default location, if any, within 10-160 miles
+      description: list of closest stations to the default location, if any, within 10-160 miles
       responses:
         200:
           description: OK
@@ -103,14 +93,9 @@ paths:
 
   /api/stations/location/{location}:
     get:
-      description: closest stations to the given location, if any, within 10-160 miles
+      description: list of closest stations to the given location, if any, within 10-160 miles
       parameters:
-        - in: path
-          name: location
-          schema:
-            type: string
-            example: "42.710,-70.788"
-          required: true
+        - $ref: "#/components/parameters/locationPath"
       responses:
         200:
           description: OK
@@ -146,12 +131,7 @@ paths:
     get:
       description: list of next tides for the closest station to the given location
       parameters:
-        - in: path
-          name: location
-          schema:
-            type: string
-            example: "42.710,-70.788"
-          required: true
+        - $ref: "#/components/parameters/locationPath"
       responses:
         200:
           description: OK
@@ -175,12 +155,7 @@ paths:
     get:
       description: list of next tides for the given station
       parameters:
-        - in: path
-          name: station
-          schema:
-            type: string
-            example: "8441241"
-          required: true
+        - $ref: "#/components/parameters/stationPath"
       responses:
         200:
           description: OK
@@ -190,6 +165,22 @@ paths:
                 $ref: "#/components/schemas/TidesResponse"
 
 components:
+  parameters:
+    stationPath:
+      in: path
+      name: station
+      required: true
+      schema:
+        type: string
+      example: "8441241"
+    locationPath:
+      in: path
+      name: location
+      required: true
+      schema:
+        type: string
+      example: "42.710,-70.788"
+
   schemas:
 
     Location:
@@ -204,6 +195,11 @@ components:
           type: number
           format: float
           description: Longitude
+      example:
+        "location": {
+          "lat": 42.710,
+          "lon": -70.788
+        }
 
     Station:
       description: Station entity
