@@ -25,11 +25,11 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
   const hours = String(reqDate.getHours()).padStart(2, '0')
   const minutes = String(reqDate.getMinutes()).padStart(2, '0')
 
-  const beginData = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
+  const beginDate = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
   const range = (48 + backdateHours).toString()
   const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
     'product=predictions&format=json&units=metric&interval=hilo&datum=MLLW&' +
-    `station=${station.id}&time_zone=${noaaTz}&begin_date=${beginData}&range=${range}`
+    `station=${station.id}&time_zone=${noaaTz}&begin_date=${beginDate}&range=${range}`
   )
 
   const noaaResponse = await fetch(url, {cache: 'force-cache'})
