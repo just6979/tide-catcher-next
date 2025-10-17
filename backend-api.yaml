@@ -62,7 +62,7 @@ paths:
           name: location
           schema:
             type: string
-            example: "42.71014,-70.78861"
+            example: "42.710,-70.788"
           required: true
       responses:
         200:
@@ -109,7 +109,7 @@ paths:
           name: location
           schema:
             type: string
-            example: "42.71014,-70.78861"
+            example: "42.710,-70.788"
           required: true
       responses:
         200:
@@ -150,7 +150,7 @@ paths:
           name: location
           schema:
             type: string
-            example: "42.71014,-70.78861"
+            example: "42.710,-70.788"
           required: true
       responses:
         200:
@@ -229,8 +229,8 @@ components:
         {
           "id": "8441241",
           "location": {
-            "lat": 42.71014,
-            "lon": -70.78861
+            "lat": 42.710,
+            "lon": -70.788
           },
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
@@ -260,16 +260,16 @@ components:
           "status": "OK",
           "message": "",
           "reqLocation": {
-            "lat": 42.71014,
-            "lon": -70.78861
+            "lat": 42.710,
+            "lon": -70.788
           },
           "count": 1,
           "stations": [
             {
               "id": "8441241",
               "location": {
-                "lat": 42.71014,
-                "lon": -70.78861
+                "lat": 42.710,
+                "lon": -70.788
               },
               "name": "Plum Island South",
               "eTidesName": "Plum Island South",
@@ -351,14 +351,14 @@ components:
           "message": "",
           "reqTimestamp": "2025-10-15T19:22:58.605Z",
           "reqLocation": {
-            "lat": 42.71014,
-            "lon": -70.78861
+            "lat": 42.710,
+            "lon": -70.788
           },
           "station": {
             "id": "8441241",
             "location": {
-              "lat": 42.71013888888889,
-              "lon": -70.78861111111111
+              "lat": 42.710,
+              "lon": -70.788
             },
             "name": "Plum Island South",
             "eTidesName": "Plum Island Sound (south end)",

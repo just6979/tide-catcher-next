@@ -30,5 +30,5 @@ export function coordsFromString(locationString: string): Coords {
 }
 
 export function coordsToString(coords: Coords): string {
-  return `${coords.lat.toFixed(5)},${coords.lon.toFixed(5)}`
+  return `${coords.lat.toFixed(3)},${coords.lon.toFixed(3)}`
 }

@@ -28,13 +28,13 @@ GET https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?
     datum=MLLW&time_zone=lst&interval=hilo&units=english&format=json
 
 ### tide prediction stations nearby, plum island south
-GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-70.7886&radius=10
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.710&lon=-70.788&radius=10
 
 ### tide prediction stations nearby, single
-GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-70.7886&radius=1
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.710&lon=-70.788&radius=1
 
 ### tide prediction stations nearby, empty
-GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.7101&lon=-75.7886&radius=1
+GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?lat=42.710&lon=-75.788&radius=1
 
 ### tide prediction stations, all
 GET https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json
