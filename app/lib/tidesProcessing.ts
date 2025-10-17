@@ -3,7 +3,13 @@ import {TZDateMini} from '@date-fns/tz'
 import {UTCDate} from '@date-fns/utc'
 
 import {ZERO_COORDS} from '@/app/lib/coords'
-import type {Station, TidesResponse} from '@/app/lib/types'
+import type {Station, Tide, TidesResponse} from '@/app/lib/types'
+
+interface NoaaTidePrediction {
+  t: string,
+  v: string,
+  type: string
+}
 
 export default async function tidesProcessing(station: Station, utcNow: Date, tzOffset?: string): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -46,26 +52,26 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
     }
   }
 
-  const tides = []
-  for (const i in data.predictions) {
-    const prediction = data.predictions[i]
+  const predictions: NoaaTidePrediction[] = 'predictions' in data ? data['predictions'] : []
+  const tides: Tide[] = predictions.map((prediction: NoaaTidePrediction): Tide => {
     const predDate: string = `${prediction.t}${useLocalTime ? '' : 'Z'}`
     const tideDate = new UTCDate(Date.parse(predDate))
     const localDate = new TZDateMini(tideDate, offset)
-    const tide = {
+    return {
       sourceDate: predDate,
       isoDate: formatISO(tideDate),
       localDate: formatISO(localDate),
       type: prediction.type === 'H' ? 'high' : 'low',
-      time: `${localDate.getHours().toString().padStart(2, '0')}:` +
+      time:
+        `${localDate.getHours().toString().padStart(2, '0')}:` +
         `${localDate.getMinutes().toString().padStart(2, '0')}`,
       day: weekDays[localDate.getDay()],
-      date: `${(localDate.getMonth() + 1).toString().padStart(2, '0')}/` +
+      date:
+        `${(localDate.getMonth() + 1).toString().padStart(2, '0')}/` +
         `${localDate.getDate().toString().padStart(2, '0')}`,
       height: Number(prediction.v)
     }
-    tides.push(tide)
-  }
+  })
 
   return {
     status: 'OK',
