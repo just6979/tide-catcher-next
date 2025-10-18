@@ -1,6 +1,6 @@
 import {coordsFromLatLon} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
+import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/stationsProcessing'
 import type {StationsResponse} from '@/app/lib/types'
 
 interface NoaaStationById {
@@ -11,7 +11,7 @@ interface NoaaStationById {
   timezonecorr: number
 }
 
-export async function stationFromStation(id: string): Promise<StationsResponse> {
+export async function stationsFromStation(id: string): Promise<StationsResponse> {
   let stationsData = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
 
   const error = checkNoaaError(stationsData)

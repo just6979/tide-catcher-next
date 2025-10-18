@@ -1,4 +1,4 @@
-import {makeStationsError} from '@/app/lib/statonsProcessing'
+import {makeStationsError} from '@/app/lib/stationsProcessing'
 import {buildNoaaUrl, checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {processTidePredStations} from '@/app/lib/stationsFromCoords'
 import {check, initStorage, read, write} from '@/app/lib/storage'

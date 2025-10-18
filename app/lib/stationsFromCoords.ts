@@ -1,6 +1,6 @@
 import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
+import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/stationsProcessing'
 import type {Coords, Station, StationsResponse} from '@/app/lib/types'
 
 interface NoaaTidePredStation {

@@ -1,11 +1,11 @@
 import {ZERO_COORDS} from '@/app/lib/coords'
 import tidesProcessing from '@/app/lib/tidesProcessing'
-import {stationFromStation} from '@/app/lib/stationFromStation'
+import {stationsFromStation} from '@/app/lib/stationsFromStation'
 import type {TidesResponse} from '@/app/lib/types'
 
 export async function tidesFromStation(stationId: string, tzOffset?: string): Promise<TidesResponse> {
   const nowDate = new Date()
-  const stationData = await stationFromStation(stationId)
+  const stationData = await stationsFromStation(stationId)
 
   if (stationData.status !== 'OK') {
     return {
