@@ -12,22 +12,14 @@ export function buildNoaaUrl(path: string): string {
   }
 }
 
-export async function fetchNoaaUrl(path: string): Promise<any> {
+export async function fetchNoaaUrl(path: string) {
   try {
     const noaaResponse = await fetch(buildNoaaUrl(path), {cache: 'force-cache'})
     return await noaaResponse.json()
   } catch (error) {
-    let msg = (error instanceof Error) ? error.toString() : 'Unknown error'
-    return {error: {message: msg}}
+    return {
+      errorMsg: (error instanceof Error) ? error.toString() : 'Unknown error',
+      errorCode: 500
+    }
   }
-}
-
-export function checkNoaaError(response: any): string {
-  if ('error' in response) {
-    return 'message' in response.error ? response.error.message : 'Unknown error'
-  }
-  if ('errorCode' in response) {
-    return `${response['errorCode']}: ${response.errorMsg}`
-  }
-  return ''
 }

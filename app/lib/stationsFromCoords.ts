@@ -1,5 +1,5 @@
 import {coordsFromLatLon, coordsToString} from '@/app/lib/coords'
-import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
+import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
 import type {Coords, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
 
@@ -15,10 +15,13 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
       `/mdapi/prod/webapi/tidepredstations.json?lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     )
 
-    const error = checkNoaaError(stationsData)
-    if (error) return makeStationsError(error)
+    if ('errorMsg' in data) {
+      return makeStationsError(
+        `${data.errorCode}: ${data.errorMsg}`
+      )
+    }
 
-    const stations = stationsData['stationList']
+    const stations: NoaaTidePredStation[] = data['stationList']
     if (stations != null) {
       const stationsSlice = stations.slice(0, Math.min(count, stations.length))
       const stationsOut: Station[] = stationsSlice.map((station: NoaaTidePredStation): Station => {

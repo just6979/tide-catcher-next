@@ -1,5 +1,5 @@
 import {ZERO_COORDS} from '@/app/lib/coords'
-import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
+import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {stationsFromStation} from '@/app/lib/stationsFromStation'
 import type {Coords, StationsResponse, Tide, TidesResponse} from '@/app/lib/types'
@@ -75,11 +75,10 @@ async function processTides(
 
   let data = await fetchNoaaUrl(url)
 
-  const error = checkNoaaError(data)
-  if (error) {
+  if ('error' in data) {
     return {
       status: 'Error',
-      message: `Error calling NOAA API: ${error}`,
+      message: `Error calling NOAA API: ${('message' in data.error ? data.error.message : 'Unknown error')}`,
       reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
       station: station,
