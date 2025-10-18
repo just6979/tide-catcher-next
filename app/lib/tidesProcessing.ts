@@ -4,7 +4,7 @@ import {UTCDate} from '@date-fns/utc'
 
 import {ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import type {Coords, Station, Tide, TidesResponse} from '@/app/lib/types'
+import type {Coords, Station, StationsResponse, Tide, TidesResponse} from '@/app/lib/types'
 
 interface NoaaTidePrediction {
   t: string,
@@ -12,7 +12,7 @@ interface NoaaTidePrediction {
   type: string
 }
 
-export default async function tidesProcessing(
+export async function tidesProcessing(
   station: Station, utcNow: Date, reqLocation: Coords, tzOffset?: string
 ): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -90,6 +90,14 @@ function buildTzOffsetStr(offsetIn?: string): string {
   return `${offsetSign}${offsetHoursStr}${offsetMinutesStr}`
 }
 
+export async function checkStationsResponse(stationData: StationsResponse, nowDate: Date, location: Coords, tzOffset: string | undefined) {
+  if (stationData.status === 'OK' && stationData.stations.length > 0) {
+    return await tidesProcessing((stationData.stations)[0], nowDate, location, tzOffset)
+  } else {
+    return makeTidesError(stationData, nowDate, location)
+  }
+}
+
 function makeTidesResponse(
   status: string, msg: string, time: Date, loc: Coords, station: Station, tides: Tide[]
 ) {
@@ -100,5 +108,22 @@ function makeTidesResponse(
     reqLocation: loc,
     station: station,
     tides: tides
+  }
+}
+
+export function makeTidesError(stationData: StationsResponse, utcNow: Date, location = ZERO_COORDS) {
+  return {
+    status: stationData.status,
+    message: `Error calling NOAA API: ${stationData.message}`,
+    reqTimestamp: utcNow.toISOString(),
+    reqLocation: location,
+    station: {
+      id: '',
+      location: ZERO_COORDS,
+      name: '',
+      eTidesName: '',
+      tzOffset: 0
+    },
+    tides: []
   }
 }
