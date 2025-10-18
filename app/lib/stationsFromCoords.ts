@@ -1,4 +1,4 @@
-import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
+import {coordsFromLatLon, coordsToString, ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/stationsProcessing'
 import type {Coords, Station, StationsResponse} from '@/app/lib/types'
@@ -35,7 +35,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
   } while (attempts > 0)
 
   // no stations found after maxing out the range
-  return makeStationsError(`No stations found within ${range} miles of location (${location}).`, location)
+  return makeStationsError(`No stations found within ${range} miles of location (${coordsToString(location)}).`, location)
 }
 
 export function processTidePredStations(
