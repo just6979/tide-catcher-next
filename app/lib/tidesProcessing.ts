@@ -12,7 +12,9 @@ interface NoaaTidePrediction {
   type: string
 }
 
-export default async function tidesProcessing(station: Station, utcNow: Date, tzOffset?: string): Promise<TidesResponse> {
+export default async function tidesProcessing(
+  station: Station, utcNow: Date, reqLocation: Coords, tzOffset?: string
+): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   let offset = undefined
@@ -47,7 +49,7 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
       'Error',
       `Error calling NOAA API: ${error}`,
       utcNow,
-      ZERO_COORDS,
+      reqLocation,
       station,
       []
     )
@@ -74,7 +76,7 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
     }
   })
 
-  return makeTidesResponse('OK', '', utcNow, ZERO_COORDS, station, tides)
+  return makeTidesResponse('OK', '', utcNow, reqLocation, station, tides)
 }
 
 function buildTzOffsetStr(offsetIn?: string): string {

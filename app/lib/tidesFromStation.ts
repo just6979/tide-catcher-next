@@ -3,7 +3,7 @@ import tidesProcessing from '@/app/lib/tidesProcessing'
 import {stationFromStation} from '@/app/lib/stationFromStation'
 import type {TidesResponse} from '@/app/lib/types'
 
-export async function tidesFromStation(stationId: string): Promise<TidesResponse> {
+export async function tidesFromStation(stationId: string, tzOffset?: string): Promise<TidesResponse> {
   const nowDate = new Date()
   const stationData = await stationFromStation(stationId)
 
@@ -27,9 +27,5 @@ export async function tidesFromStation(stationId: string): Promise<TidesResponse
   const stations = stationData['stations']
   const station = stations[0]
 
-  const outData = await tidesProcessing(station, nowDate)
-  return {
-    ...outData,
-    reqLocation: ZERO_COORDS
-  }
+  return await tidesProcessing(station, nowDate, ZERO_COORDS, tzOffset)
 }

@@ -30,10 +30,5 @@ export async function tidesFromCoords(location: Coords, tzOffset?: string): Prom
   const stations = nearbyData['stations']
   const station = stations[0]
 
-  const outData = await tidesProcessing(station, utcNow, tzOffset)
-
-  return {
-    ...outData,
-    reqLocation: location
-  }
+  return await tidesProcessing(station, utcNow, location, tzOffset)
 }
