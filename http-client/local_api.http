@@ -14,13 +14,13 @@
 ### location that should have no stations in range
 {{host}}/api/station/location/{{badLocation}}
 
-### single nearest station within 10 miles of default location: 42.71014,-70.78861
+### single nearest station within 10 miles of default location: 42.710,-70.788
 {{host}}/api/station/location
 
 ### multiple nearest stations within 10 miles
 {{host}}/api/stations/location/{{location}}
 
-### stations by default location: 42.71014,-70.78861
+### stations by default location: 42.710,-70.788
 {{host}}/api/stations/location
 
 ### all stations
@@ -38,5 +38,5 @@
 ### tides by location
 {{host}}/api/tides/location/{{location}}
 
-### tides by default location: 42.71014,-70.78861
+### tides by default location: 42.710,-70.788
 {{host}}/api/tides/location
