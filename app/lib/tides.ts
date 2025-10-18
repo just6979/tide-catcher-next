@@ -2,18 +2,12 @@ import {ZERO_COORDS} from '@/app/lib/coords'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {stationsFromStation} from '@/app/lib/stationsFromStation'
-import type {Coords, StationsResponse, Tide, TidesResponse} from '@/app/lib/types'
+import type {Coords, NoaaTidePrediction, StationsResponse, Tide, TidesResponse} from '@/app/lib/types'
 import {TZDateMini} from '@date-fns/tz'
 import {UTCDate} from '@date-fns/utc'
 import {formatISO, subHours} from 'date-fns'
 
 const emptyStation = {id: '', location: ZERO_COORDS, name: '', eTidesName: '', tzOffset: 0}
-
-interface NoaaTidePrediction {
-  t: string,
-  v: string,
-  type: string
-}
 
 export async function tidesFromCoords(location: Coords, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromCoords(location, 1)

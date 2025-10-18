@@ -55,3 +55,9 @@ export interface NoaaCoOpsStation {
   name: string
   timezonecorr: number
 }
+
+export interface NoaaTidePrediction {
+  t: string,
+  v: string,
+  type: string
+}
