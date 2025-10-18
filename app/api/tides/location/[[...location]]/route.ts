@@ -1,6 +1,6 @@
-import {coordsFromString} from '@/app/lib/coords'
-import {tidesFromCoords} from '@/app/lib/tidesFromCoords'
 import {defaultLocation} from '@/app/lib/constants'
+import {coordsFromString} from '@/app/lib/coords'
+import {tidesFromCoords} from '@/app/lib/tidesProcessing'
 
 export async function GET(request: Request, {params}: { params: Promise<{ location?: string[] | undefined }> }) {
   const {location} = await params
