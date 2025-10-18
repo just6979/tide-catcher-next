@@ -11,7 +11,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
     range *= 2
     attempts -= 1
 
-    let stationsData = await fetchNoaaUrl(
+    const data = await fetchNoaaUrl(
       `/mdapi/prod/webapi/tidepredstations.json?lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     )
 

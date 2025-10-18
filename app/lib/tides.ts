@@ -67,7 +67,7 @@ async function processTides(
     `station=${station.id}&time_zone=${noaaTz}&begin_date=${beginDate}&range=${range}`
   )
 
-  let data = await fetchNoaaUrl(url)
+  const data = await fetchNoaaUrl(url)
 
   if ('error' in data) {
     return {
