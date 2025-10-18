@@ -1,16 +1,7 @@
-import {coordsFromLatLon, coordsToString, ZERO_COORDS} from '@/app/lib/coords'
+import {coordsFromLatLon, coordsToString} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/stationsProcessing'
-import type {Coords, Station, StationsResponse} from '@/app/lib/types'
-
-interface NoaaTidePredStation {
-  stationId: string
-  lat: number
-  lon: number
-  stationName: string
-  etidesStnName: string
-  timeZoneCorr: number
-}
+import {makeStationsError} from '@/app/lib/stationsProcessing'
+import type {Coords, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
 
 export async function stationsFromCoords(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
   let range = initialRange / 2
@@ -29,31 +20,26 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
 
     const stations = stationsData['stationList']
     if (stations != null) {
-      return processTidePredStations(stations, count, location)
+      const stationsSlice = stations.slice(0, Math.min(count, stations.length))
+      const stationsOut: Station[] = stationsSlice.map((station: NoaaTidePredStation): Station => {
+        return {
+          id: station.stationId,
+          location: coordsFromLatLon(station.lat, station.lon),
+          name: station.stationName,
+          eTidesName: station.etidesStnName,
+          tzOffset: Number(station.timeZoneCorr)
+        }
+      })
+      return {
+        status: 'OK',
+        message: '',
+        reqLocation: location,
+        count: stationsOut.length,
+        stations: stationsOut
+      }
     }
   } while (attempts > 0)
 
   // no stations found after maxing out the range
   return makeStationsError(`No stations found within ${range} miles of location (${coordsToString(location)}).`, location)
-}
-
-export function processTidePredStations(
-  stations: NoaaTidePredStation[], count = Infinity, location = ZERO_COORDS
-): StationsResponse {
-  if (stations == null) {
-    return makeStationsResponse([], location)
-  }
-
-  const stationsOut: Station[] = []
-  for (let i = 0; i < Math.min(count, stations.length); i++) {
-    const station = stations[i]
-    stationsOut.push(makeStation(
-      station.stationId,
-      coordsFromLatLon(station.lat, station.lon),
-      station.stationName,
-      station.etidesStnName,
-      station.timeZoneCorr
-    ))
-  }
-  return makeStationsResponse(stationsOut, location)
 }

@@ -1,15 +1,7 @@
-import {coordsFromLatLon} from '@/app/lib/coords'
+import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/stationsProcessing'
-import type {StationsResponse} from '@/app/lib/types'
-
-interface NoaaStationById {
-  id: string
-  lat: number
-  lng: number
-  name: string
-  timezonecorr: number
-}
+import {makeStationsError} from '@/app/lib/stationsProcessing'
+import type {NoaaCoOpsStation, StationsResponse} from '@/app/lib/types'
 
 export async function stationsFromStation(id: string): Promise<StationsResponse> {
   let stationsData = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
@@ -17,20 +9,30 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
   const error = checkNoaaError(stationsData)
   if (error) return makeStationsError(error)
 
-  const stations = stationsData['stations']
+  const stations: NoaaCoOpsStation[] = stationsData['stations']
 
-  if (stations == null) {
-    return makeStationsError(`No stations found for ID: ${id}`)
+  if (stations == null || stations.length == 0) {
+    return {
+      status: 'Error',
+      message: `No stations found for ID: ${id}`,
+      reqLocation: ZERO_COORDS,
+      count: [].length,
+      stations: []
+    }
   }
 
-  const station: NoaaStationById = stations[0]
-  const stationOut = makeStation(
-    station.id,
-    coordsFromLatLon(station.lat, station.lng),
-    station.name,
-    station.name,
-    station.timezonecorr
-  )
-  const stationsOut = [stationOut]
-  return makeStationsResponse(stationsOut)
+  const station = stations[0]
+  return {
+    status: 'OK',
+    message: '',
+    reqLocation: ZERO_COORDS,
+    count: 1,
+    stations: [{
+      id: station.id,
+      location: coordsFromLatLon(station.lat, station.lng),
+      name: station.name,
+      eTidesName: station.name,
+      tzOffset: Number(station.timezonecorr)
+    }]
+  }
 }

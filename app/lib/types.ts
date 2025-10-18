@@ -38,3 +38,20 @@ export interface TidesResponse {
   station: Station
   tides: Tide[]
 }
+
+export interface NoaaTidePredStation {
+  stationId: string
+  lat: number
+  lon: number
+  stationName: string
+  etidesStnName: string
+  timeZoneCorr: number
+}
+
+export interface NoaaCoOpsStation {
+  id: string
+  lat: number
+  lng: number
+  name: string
+  timezonecorr: number
+}

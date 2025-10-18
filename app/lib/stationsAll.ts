@@ -1,8 +1,8 @@
 import {makeStationsError} from '@/app/lib/stationsProcessing'
 import {buildNoaaUrl, checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {processTidePredStations} from '@/app/lib/stationsFromCoords'
+import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
 import {check, initStorage, read, write} from '@/app/lib/storage'
-import type {StationsResponse} from '@/app/lib/types'
+import type {NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
 
 export async function stationsAll(forceFetch = false): Promise<StationsResponse> {
   initStorage()
@@ -33,13 +33,29 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
   const error = checkNoaaError(stationsData)
   if (error) return makeStationsError(error)
 
-  const stations = stationsData['stationList']
-  if (stations != null) {
-    const count = stations.length
-    const stationsData = processTidePredStations(stations, count)
-    await write('stations.json', JSON.stringify(stationsData))
-    return stationsData
+  const stationList = stationsData['stationList']
+
+  if (stationList == null) {
+    return makeStationsError('No stations found.')
   }
 
-  return makeStationsError('No stations found.')
+  const stations: Station[] = stationList.map((station: NoaaTidePredStation): Station => {
+    return {
+      id: station.stationId,
+      location: coordsFromLatLon(station.lat, station.lon),
+      name: station.stationName,
+      eTidesName: station.etidesStnName,
+      tzOffset: Number(station.timeZoneCorr)
+    }
+  })
+
+  const response = {
+    status: 'OK',
+    message: '',
+    reqLocation: ZERO_COORDS,
+    count: stations.length,
+    stations: stations
+  }
+  await write('stations.json', JSON.stringify(response))
+  return response
 }
