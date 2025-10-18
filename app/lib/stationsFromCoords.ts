@@ -21,8 +21,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
     attempts -= 1
 
     let stationsData = await fetchNoaaUrl(
-      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
-      `lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
+      `/mdapi/prod/webapi/tidepredstations.json?lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     )
 
     const error = checkNoaaError(stationsData)
