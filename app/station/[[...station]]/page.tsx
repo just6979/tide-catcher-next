@@ -1,9 +1,9 @@
 'use client'
 
+import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
 import type {Station, StationsResponse} from '@/app/lib/types'
 import {useParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
-import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
 
 export default function StationFromStation() {
   const {station} = useParams<{ station: string }>()

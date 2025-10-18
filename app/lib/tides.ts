@@ -1,12 +1,11 @@
-import {formatISO, subHours} from 'date-fns'
-import {TZDateMini} from '@date-fns/tz'
-import {UTCDate} from '@date-fns/utc'
-
 import {ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {stationsFromStation} from '@/app/lib/stationsFromStation'
 import type {Coords, StationsResponse, Tide, TidesResponse} from '@/app/lib/types'
+import {TZDateMini} from '@date-fns/tz'
+import {UTCDate} from '@date-fns/utc'
+import {formatISO, subHours} from 'date-fns'
 
 const emptyStation = {id: '', location: ZERO_COORDS, name: '', eTidesName: '', tzOffset: 0}
 
@@ -18,15 +17,15 @@ interface NoaaTidePrediction {
 
 export async function tidesFromCoords(location: Coords, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromCoords(location, 1)
-  return await tidesProcessing(stationData, new UTCDate(), location, tzOffset)
+  return await processTides(stationData, new UTCDate(), location, tzOffset)
 }
 
 export async function tidesFromStation(stationId: string, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromStation(stationId)
-  return await tidesProcessing(stationData, new Date(), ZERO_COORDS, tzOffset)
+  return await processTides(stationData, new Date(), ZERO_COORDS, tzOffset)
 }
 
-async function tidesProcessing(
+async function processTides(
   stationData: StationsResponse, nowDate: Date, reqLocation: Coords, tzOffset?: string
 ): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']

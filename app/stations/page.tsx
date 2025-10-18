@@ -1,11 +1,10 @@
 'use client'
 
+import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
+import type {StationsResponse} from '@/app/lib/types'
 import Link from 'next/link'
 import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
-
-import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
-import type {StationsResponse} from '@/app/lib/types'
 
 export default function StationsAll() {
   const isRefreshed = useSearchParams().has('refreshed')

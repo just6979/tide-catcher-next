@@ -1,6 +1,6 @@
 import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
 import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStationsError} from '@/app/lib/stationsProcessing'
+import {makeStationsError} from '@/app/lib/stationsUtils'
 import type {NoaaCoOpsStation, StationsResponse} from '@/app/lib/types'
 
 export async function stationsFromStation(id: string): Promise<StationsResponse> {

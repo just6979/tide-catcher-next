@@ -1,9 +1,8 @@
-import type {Metadata, Viewport} from 'next'
-import {ReactNode, Suspense} from 'react'
-
+import Footer from '@/app/footer'
 import Header from '@/app/header'
 import Loading from '@/app/loading'
-import Footer from '@/app/footer'
+import type {Metadata, Viewport} from 'next'
+import {ReactNode, Suspense} from 'react'
 
 import './globals.css'
 
@@ -30,12 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body>
-        <Header/>
-        <Suspense fallback={<Loading/>}>
-          {children}
-        </Suspense>
-        <Footer/>
-      </body>
+    <Header/>
+    <Suspense fallback={<Loading/>}>
+      {children}
+    </Suspense>
+    <Footer/>
+    </body>
     </html>
   )
 }

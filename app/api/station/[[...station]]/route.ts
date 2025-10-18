@@ -1,5 +1,5 @@
-import {stationsFromStation} from '@/app/lib/stationsFromStation'
 import {defaultStation} from '@/app/lib/constants'
+import {stationsFromStation} from '@/app/lib/stationsFromStation'
 
 export async function GET(request: Request, {params}: { params: Promise<{ station?: string[] | undefined }> }) {
   const {station} = await params
