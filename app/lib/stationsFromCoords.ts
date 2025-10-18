@@ -1,4 +1,5 @@
 import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
+import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
 import type {Coords, Station, StationsResponse} from '@/app/lib/types'
 
@@ -18,16 +19,19 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
   do {
     range *= 2
     attempts -= 1
-    const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
+
+    let stationsData = await fetchNoaaUrl(
+      `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json?` +
       `lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
-    const stationsResponse = await fetch(url, {cache: 'force-cache'})
-    const stationsData = await stationsResponse.json()
+    )
+
+    const error = checkNoaaError(stationsData)
+    if (error) return makeStationsError(error)
 
     const stations = stationsData['stationList']
     if (stations != null) {
       return processTidePredStations(stations, count, location)
     }
-
   } while (attempts > 0)
 
   // no stations found after maxing out the range

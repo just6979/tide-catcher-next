@@ -1,4 +1,5 @@
 import {makeStationsError} from '@/app/lib/statonsProcessing'
+import {buildNoaaUrl, checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {processTidePredStations} from '@/app/lib/stationsFromCoords'
 import {check, initStorage, read, write} from '@/app/lib/storage'
 import type {StationsResponse} from '@/app/lib/types'
@@ -25,11 +26,12 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
     console.log(`${__filename}: Forcing refresh of stations.json because no cache found`)
   }
 
-  const stationsUrl = 'https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json'
-  console.log(`${__filename}: Fetching new stations.json from ${stationsUrl}`)
+  const path = '/mdapi/prod/webapi/tidepredstations.json'
+  console.log(`${__filename}: Fetching new stations.json from ${buildNoaaUrl(path)}`)
+  const stationsData = await fetchNoaaUrl(path)
 
-  const stationsResponse = await fetch(stationsUrl)
-  const stationsData = await stationsResponse.json()
+  const error = checkNoaaError(stationsData)
+  if (error) return makeStationsError(error)
 
   const stations = stationsData['stationList']
   if (stations != null) {

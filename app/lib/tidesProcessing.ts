@@ -3,7 +3,8 @@ import {TZDateMini} from '@date-fns/tz'
 import {UTCDate} from '@date-fns/utc'
 
 import {ZERO_COORDS} from '@/app/lib/coords'
-import type {Station, Tide, TidesResponse} from '@/app/lib/types'
+import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
+import type {Coords, Station, Tide, TidesResponse} from '@/app/lib/types'
 
 interface NoaaTidePrediction {
   t: string,
@@ -33,23 +34,23 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
 
   const beginDate = `${reqDate.getFullYear()}${month}${day} ${hours}:${minutes}`
   const range = (48 + backdateHours).toString()
-  const url = encodeURI('https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?' +
+  const url = encodeURI('/api/prod/datagetter?' +
     'product=predictions&format=json&units=metric&interval=hilo&datum=MLLW&' +
     `station=${station.id}&time_zone=${noaaTz}&begin_date=${beginDate}&range=${range}`
   )
 
-  const noaaResponse = await fetch(url, {cache: 'force-cache'})
-  const data = await noaaResponse.json()
+  let data = await fetchNoaaUrl(url)
 
-  if ('error' in data) {
-    return {
-      status: 'Error',
-      message: `Error calling NOAA API: ${data['error']['message']}`,
-      reqLocation: ZERO_COORDS,
-      reqTimestamp: utcNow.toISOString(),
-      station: station,
-      tides: []
-    }
+  const error = checkNoaaError(data)
+  if (error) {
+    return makeTidesResponse(
+      'Error',
+      `Error calling NOAA API: ${error}`,
+      utcNow,
+      ZERO_COORDS,
+      station,
+      []
+    )
   }
 
   const predictions: NoaaTidePrediction[] = 'predictions' in data ? data['predictions'] : []
@@ -73,14 +74,7 @@ export default async function tidesProcessing(station: Station, utcNow: Date, tz
     }
   })
 
-  return {
-    status: 'OK',
-    message: '',
-    reqLocation: ZERO_COORDS,
-    reqTimestamp: utcNow.toISOString(),
-    station: station,
-    tides: tides
-  }
+  return makeTidesResponse('OK', '', utcNow, ZERO_COORDS, station, tides)
 }
 
 function buildTzOffsetStr(offsetIn?: string): string {
@@ -92,4 +86,17 @@ function buildTzOffsetStr(offsetIn?: string): string {
   const offsetHoursStr = offsetHours.toString().padStart(2, '0')
   const offsetMinutesStr = offsetMinutes.toString().padStart(2, '0')
   return `${offsetSign}${offsetHoursStr}${offsetMinutesStr}`
+}
+
+function makeTidesResponse(
+  status: string, msg: string, time: Date, loc: Coords, station: Station, tides: Tide[]
+) {
+  return {
+    status: status,
+    message: msg,
+    reqTimestamp: time.toISOString(),
+    reqLocation: loc,
+    station: station,
+    tides: tides
+  }
 }

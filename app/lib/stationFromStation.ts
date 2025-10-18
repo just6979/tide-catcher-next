@@ -1,4 +1,5 @@
 import {coordsFromLatLon} from '@/app/lib/coords'
+import {checkNoaaError, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStation, makeStationsError, makeStationsResponse} from '@/app/lib/statonsProcessing'
 import type {StationsResponse} from '@/app/lib/types'
 
@@ -11,9 +12,10 @@ interface NoaaStationById {
 }
 
 export async function stationFromStation(id: string): Promise<StationsResponse> {
-  const url = `https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/stations/${id}.json`
-  const stationsResponse = await fetch(url, {cache: 'force-cache'})
-  const stationsData = await stationsResponse.json()
+  let stationsData = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
+
+  const error = checkNoaaError(stationsData)
+  if (error) return makeStationsError(error)
 
   const stations = stationsData['stations']
 
