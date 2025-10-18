@@ -27,7 +27,7 @@ export function checkNoaaError(response: any): string {
     return 'message' in response.error ? response.error.message : 'Unknown error'
   }
   if ('errorCode' in response) {
-    return `$stationsData['errorCode']: ${response.errorMsg}`
+    return `${response['errorCode']}: ${response.errorMsg}`
   }
   return ''
 }
