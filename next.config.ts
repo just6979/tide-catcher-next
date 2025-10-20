@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
 export default nextConfig
 
 module.exports = {
-  distDir: 'build',
   output: "standalone",
   logging: {
     fetches: {
