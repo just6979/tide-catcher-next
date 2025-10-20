@@ -1,4 +1,4 @@
-import {ZERO_COORDS} from '@/app/lib/coords'
+import {EMPTY_STATION, WEEKDAYS, ZERO_COORDS} from '@/app/lib/constants'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {stationsFromStation} from '@/app/lib/stationsFromStation'
@@ -6,8 +6,6 @@ import type {Coords, NoaaTidePrediction, StationsResponse, Tide, TidesResponse} 
 import {TZDateMini} from '@date-fns/tz'
 import {UTCDate} from '@date-fns/utc'
 import {formatISO, subHours} from 'date-fns'
-
-const emptyStation = {id: '', location: ZERO_COORDS, name: '', eTidesName: '', tzOffset: 0}
 
 export async function tidesFromCoords(location: Coords, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromCoords(location, 1)
@@ -22,14 +20,12 @@ export async function tidesFromStation(stationId: string, tzOffset?: string): Pr
 async function processTides(
   stationData: StationsResponse, nowDate: Date, reqLocation: Coords, tzOffset?: string
 ): Promise<TidesResponse> {
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
   if (stationData.status.code != 200 || stationData.stations.length == 0) {
     return {
       status: stationData.status,
       reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
-      station: emptyStation,
+      station: EMPTY_STATION,
       tides: []
     }
   }
@@ -94,7 +90,7 @@ async function processTides(
       time:
         `${localDate.getHours().toString().padStart(2, '0')}:` +
         `${localDate.getMinutes().toString().padStart(2, '0')}`,
-      day: weekDays[localDate.getDay()],
+      day: WEEKDAYS[localDate.getDay()],
       date:
         `${(localDate.getMonth() + 1).toString().padStart(2, '0')}/` +
         `${localDate.getDate().toString().padStart(2, '0')}`,

@@ -1,7 +1,8 @@
 'use client'
 
-import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
-import type {StationsResponse} from '@/app/lib/types'
+import {EMPTY_STATION_RESPONSE} from '@/app/lib/constants'
+import {coordsToString} from '@/app/lib/coords'
+import {StationsResponse} from '@/app/lib/types'
 import Link from 'next/link'
 import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
@@ -9,18 +10,9 @@ import {useEffect, useState} from 'react'
 export default function StationsAll() {
   const isRefreshed = useSearchParams().has('refreshed')
 
-  const initialStationsData: StationsResponse = {
-    status: {
-      code: 200
-    },
-    reqLocation: ZERO_COORDS,
-    reqTimestamp: '',
-    count: 0,
-    stations: []
-  }
 
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState(initialStationsData)
+  const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 
   useEffect(() => {
     fetch('/api/stations')

@@ -1,40 +1,19 @@
 'use client'
 
-import {coordsToString, ZERO_COORDS} from '@/app/lib/coords'
-import type {Tide, TidesResponse} from '@/app/lib/types'
+import {EMPTY_TIDES_RESPONSE, GEOLOCATION_ERRORS} from '@/app/lib/constants'
+import {coordsToString} from '@/app/lib/coords'
+import {Tide, TidesResponse} from '@/app/lib/types'
 import {useEffect, useState} from 'react'
 
-const navigationErrorMap = ['',
-  'PERMISSION_DENIED. No location permission granted. Check site settings.',
-  'POSITION_UNAVAILABLE: Error acquiring location data. Try again.',
-  'TIMEOUTNo location data acquired in the time allotted.'
-]
-
 export default function TidesFromLocation() {
-  const nowTime = new Date()
 
-  const initialData: TidesResponse = {
-    status: {
-      code: 200,
-      msg: undefined
-    },
-    reqLocation: ZERO_COORDS,
-    reqTimestamp: '',
-    station: {
-      id: '',
-      location: ZERO_COORDS,
-      name: '',
-      eTidesName: '',
-      tzOffset: 0
-    },
-    tides: []
-  }
+  const nowTime = new Date()
 
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState('')
   const [locationError, setLocationError] = useState('')
   const [isLoading, setLoading] = useState(true)
-  const [data, setData] = useState(initialData)
+  const [data, setData] = useState(EMPTY_TIDES_RESPONSE)
 
   useEffect(() => {
     console.log('getting location')
@@ -48,8 +27,8 @@ export default function TidesFromLocation() {
       },
       error => {
         console.log('error getting location')
-        console.log(navigationErrorMap[error.code])
-        setLocationError(navigationErrorMap[error.code])
+        console.log(GEOLOCATION_ERRORS[error.code])
+        setLocationError(GEOLOCATION_ERRORS[error.code])
         setLocating(false)
       },
       {

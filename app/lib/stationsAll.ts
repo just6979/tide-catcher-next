@@ -1,4 +1,5 @@
-import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
+import {ZERO_COORDS} from '@/app/lib/constants'
+import {coordsFromLatLon} from '@/app/lib/coords'
 import {buildNoaaUrl, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
 import {check, initStorage, read, write} from '@/app/lib/storage'
