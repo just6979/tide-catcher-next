@@ -1,14 +1,14 @@
-export interface Coords {
+export type Coords = {
   lat: number
   lon: number
 }
 
-export interface Status {
+export type Status = {
   code: string | number
   msg: string | undefined
 }
 
-export interface Station {
+export type Station = {
   id: string
   location: Coords
   name: string
@@ -16,7 +16,7 @@ export interface Station {
   tzOffset: number
 }
 
-export interface Tide {
+export type Tide = {
   sourceDate: string
   isoDate: string
   localDate: string
@@ -27,14 +27,14 @@ export interface Tide {
   type: string
 }
 
-export interface StationsResponse {
+export type StationsResponse = {
   status: Status
   reqLocation: Coords
   count: number
   stations: Station[]
 }
 
-export interface TidesResponse {
+export type TidesResponse = {
   status: Status
   reqLocation: Coords
   reqTimestamp: string
@@ -42,7 +42,7 @@ export interface TidesResponse {
   tides: Tide[]
 }
 
-export interface NoaaTidePredStation {
+export type NoaaTidePredStation = {
   stationId: string
   lat: number
   lon: number
@@ -51,7 +51,7 @@ export interface NoaaTidePredStation {
   timeZoneCorr: number
 }
 
-export interface NoaaCoOpsStation {
+export type NoaaCoOpsStation = {
   id: string
   lat: number
   lng: number
@@ -59,7 +59,7 @@ export interface NoaaCoOpsStation {
   timezonecorr: number
 }
 
-export interface NoaaTidePrediction {
+export type NoaaTidePrediction = {
   t: string
   v: string
   type: string
