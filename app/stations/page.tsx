@@ -11,7 +11,7 @@ export default function StationsAll() {
 
   const initialStationsData: StationsResponse = {
     status: {
-      code: '',
+      code: 200,
       msg: undefined
     },
     reqLocation: ZERO_COORDS,
@@ -20,33 +20,37 @@ export default function StationsAll() {
   }
 
   const [isLoading, setIsLoading] = useState(true)
-  const [stationsData, setStationsData] = useState(initialStationsData)
+  const [data, setData] = useState(initialStationsData)
 
   useEffect(() => {
     fetch('/api/stations')
       .then((res) => res.json())
       .then((data: StationsResponse) => {
-        setStationsData(data)
+        setData(data)
         setIsLoading(false)
       })
   }, [])
 
-  if (isLoading) return <p>Loading Stations List...</p>
-  if (!stationsData) return <p>No Stations List found.</p>
-  if (stationsData.status.code != 'OK') return <p>Error: {stationsData.status.msg}</p>
-
-  const stations = stationsData.stations
+  if (isLoading) {
+    return <p>Loading Stations List...</p>
+  }
+  if (!data || !('stations' in data) || !(data.stations.length > 0)) {
+    return <p>No Stations List found.</p>
+  }
+  if (data.status.code != 200) {
+    return <p>Error: {data.status.code}: {data.status.msg}</p>
+  }
 
   return (
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {stationsData.count} stations available <span id="refresh">
+        {data.count} stations available <span id="refresh">
         (<Link href="/stations/refresh" replace>{isRefreshed ? 'Refresh Again' : 'Refresh'}</Link>)
       </span>
       </p>
       <ul>
-        {stations.map((station) => (
+        {data.stations.map((station) => (
           <li key={station.id}>
             <a
               href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}

@@ -31,7 +31,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
       })
       return {
         status: {
-          code: 'OK',
+          code: 200,
           msg: undefined
         },
         reqLocation: location,
@@ -43,7 +43,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
 
   // no stations found after maxing out the range
   return makeStationsError({
-    code: '404',
+    code: 404,
     msg: `No stations found within ${range} miles of location (${coordsToString(location)}).`
   }, location)
 }

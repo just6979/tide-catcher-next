@@ -13,7 +13,7 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
   if (stations == null || stations.length == 0) {
     return {
       status: {
-        code: 'Error',
+        code: 404,
         msg: `No stations found for ID: ${id}`
       },
       reqLocation: ZERO_COORDS,
@@ -25,7 +25,7 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
   const station = stations[0]
   return {
     status: {
-      code: 'OK',
+      code: 200,
       msg: undefined
     },
     reqLocation: ZERO_COORDS,

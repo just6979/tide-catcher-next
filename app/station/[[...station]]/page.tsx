@@ -11,7 +11,7 @@ export default function StationFromStation() {
 
   const initialStationsData: StationsResponse = {
     status: {
-      code: '',
+      code: 200,
       msg: undefined
     },
     reqLocation: ZERO_COORDS,
@@ -20,22 +20,28 @@ export default function StationFromStation() {
   }
 
   const [isLoading, setIsLoading] = useState(true)
-  const [stationsData, setStationsData] = useState(initialStationsData)
+  const [data, setData] = useState(initialStationsData)
 
   useEffect(() => {
     fetch(`/api/station/${stationId}`)
       .then((res) => res.json())
       .then((data: StationsResponse) => {
-        setStationsData(data)
+        setData(data)
         setIsLoading(false)
       })
   }, [stationId])
 
-  if (isLoading) return <p>Loading Station Info...</p>
-  if (stationsData.status.code != 'OK') return <p>Error: {stationsData.status.msg}</p>
+  if (isLoading) {
+    return <p>Loading Station with ID {stationId}...</p>
+  }
+  if (!data || !('stations' in data) || !(data.stations.length > 0)) {
+    return <p>No Station with ID {stationId} found.</p>
+  }
+  if (data.status.code != 200) {
+    return <p>Error: {data.status.code}: {data.status.msg}</p>
+  }
 
-  const stationItem: Station = stationsData['stations'][0]
-
+  const stationItem: Station = data.stations[0]
   return (
     <table className="request-info single-station">
       <caption>{stationItem.name}</caption>

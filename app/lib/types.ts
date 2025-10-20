@@ -4,7 +4,7 @@ export type Coords = {
 }
 
 export type Status = {
-  code: string | number
+  code: number
   msg: string | undefined
 }
 

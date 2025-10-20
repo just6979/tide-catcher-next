@@ -15,7 +15,7 @@ export default function TidesFromLocation() {
 
   const initialData: TidesResponse = {
     status: {
-      code: '',
+      code: 200,
       msg: undefined
     },
     reqLocation: ZERO_COORDS,
@@ -76,19 +76,24 @@ export default function TidesFromLocation() {
       })
   }, [location])
 
-  if (isLocating) return <p>Getting your location...</p>
-  if (locationError != '') return (
-    <p>
-      Error getting location:
-      <br/>
-      {locationError}
-    </p>
-  )
-  if (isLoading) return <p>Loading Tides Data for [{location}]...</p>
-  if (!data) return <p>No Tides Data found.</p>
-  if (data.status.code != 'OK') return <p>Error: {data.status.msg}</p>
+  if (isLocating) {
+    return <p>Getting your location...</p>
+  }
+  if (locationError != '') {
+    return (<p>
+      Error getting location: {locationError}
+    </p>)
+  }
 
-  /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
+  if (isLoading) {
+    return <p>Loading Tides Data for [{location}]...</p>
+  }
+  if (!data || !('tides' in data) || !(data.tides.length > 0)) {
+    return <p>No Tides Data for [{location}] found.</p>
+  }
+  if (data.status.code != 200) {
+    return <p>Error: ${data.status.code}: {data.status.msg}</p>
+  }
 
   const reqTime = new Date(data.reqTimestamp).toLocaleString()
   return (

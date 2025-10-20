@@ -52,7 +52,7 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
 
   const response = {
     status: {
-      code: 'OK',
+      code: 200,
       msg: undefined
     },
     reqLocation: ZERO_COORDS,
