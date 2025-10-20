@@ -1,4 +1,4 @@
-import {ApiResponse, Coords, StationsResponse, TidesResponse} from '@/app/lib/types'
+import type {ApiResponse, Coords, StationsResponse, TidesResponse} from '@/app/lib/types'
 
 /* Plum Island South */
 export const defaultStation = '8441241'

@@ -1,5 +1,5 @@
 import {ZERO_COORDS} from '@/app/lib/constants'
-import {Coords} from '@/app/lib/types'
+import type {Coords} from '@/app/lib/types'
 
 export function coordsFromLatLon(lat: number, lon: number): Coords {
   if (lat < -90 || lat > 90) {

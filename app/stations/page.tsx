@@ -2,7 +2,7 @@
 
 import {EMPTY_STATION_RESPONSE} from '@/app/lib/constants'
 import {coordsToString} from '@/app/lib/coords'
-import {StationsResponse} from '@/app/lib/types'
+import type {StationsResponse} from '@/app/lib/types'
 import Link from 'next/link'
 import {useSearchParams} from 'next/navigation'
 import {useEffect, useState} from 'react'

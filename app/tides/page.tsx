@@ -2,7 +2,7 @@
 
 import {EMPTY_TIDES_RESPONSE, GEOLOCATION_ERRORS} from '@/app/lib/constants'
 import {coordsToString} from '@/app/lib/coords'
-import {Tide, TidesResponse} from '@/app/lib/types'
+import type {Tide, TidesResponse} from '@/app/lib/types'
 import {useEffect, useState} from 'react'
 
 export default function TidesFromLocation() {
