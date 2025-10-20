@@ -2,8 +2,10 @@ import {coordsFromLatLon, coordsToString} from '@/app/lib/coords'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
 import type {Coords, NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
+import {UTCDate} from '@date-fns/utc'
 
 export async function stationsFromCoords(location: Coords, count = Infinity, initialRange = 10): Promise<StationsResponse> {
+  const utcDate = new UTCDate()
   let range = initialRange / 2
   let attempts = 5
 
@@ -15,7 +17,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
       `/mdapi/prod/webapi/tidepredstations.json?lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     )
 
-    if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg})
+    if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg}, utcDate)
 
     const stations: NoaaTidePredStation[] = data['stationList']
     if (stations != null) {
@@ -31,9 +33,9 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
       })
       return {
         status: {
-          code: 200,
-          msg: undefined
+          code: 200
         },
+        reqTimestamp: utcDate.toISOString(),
         reqLocation: location,
         count: stationsOut.length,
         stations: stationsOut
@@ -45,5 +47,5 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
   return makeStationsError({
     code: 404,
     msg: `No stations found within ${range} miles of location (${coordsToString(location)}).`
-  }, location)
+  }, utcDate, location)
 }

@@ -2,11 +2,14 @@ import {coordsFromLatLon, ZERO_COORDS} from '@/app/lib/coords'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
 import type {NoaaCoOpsStation, StationsResponse} from '@/app/lib/types'
+import {UTCDate} from '@date-fns/utc'
 
 export async function stationsFromStation(id: string): Promise<StationsResponse> {
+  const utcDate = new UTCDate()
+
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
 
-  if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg})
+  if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg}, utcDate)
 
   const stations: NoaaCoOpsStation[] = data['stations']
 
@@ -16,6 +19,7 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
         code: 404,
         msg: `No stations found for ID: ${id}`
       },
+      reqTimestamp: utcDate.toISOString(),
       reqLocation: ZERO_COORDS,
       count: [].length,
       stations: []
@@ -25,9 +29,9 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
   const station = stations[0]
   return {
     status: {
-      code: 200,
-      msg: undefined
+      code: 200
     },
+    reqTimestamp: utcDate.toISOString(),
     reqLocation: ZERO_COORDS,
     count: 1,
     stations: [{

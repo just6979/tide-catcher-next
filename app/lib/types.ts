@@ -4,8 +4,8 @@ export interface Coords {
 }
 
 export interface Status {
-  code: string | number
-  msg: string | undefined
+  code: number
+  msg?: string
 }
 
 export interface Station {
@@ -27,17 +27,19 @@ export interface Tide {
   type: string
 }
 
-export interface StationsResponse {
+export interface ApiResponse {
   status: Status
+  reqTimestamp: string
   reqLocation: Coords
+}
+
+export interface StationsResponse extends ApiResponse {
   count: number
   stations: Station[]
 }
 
-export interface TidesResponse {
-  status: Status
-  reqLocation: Coords
-  reqTimestamp: string
+
+export interface TidesResponse extends ApiResponse {
   station: Station
   tides: Tide[]
 }

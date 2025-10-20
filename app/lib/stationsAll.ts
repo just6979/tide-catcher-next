@@ -3,8 +3,10 @@ import {buildNoaaUrl, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
 import {check, initStorage, read, write} from '@/app/lib/storage'
 import type {NoaaTidePredStation, Station, StationsResponse} from '@/app/lib/types'
+import {UTCDate} from '@date-fns/utc'
 
 export async function stationsAll(forceFetch = false): Promise<StationsResponse> {
+  const utcDate = new UTCDate()
   initStorage()
 
   if (!forceFetch) {
@@ -31,13 +33,13 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
   const data = await fetchNoaaUrl(path)
 
   if ('errorMsg' in data) {
-    return makeStationsError({code: data.errorCode, msg: data.errorMsg})
+    return makeStationsError({code: data.errorCode, msg: data.errorMsg}, utcDate)
   }
 
   const stationList: NoaaTidePredStation[] = data['stationList']
 
   if (stationList == null) {
-    return makeStationsError({code: 404, msg: 'No stations found.'})
+    return makeStationsError({code: 404, msg: 'No stations found.'}, utcDate)
   }
 
   const stations: Station[] = stationList.map((station: NoaaTidePredStation): Station => {
@@ -52,9 +54,9 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
 
   const response = {
     status: {
-      code: 200,
-      msg: undefined
+      code: 200
     },
+    reqTimestamp: utcDate.toISOString(),
     reqLocation: ZERO_COORDS,
     count: stations.length,
     stations: stations

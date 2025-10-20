@@ -11,10 +11,10 @@ export default function StationFromStation() {
 
   const initialStationsData: StationsResponse = {
     status: {
-      code: 200,
-      msg: undefined
+      code: 200
     },
     reqLocation: ZERO_COORDS,
+    reqTimestamp: '',
     count: 0,
     stations: []
   }
