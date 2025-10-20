@@ -10,8 +10,10 @@ export default function StationsAll() {
   const isRefreshed = useSearchParams().has('refreshed')
 
   const initialStationsData: StationsResponse = {
-    status: '',
-    message: '',
+    status: {
+      code: '',
+      msg: undefined
+    },
     reqLocation: ZERO_COORDS,
     count: 0,
     stations: []
@@ -31,6 +33,7 @@ export default function StationsAll() {
 
   if (isLoading) return <p>Loading Stations List...</p>
   if (!stationsData) return <p>No Stations List found.</p>
+  if (stationsData.status.code != 'OK') return <p>Error: {stationsData.status.msg}</p>
 
   const stations = stationsData.stations
 

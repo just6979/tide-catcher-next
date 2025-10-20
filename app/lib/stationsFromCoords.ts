@@ -15,11 +15,7 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
       `/mdapi/prod/webapi/tidepredstations.json?lat=${(location.lat)}&lon=${(location.lon)}&range=${range}`
     )
 
-    if ('errorMsg' in data) {
-      return makeStationsError(
-        `${data.errorCode}: ${data.errorMsg}`
-      )
-    }
+    if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg})
 
     const stations: NoaaTidePredStation[] = data['stationList']
     if (stations != null) {
@@ -34,8 +30,10 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
         }
       })
       return {
-        status: 'OK',
-        message: '',
+        status: {
+          code: 'OK',
+          msg: undefined
+        },
         reqLocation: location,
         count: stationsOut.length,
         stations: stationsOut
@@ -44,5 +42,8 @@ export async function stationsFromCoords(location: Coords, count = Infinity, ini
   } while (attempts > 0)
 
   // no stations found after maxing out the range
-  return makeStationsError(`No stations found within ${range} miles of location (${coordsToString(location)}).`, location)
+  return makeStationsError({
+    code: '404',
+    msg: `No stations found within ${range} miles of location (${coordsToString(location)}).`
+  }, location)
 }

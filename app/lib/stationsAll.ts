@@ -31,13 +31,13 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
   const data = await fetchNoaaUrl(path)
 
   if ('errorMsg' in data) {
-    return makeStationsError(`${data.errorCode}: ${data.errorMsg}`)
+    return makeStationsError({code: data.errorCode, msg: data.errorMsg})
   }
 
   const stationList: NoaaTidePredStation[] = data['stationList']
 
   if (stationList == null) {
-    return makeStationsError('No stations found.')
+    return makeStationsError({code: 404, msg: 'No stations found.'})
   }
 
   const stations: Station[] = stationList.map((station: NoaaTidePredStation): Station => {
@@ -51,8 +51,10 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
   })
 
   const response = {
-    status: 'OK',
-    message: '',
+    status: {
+      code: 'OK',
+      msg: undefined
+    },
     reqLocation: ZERO_COORDS,
     count: stations.length,
     stations: stations

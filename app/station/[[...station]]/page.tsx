@@ -10,8 +10,10 @@ export default function StationFromStation() {
   const stationId = station && station.length > 0 ? station[0] : ''
 
   const initialStationsData: StationsResponse = {
-    status: '',
-    message: '',
+    status: {
+      code: '',
+      msg: undefined
+    },
     reqLocation: ZERO_COORDS,
     count: 0,
     stations: []
@@ -30,7 +32,7 @@ export default function StationFromStation() {
   }, [stationId])
 
   if (isLoading) return <p>Loading Station Info...</p>
-  if (stationsData.status != 'OK') return <p>Error: {stationsData.message}</p>
+  if (stationsData.status.code != 'OK') return <p>Error: {stationsData.status.msg}</p>
 
   const stationItem: Station = stationsData['stations'][0]
 

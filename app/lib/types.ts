@@ -3,6 +3,11 @@ export interface Coords {
   lon: number
 }
 
+export interface Status {
+  code: string | number
+  msg: string | undefined
+}
+
 export interface Station {
   id: string
   location: Coords
@@ -23,16 +28,14 @@ export interface Tide {
 }
 
 export interface StationsResponse {
-  status: string
-  message: string
+  status: Status
   reqLocation: Coords
   count: number
   stations: Station[]
 }
 
 export interface TidesResponse {
-  status: string
-  message: string
+  status: Status
   reqLocation: Coords
   reqTimestamp: string
   station: Station
@@ -57,7 +60,7 @@ export interface NoaaCoOpsStation {
 }
 
 export interface NoaaTidePrediction {
-  t: string,
-  v: string,
+  t: string
+  v: string
   type: string
 }

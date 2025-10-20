@@ -24,10 +24,9 @@ async function processTides(
 ): Promise<TidesResponse> {
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-  if (stationData.status !== 'OK' || stationData.stations.length == 0) {
+  if (stationData.status.code !== 'OK' || stationData.stations.length == 0) {
     return {
       status: stationData.status,
-      message: `Error calling NOAA API: ${stationData.message}`,
       reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
       station: emptyStation,
@@ -71,8 +70,10 @@ async function processTides(
 
   if ('error' in data) {
     return {
-      status: 'Error',
-      message: `Error calling NOAA API: ${('message' in data.error ? data.error.message : 'Unknown error')}`,
+      status: {
+        code: 'Error',
+        msg: `Error calling NOAA API: ${('message' in data.error ? data.error.message : 'Unknown error')}`
+      },
       reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
       station: station,
@@ -102,8 +103,10 @@ async function processTides(
   })
 
   return {
-    status: 'OK',
-    message: '',
+    status: {
+      code: 'OK',
+      msg: undefined
+    },
     reqTimestamp: nowDate.toISOString(),
     reqLocation: reqLocation,
     station: station,

@@ -6,16 +6,16 @@ import type {NoaaCoOpsStation, StationsResponse} from '@/app/lib/types'
 export async function stationsFromStation(id: string): Promise<StationsResponse> {
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
 
-  if ('errorMsg' in data) {
-    return makeStationsError(`${data.errorCode}: ${data.errorMsg}`)
-  }
+  if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg})
 
   const stations: NoaaCoOpsStation[] = data['stations']
 
   if (stations == null || stations.length == 0) {
     return {
-      status: 'Error',
-      message: `No stations found for ID: ${id}`,
+      status: {
+        code: 'Error',
+        msg: `No stations found for ID: ${id}`
+      },
       reqLocation: ZERO_COORDS,
       count: [].length,
       stations: []
@@ -24,8 +24,10 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
 
   const station = stations[0]
   return {
-    status: 'OK',
-    message: '',
+    status: {
+      code: 'OK',
+      msg: undefined
+    },
     reqLocation: ZERO_COORDS,
     count: 1,
     stations: [{

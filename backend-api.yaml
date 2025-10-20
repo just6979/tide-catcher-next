@@ -183,6 +183,18 @@ components:
 
   schemas:
 
+    Status:
+      description: The status of the request
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+          default: ""
+        example:
+
+
     Location:
       description: Structured latitude and longitude
       type: object
@@ -238,9 +250,9 @@ components:
       type: object
       properties:
         status:
-          type: string
-        message:
-          type: string
+          type: object
+          items:
+            $ref: "#/components/schemas/Status"
         reqLocation:
           type: object
           items:
@@ -253,8 +265,10 @@ components:
             $ref: "#/components/schemas/Station"
       example:
         {
-          "status": "OK",
-          "message": "",
+          "status": {
+            code: "OK",
+            message: ""
+          },
           "reqLocation": {
             "lat": 42.710,
             "lon": -70.788
@@ -322,9 +336,9 @@ components:
       type: object
       properties:
         status:
-          type: string
-        message:
-          type: string
+          type: object
+          items:
+            $ref: "#/components/schemas/Status"
         reqTimestamp:
           type: string
           format: date-time
@@ -343,8 +357,10 @@ components:
             $ref: "#/components/schemas/Tide"
       example:
         {
-          "status": "OK",
-          "message": "",
+          "status": {
+            code: "OK",
+            message: ""
+          },
           "reqTimestamp": "2025-10-15T19:22:58.605Z",
           "reqLocation": {
             "lat": 42.710,

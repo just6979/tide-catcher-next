@@ -14,7 +14,10 @@ export default function TidesFromLocation() {
   const nowTime = new Date()
 
   const initialData: TidesResponse = {
-    message: '',
+    status: {
+      code: '',
+      msg: undefined
+    },
     reqLocation: ZERO_COORDS,
     reqTimestamp: '',
     station: {
@@ -24,7 +27,6 @@ export default function TidesFromLocation() {
       eTidesName: '',
       tzOffset: 0
     },
-    status: '',
     tides: []
   }
 
@@ -84,6 +86,7 @@ export default function TidesFromLocation() {
   )
   if (isLoading) return <p>Loading Tides Data for [{location}]...</p>
   if (!data) return <p>No Tides Data found.</p>
+  if (data.status.code != 'OK') return <p>Error: {data.status.msg}</p>
 
   /* Google Maps URL format is /maps/place/<pinLat>,<pinLon>/@<centerLat>,<centerLon>,<zoomlevel>z */
 
