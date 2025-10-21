@@ -4,12 +4,13 @@ import {TidesElement} from '@/app/elements/tidesElement'
 import {defaultLocation, EMPTY_TIDES_RESPONSE} from '@/app/lib/constants'
 import type {TidesResponse} from '@/app/lib/types'
 import {useParams} from 'next/navigation'
-import {useEffect, useState} from 'react'
+import {useEffect, useMemo, useState} from 'react'
 
 export default function TidesFromStation() {
-  const nowDate = new Date()
   const {loc} = useParams<{ loc: string }>()
   const location = loc && loc.length > 0 ? decodeURIComponent(loc[0]) : defaultLocation
+
+  const nowDate = useMemo(() => new Date(), [])
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_TIDES_RESPONSE)
@@ -25,7 +26,7 @@ export default function TidesFromStation() {
         setData(data)
         setIsLoading(false)
       })
-  }, [location])
+  }, [location, nowDate])
 
   if (isLoading) {
     return <p>Loading Tides near [{location}]...</p>
