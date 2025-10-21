@@ -1,7 +1,8 @@
 import {coordsToString} from '@/app/lib/coords'
 import type {Tide, TidesResponse} from '@/app/lib/types'
 
-export function TidesElement(data: TidesResponse, nowDate: Date) {
+export default function TidesElement(props: {data: TidesResponse, nowDate: Date}) {
+  const {data, nowDate} = props
   const reqLoc = coordsToString(data.reqLocation)
   const stationLoc = coordsToString(data.station.location)
   return (

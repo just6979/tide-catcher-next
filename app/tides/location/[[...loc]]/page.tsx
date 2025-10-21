@@ -1,14 +1,17 @@
 'use client'
 
-import {TidesElement} from '@/app/elements/tidesElement'
+import TidesElement from '@/app/elements/TidesElement'
 import {defaultLocation, EMPTY_TIDES_RESPONSE} from '@/app/lib/constants'
 import type {TidesResponse} from '@/app/lib/types'
 import {useParams} from 'next/navigation'
 import {useEffect, useMemo, useState} from 'react'
 
-export default function TidesFromStation() {
-  const {loc} = useParams<{ loc: string }>()
-  const location = loc && loc.length > 0 ? decodeURIComponent(loc[0]) : defaultLocation
+export default function TidesFromStation(props: { location: string }) {
+  let location = props.location
+  if (!location) {
+    const {loc} = useParams<{ loc?: string }>()
+    location = loc && loc.length > 0 ? decodeURIComponent(loc[0]) : defaultLocation
+  }
 
   const nowDate = useMemo(() => new Date(), [])
 
@@ -38,5 +41,5 @@ export default function TidesFromStation() {
     return <p>Error: {data.status.code}: {data.status.msg}</p>
   }
 
-  return TidesElement(data, nowDate)
+  return <TidesElement data={data} nowDate={nowDate}/>
 }

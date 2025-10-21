@@ -1,6 +1,6 @@
 'use client'
 
-import {TidesElement} from '@/app/elements/tidesElement'
+import TidesElement from '@/app/elements/TidesElement'
 import {defaultStation, EMPTY_TIDES_RESPONSE} from '@/app/lib/constants'
 import type {TidesResponse} from '@/app/lib/types'
 import {useParams} from 'next/navigation'
@@ -38,5 +38,5 @@ export default function TidesFromCoords() {
     return <p>Error: {data.status.code}: {data.status.msg}</p>
   }
 
-  return TidesElement(data, nowDate)
+  return <TidesElement data={data} nowDate={nowDate}/>
 }
