@@ -109,6 +109,10 @@ tbody > .future ~ .future {
   text-align: start;
 }
 
+.external {
+  text-decoration: none;
+}
+
 #footer {
   border-top: dashed thin;
   font-size: 50%;
