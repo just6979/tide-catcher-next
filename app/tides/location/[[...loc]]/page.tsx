@@ -31,7 +31,7 @@ export default function TidesFromStation() {
     return <p>Loading Tides near [{location}]...</p>
   }
   if (!data || !('tides' in data) || !(data.tides.length > 0)) {
-    return <p>No Tides near [{location}] found.</p>
+    return <p>No Tides found near [{location}].</p>
   }
   if (data.status.code != 200) {
     return <p>Error: {data.status.code}: {data.status.msg}</p>

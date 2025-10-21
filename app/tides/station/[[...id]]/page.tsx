@@ -28,10 +28,10 @@ export default function TidesFromCoords() {
   }, [stationId])
 
   if (isLoading) {
-    return <p>Loading Station with ID {stationId}...</p>
+    return <p>Loading Tides from Station {stationId}...</p>
   }
   if (!data || !('tides' in data) || !(data.tides.length > 0)) {
-    return <p>No Station with ID {stationId} found.</p>
+    return <p>No Tides found for Station {stationId}.</p>
   }
   if (data.status.code != 200) {
     return <p>Error: {data.status.code}: {data.status.msg}</p>
