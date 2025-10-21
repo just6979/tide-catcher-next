@@ -154,3 +154,9 @@ tbody > .future ~ .future {
 .single-station caption {
   font-size: 133%;
 }
+
+#mode-selector ul {
+  list-style: none;
+  padding-inline-start: 0;
+  line-height: 150%;
+}
