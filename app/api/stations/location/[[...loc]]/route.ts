@@ -4,24 +4,24 @@ import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {StationsResponse} from '@/app/lib/types'
 import {UTCDate} from '@date-fns/utc'
 
-export async function GET(request: Request, {params}: { params: Promise<{ location?: string[] | undefined }> }) {
-  const {location} = await params
-  const reqLocation = location && location.length > 0 ? location[0] : defaultLocation
+export async function GET(request: Request, {params}: { params: Promise<{ loc?: string[] | undefined }> }) {
+  const {loc} = await params
+  const location = loc && loc.length > 0 ? loc[0] : defaultLocation
 
   let responseData: StationsResponse
-  const locationString = coordsFromString(reqLocation)
-  if (!locationString) {
+  const coords = coordsFromString(location)
+  if (!coords) {
     responseData = {
       status: {
         code: 404,
-        msg: `Invalid location: ${reqLocation}`
+        msg: `Invalid location: ${location}`
       },
       reqTimestamp: new UTCDate().toISOString(),
       count: 0,
       stations: []
     }
   } else {
-    responseData = await stationsFromCoords(locationString, 10)
+    responseData = await stationsFromCoords(coords, 10)
   }
 
   return Response.json(responseData)

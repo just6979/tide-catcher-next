@@ -4,21 +4,21 @@ import {tidesFromCoords} from '@/app/lib/tides'
 import {TidesResponse} from '@/app/lib/types'
 import {UTCDate} from '@date-fns/utc'
 
-export async function GET(request: Request, {params}: { params: Promise<{ location?: string[] | undefined }> }) {
+export async function GET(request: Request, {params}: { params: Promise<{ loc?: string[] | undefined }> }) {
   const utcDate = new UTCDate()
-  const {location} = await params
-  const reqLocation = location && location.length > 0 ? location[0] : defaultLocation
+  const {loc} = await params
+  const location = loc && loc.length > 0 ? loc[0] : defaultLocation
 
   const headersList = request.headers
   const tzOffset = headersList.get('X-Tidecatcher-Tz-Offset') || undefined
 
   let responseData: TidesResponse
-  const locationString = coordsFromString(reqLocation)
+  const locationString = coordsFromString(location)
   if (!locationString) {
     responseData = {
       status: {
         code: 404,
-        msg: `Invalid location: ${reqLocation}`
+        msg: `Invalid location: ${location}`
       },
       reqTimestamp: utcDate.toISOString(),
       station: EMPTY_STATION,

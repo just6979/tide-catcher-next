@@ -10,7 +10,6 @@ import {useEffect, useState} from 'react'
 export default function StationsAll() {
   const isRefreshed = useSearchParams().has('refreshed')
 
-
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 

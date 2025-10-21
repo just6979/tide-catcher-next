@@ -7,8 +7,8 @@ import {useParams} from 'next/navigation'
 import {useEffect, useState} from 'react'
 
 export default function StationFromStation() {
-  const {station} = useParams<{ station: string }>()
-  const stationId = station && station.length > 0 ? station[0] : defaultStation
+  const {id} = useParams<{ id: string }>()
+  const stationId = id && id.length > 0 ? id[0] : defaultStation
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
