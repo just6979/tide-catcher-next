@@ -1,4 +1,3 @@
-import {ZERO_COORDS} from '@/app/lib/constants'
 import {coordsFromLatLon} from '@/app/lib/coords'
 import {buildNoaaUrl, fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
@@ -58,7 +57,6 @@ export async function stationsAll(forceFetch = false): Promise<StationsResponse>
       code: 200
     },
     reqTimestamp: utcDate.toISOString(),
-    reqLocation: ZERO_COORDS,
     count: stations.length,
     stations: stations
   }

@@ -1,7 +1,6 @@
-import {ZERO_COORDS} from '@/app/lib/constants'
-import type {StationsResponse, Status} from '@/app/lib/types'
+import type {Coords, StationsResponse, Status} from '@/app/lib/types'
 
-export function makeStationsError(status: Status, timestamp: Date, location = ZERO_COORDS): StationsResponse {
+export function makeStationsError(status: Status, timestamp: Date, location?: Coords): StationsResponse {
   return {
     status: status,
     reqTimestamp: timestamp.toISOString(),

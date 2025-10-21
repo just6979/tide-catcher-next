@@ -29,14 +29,17 @@ export function TidesElement(data: TidesResponse, nowDate: Date) {
           <td>Request Time</td>
           <td>{new Date(data.reqTimestamp).toLocaleString()}</td>
         </tr>
-        <tr>
-          <td>Your Location</td>
-          <td>[<a
-            href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
-            target="_blank">{coordsToString(data.reqLocation)}
-          </a>]
-          </td>
-        </tr>
+        {data.reqLocation != undefined &&
+          <tr>
+            <td>Your Location</td>
+            <td>[<a
+              href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
+              target="_blank">{coordsToString(data.reqLocation)}
+            </a>
+              ]
+            </td>
+          </tr>
+        }
         <tr>
           <td>Tides <a href="/stations">Station</a></td>
           <td><a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${(data.station.id)}`}

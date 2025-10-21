@@ -1,4 +1,4 @@
-import {EMPTY_STATION, WEEKDAYS, ZERO_COORDS} from '@/app/lib/constants'
+import {EMPTY_STATION, WEEKDAYS} from '@/app/lib/constants'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {stationsFromCoords} from '@/app/lib/stationsFromCoords'
 import {stationsFromStation} from '@/app/lib/stationsFromStation'
@@ -9,16 +9,16 @@ import {formatISO, subHours} from 'date-fns'
 
 export async function tidesFromCoords(location: Coords, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromCoords(location, 1)
-  return await processTides(stationData, new UTCDate(), location, tzOffset)
+  return await processTides(stationData, new UTCDate(), tzOffset, location)
 }
 
 export async function tidesFromStation(stationId: string, tzOffset?: string): Promise<TidesResponse> {
   const stationData = await stationsFromStation(stationId)
-  return await processTides(stationData, new Date(), ZERO_COORDS, tzOffset)
+  return await processTides(stationData, new Date(), tzOffset)
 }
 
 async function processTides(
-  stationData: StationsResponse, nowDate: Date, reqLocation: Coords, tzOffset?: string
+  stationData: StationsResponse, nowDate: Date, tzOffset?: string, reqLocation?: Coords
 ): Promise<TidesResponse> {
   if (stationData.status.code != 200 || stationData.stations.length == 0) {
     return {

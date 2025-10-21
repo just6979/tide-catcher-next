@@ -10,7 +10,7 @@ export interface Status {
 
 export interface Station {
   id: string
-  location: Coords
+  location?: Coords
   name: string
   eTidesName: string
   tzOffset: number
@@ -30,7 +30,7 @@ export interface Tide {
 export interface ApiResponse {
   status: Status
   reqTimestamp: string
-  reqLocation: Coords
+  reqLocation?: Coords
 }
 
 export interface StationsResponse extends ApiResponse {

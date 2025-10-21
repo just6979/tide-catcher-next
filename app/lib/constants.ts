@@ -1,4 +1,4 @@
-import type {ApiResponse, Coords, StationsResponse, TidesResponse} from '@/app/lib/types'
+import type {ApiResponse, StationsResponse, TidesResponse} from '@/app/lib/types'
 
 /* Plum Island South */
 export const defaultStation = '8441241'
@@ -12,11 +12,8 @@ export const GEOLOCATION_ERRORS = ['',
   'TIMEOUTNo location data acquired in the time allotted.'
 ]
 
-export const ZERO_COORDS: Coords = {lat: 0, lon: 0}
-
 export const EMPTY_STATION = {
   id: '',
-  location: ZERO_COORDS,
   name: '',
   eTidesName: '',
   tzOffset: 0
@@ -26,8 +23,7 @@ export const EMPTY_API_RESPONSE: ApiResponse = {
   status: {
     code: 200
   },
-  reqTimestamp: '',
-  reqLocation: ZERO_COORDS
+  reqTimestamp: ''
 }
 
 export const EMPTY_STATION_RESPONSE: StationsResponse = {

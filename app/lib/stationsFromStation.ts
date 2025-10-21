@@ -1,4 +1,3 @@
-import {ZERO_COORDS} from '@/app/lib/constants'
 import {coordsFromLatLon} from '@/app/lib/coords'
 import {fetchNoaaUrl} from '@/app/lib/noaa'
 import {makeStationsError} from '@/app/lib/stationsUtils'
@@ -21,7 +20,6 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
         msg: `No stations found for ID: ${id}`
       },
       reqTimestamp: utcDate.toISOString(),
-      reqLocation: ZERO_COORDS,
       count: [].length,
       stations: []
     }
@@ -33,7 +31,6 @@ export async function stationsFromStation(id: string): Promise<StationsResponse>
       code: 200
     },
     reqTimestamp: utcDate.toISOString(),
-    reqLocation: ZERO_COORDS,
     count: 1,
     stations: [{
       id: station.id,
