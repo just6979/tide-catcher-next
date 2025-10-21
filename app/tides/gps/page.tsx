@@ -1,7 +1,7 @@
 'use client'
 
+import TidesFromLocationElement from '@/app/components/TidesFromLocationElement'
 import {GEOLOCATION_ERRORS} from '@/app/lib/constants'
-import TidesFromLocation from '@/app/tides/location/[[...loc]]/page'
 import {useEffect, useState} from 'react'
 
 export default function TidesFromGeolocation() {
@@ -41,5 +41,5 @@ export default function TidesFromGeolocation() {
     </p>)
   }
 
-  return <TidesFromLocation location={location}/>
+  return <TidesFromLocationElement location={location}/>
 }
