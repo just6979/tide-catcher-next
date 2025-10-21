@@ -193,7 +193,10 @@ components:
           type: string
           default: ""
         example:
-
+          status: {
+            code: 200,
+            msg: "OK"
+          }
 
     Location:
       description: Structured latitude and longitude
