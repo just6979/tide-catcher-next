@@ -2,6 +2,8 @@ import {coordsToString} from '@/app/lib/coords'
 import type {Tide, TidesResponse} from '@/app/lib/types'
 
 export function TidesElement(data: TidesResponse, nowDate: Date) {
+  const reqLoc = coordsToString(data.reqLocation)
+  const stationLoc = coordsToString(data.station.location)
   return (
     <div>
       <table id="tides">
@@ -31,26 +33,29 @@ export function TidesElement(data: TidesResponse, nowDate: Date) {
         </tr>
         {data.reqLocation != undefined &&
           <tr>
-            <td>Your Location</td>
-            <td>[<a
-              href={`https://www.google.com/maps/place/${coordsToString(data.reqLocation)}/@${coordsToString(data.reqLocation)},12z`}
-              target="_blank">{coordsToString(data.reqLocation)}
-            </a>
-              ]
+            <td>
+              <a href={`https://www.google.com/maps/place/${reqLoc}/@${reqLoc},12z`} target="_blank">Your Location</a>
+            </td>
+            <td>
+              [<a href={`/tides/location/${reqLoc}`}>{reqLoc}</a>]
             </td>
           </tr>
         }
         <tr>
-          <td>Tides <a href="/stations">Station</a></td>
-          <td><a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${(data.station.id)}`}
-                 target="_blank">{data.station.id}</a></td>
+          <td>
+            <a href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${(data.station.id)}`}
+               target="_blank">Station ID</a>
+          </td>
+          <td>
+            <a href={`/tides/station/${data.station.id}`}>{data.station.id}</a>
+          </td>
         </tr>
         <tr>
-          <td>Tides Location</td>
-          <td>[<a
-            href={`https://www.google.com/maps/place/${coordsToString(data.station.location)}/@${coordsToString(data.station.location)},12z`}
-            target="_blank">{coordsToString(data.station.location)}
-          </a>]
+          <td><a href={`https://www.google.com/maps/place/${stationLoc}/@${stationLoc},12z`}
+                 target="_blank">Station Location</a>
+          </td>
+          <td>
+            [<a href={`/tides/location/${stationLoc}`}>{stationLoc}</a>]
           </td>
         </tr>
         </tbody>
