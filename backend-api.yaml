@@ -3,14 +3,14 @@ openapi: 3.0.0
 info:
   title: tide-catcher-next-backend
   description: Backend API serving the Tide Catcher Next frontend
-  version: '1.1'
+  version: "1.1"
 
 servers:
-  - url: 'http://localhost:8080'
+  - url: "http://localhost:8080"
     description: Development
-  - url: 'https://tide-catcher.justinwhite.net'
+  - url: "https://tide-catcher.justinwhite.net"
     description: Production
-  - url: 'https://tide-catcher-next.vercel.app'
+  - url: "https://tide-catcher-next.vercel.app"
     description: Alternate
 
 paths:
@@ -182,7 +182,6 @@ components:
       example: "42.710,-70.788"
 
   schemas:
-
     Status:
       description: The status of the request
       type: object
@@ -193,10 +192,7 @@ components:
           type: string
           default: ""
         example:
-          status: {
-            code: 200,
-            msg: "OK"
-          }
+          status: { code: 200, msg: "OK" }
 
     Location:
       description: Structured latitude and longitude
@@ -211,10 +207,7 @@ components:
           format: float
           description: Longitude
       example:
-        "location": {
-          "lat": 42.710,
-          "lon": -70.788
-        }
+        "location": { "lat": 42.710, "lon": -70.788 }
 
     Station:
       description: Station entity
@@ -239,13 +232,10 @@ components:
       example:
         {
           "id": "8441241",
-          "location": {
-            "lat": 42.710,
-            "lon": -70.788
-          },
+          "location": { "lat": 42.710, "lon": -70.788 },
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
-          "tzOffset": -5
+          "tzOffset": -5,
         }
 
     StationsResponse:
@@ -268,27 +258,19 @@ components:
             $ref: "#/components/schemas/Station"
       example:
         {
-          "status": {
-            code: "OK",
-            message: ""
-          },
-          "reqLocation": {
-            "lat": 42.710,
-            "lon": -70.788
-          },
+          "status": { code: "OK", message: "" },
+          "reqLocation": { "lat": 42.710, "lon": -70.788 },
           "count": 1,
-          "stations": [
-            {
-              "id": "8441241",
-              "location": {
-                "lat": 42.710,
-                "lon": -70.788
+          "stations":
+            [
+              {
+                "id": "8441241",
+                "location": { "lat": 42.710, "lon": -70.788 },
+                "name": "Plum Island South",
+                "eTidesName": "Plum Island South",
+                "tzOffset": -5,
               },
-              "name": "Plum Island South",
-              "eTidesName": "Plum Island South",
-              "tzOffset": -5
-            }
-          ]
+            ],
         }
 
     Tide:
@@ -331,7 +313,7 @@ components:
           "time": "13:16",
           "day": "Wed",
           "date": "10/15",
-          "height": 0.311
+          "height": 0.311,
         }
 
     TidesResponse:
@@ -360,35 +342,28 @@ components:
             $ref: "#/components/schemas/Tide"
       example:
         {
-          "status": {
-            code: "OK",
-            message: ""
-          },
+          "status": { code: "OK", message: "" },
           "reqTimestamp": "2025-10-15T19:22:58.605Z",
-          "reqLocation": {
-            "lat": 42.710,
-            "lon": -70.788
-          },
-          "station": {
-            "id": "8441241",
-            "location": {
-              "lat": 42.710,
-              "lon": -70.788
-            },
-            "name": "Plum Island South",
-            "eTidesName": "Plum Island Sound (south end)",
-            "tzOffset": -5
-          },
-          "tides": [
+          "reqLocation": { "lat": 42.710, "lon": -70.788 },
+          "station":
             {
-              "sourceDate": "2025-10-15 13:16",
-              "isoDate": "2025-10-15T17:16:00Z",
-              "localDate": "2025-10-15T13:16:00-04:00",
-              "type": "low",
-              "time": "13:16",
-              "day": "Wed",
-              "date": "10/15",
-              "height": 0.311
-            }
-          ]
+              "id": "8441241",
+              "location": { "lat": 42.710, "lon": -70.788 },
+              "name": "Plum Island South",
+              "eTidesName": "Plum Island Sound (south end)",
+              "tzOffset": -5,
+            },
+          "tides":
+            [
+              {
+                "sourceDate": "2025-10-15 13:16",
+                "isoDate": "2025-10-15T17:16:00Z",
+                "localDate": "2025-10-15T13:16:00-04:00",
+                "type": "low",
+                "time": "13:16",
+                "day": "Wed",
+                "date": "10/15",
+                "height": 0.311,
+              },
+            ],
         }

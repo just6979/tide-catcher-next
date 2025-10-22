@@ -1,5 +1,5 @@
-import {envs, initDeployEnv} from '@/app/lib/deployEnv'
-import {existsLocal, readLocal, writeLocal} from '@/app/lib/storageLocal'
+import { envs, initDeployEnv } from "@/app/lib/deployEnv"
+import { existsLocal, readLocal, writeLocal } from "@/app/lib/storageLocal"
 
 let initialized = false
 
@@ -10,13 +10,13 @@ export function initStorage() {
 
   const currentEnv = initDeployEnv()
   if (currentEnv === envs.LOCAL) {
-    console.log('Using LOCAL storage')
+    console.log("Using LOCAL storage")
   }
   if (currentEnv === envs.GCR) {
-    console.log('Using Google Cloud Storage')
+    console.log("Using Google Cloud Storage")
   }
   if (currentEnv === envs.VERCEL) {
-    console.log('Using Vercel Blob Storage')
+    console.log("Using Vercel Blob Storage")
   }
 
   initialized = true

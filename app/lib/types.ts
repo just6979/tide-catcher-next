@@ -38,7 +38,6 @@ export interface StationsResponse extends ApiResponse {
   stations: Station[]
 }
 
-
 export interface TidesResponse extends ApiResponse {
   station: Station
   tides: Tide[]

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link"
 
 export default async function Tides() {
   return (
@@ -9,7 +9,9 @@ export default async function Tides() {
           <Link href="/tides/gps">Nearby via GPS</Link>
         </li>
         <li>
-          <Link href="/tides/location/42.710,-70.788">Near a given location</Link>
+          <Link href="/tides/location/42.710,-70.788">
+            Near a given location
+          </Link>
         </li>
         <li>
           <Link href="/tides/station/8441241">From a specific station</Link>

@@ -5,7 +5,7 @@ export function buildNoaaUrl(path: string): string {
     console.error(`${path} is already a NOAA URL`)
     return path
   }
-  if (path.startsWith('/')) {
+  if (path.startsWith("/")) {
     return `${basePath}${path}`
   } else {
     return `${basePath}/${path}`
@@ -14,12 +14,14 @@ export function buildNoaaUrl(path: string): string {
 
 export async function fetchNoaaUrl(path: string) {
   try {
-    const noaaResponse = await fetch(buildNoaaUrl(path), {cache: 'force-cache'})
+    const noaaResponse = await fetch(buildNoaaUrl(path), {
+      cache: "force-cache",
+    })
     return await noaaResponse.json()
   } catch (error) {
     return {
-      errorMsg: (error instanceof Error) ? error.toString() : 'Unknown error',
-      errorCode: 500
+      errorMsg: error instanceof Error ? error.toString() : "Unknown error",
+      errorCode: 500,
     }
   }
 }

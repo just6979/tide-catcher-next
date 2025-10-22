@@ -1,20 +1,20 @@
-'use client'
+"use client"
 
-import {EMPTY_STATION_RESPONSE} from '@/app/lib/constants'
-import {coordsToString} from '@/app/lib/coords'
-import type {StationsResponse} from '@/app/lib/types'
-import Link from 'next/link'
-import {useSearchParams} from 'next/navigation'
-import {useEffect, useState} from 'react'
+import { EMPTY_STATION_RESPONSE } from "@/app/lib/constants"
+import { coordsToString } from "@/app/lib/coords"
+import type { StationsResponse } from "@/app/lib/types"
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export default function StationsAll() {
-  const isRefreshed = useSearchParams().has('refreshed')
+  const isRefreshed = useSearchParams().has("refreshed")
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 
   useEffect(() => {
-    fetch('/api/stations')
+    fetch("/api/stations")
       .then((res) => res.json())
       .then((data: StationsResponse) => {
         setData(data)
@@ -25,34 +25,47 @@ export default function StationsAll() {
   if (isLoading) {
     return <p>Loading Stations List...</p>
   }
-  if (!data || !('stations' in data) || !(data.stations.length > 0)) {
+  if (!data || !("stations" in data) || !(data.stations.length > 0)) {
     return <p>No Stations List found.</p>
   }
   if (data.status.code != 200) {
-    return <p>Error: {data.status.code}: {data.status.msg}</p>
+    return (
+      <p>
+        Error: {data.status.code}: {data.status.msg}
+      </p>
+    )
   }
 
   return (
     <div id="stations">
       <h2>Stations</h2>
       <p>
-        {data.count} stations available <span id="refresh">
-        (<Link href="/stations/refresh" replace>{isRefreshed ? 'Refresh Again' : 'Refresh'}</Link>)
-      </span>
+        {data.count} stations available{" "}
+        <span id="refresh">
+          (
+          <Link href="/stations/refresh" replace>
+            {isRefreshed ? "Refresh Again" : "Refresh"}
+          </Link>
+          )
+        </span>
       </p>
       <ul>
         {data.stations.map((station) => (
           <li key={station.id}>
             <a
               href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}
-              target="_blank">
+              target="_blank"
+            >
               {station.id}
-            </a> | {station.name} | [
+            </a>{" "}
+            | {station.name} | [
             <a
               href={`https://www.google.com/maps/place/${coordsToString(station.location)}/@${coordsToString(station.location)},12z`}
-              target="_blank">
+              target="_blank"
+            >
               {coordsToString(station.location)}
-            </a>]
+            </a>
+            ]
           </li>
         ))}
       </ul>

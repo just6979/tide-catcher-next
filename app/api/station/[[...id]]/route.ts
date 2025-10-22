@@ -1,13 +1,16 @@
-import {defaultStation} from '@/app/lib/constants'
-import {stationsFromStation} from '@/app/lib/stationsFromStation'
+import { defaultStation } from "@/app/lib/constants"
+import { stationsFromStation } from "@/app/lib/stationsFromStation"
 
-export async function GET(request: Request, {params}: { params: Promise<{ id?: string[] | undefined }> }) {
-  const {id} = await params
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id?: string[] | undefined }> },
+) {
+  const { id } = await params
   const stationId = id && id.length > 0 ? id[0] : defaultStation
 
   const responseData = await stationsFromStation(stationId)
 
   return new Response(JSON.stringify(responseData), {
-    headers: {'Content-Type': 'application/json'}
+    headers: { "Content-Type": "application/json" },
   })
 }

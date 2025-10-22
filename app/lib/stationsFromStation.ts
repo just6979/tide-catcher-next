@@ -1,43 +1,51 @@
-import {coordsFromLatLon} from '@/app/lib/coords'
-import {fetchNoaaUrl} from '@/app/lib/noaa'
-import {makeStationsError} from '@/app/lib/stationsUtils'
-import type {NoaaCoOpsStation, StationsResponse} from '@/app/lib/types'
-import {UTCDate} from '@date-fns/utc'
+import { coordsFromLatLon } from "@/app/lib/coords"
+import { fetchNoaaUrl } from "@/app/lib/noaa"
+import { makeStationsError } from "@/app/lib/stationsUtils"
+import type { NoaaCoOpsStation, StationsResponse } from "@/app/lib/types"
+import { UTCDate } from "@date-fns/utc"
 
-export async function stationsFromStation(id: string): Promise<StationsResponse> {
+export async function stationsFromStation(
+  id: string,
+): Promise<StationsResponse> {
   const utcDate = new UTCDate()
 
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
 
-  if ('errorMsg' in data) return makeStationsError({code: data.errorCode, msg: data.errorMsg}, utcDate)
+  if ("errorMsg" in data)
+    return makeStationsError(
+      { code: data.errorCode, msg: data.errorMsg },
+      utcDate,
+    )
 
-  const stations: NoaaCoOpsStation[] = data['stations']
+  const stations: NoaaCoOpsStation[] = data["stations"]
 
   if (stations == null || stations.length == 0) {
     return {
       status: {
         code: 404,
-        msg: `No stations found for ID: ${id}`
+        msg: `No stations found for ID: ${id}`,
       },
       reqTimestamp: utcDate.toISOString(),
       count: [].length,
-      stations: []
+      stations: [],
     }
   }
 
   const station = stations[0]
   return {
     status: {
-      code: 200
+      code: 200,
     },
     reqTimestamp: utcDate.toISOString(),
     count: 1,
-    stations: [{
-      id: station.id,
-      location: coordsFromLatLon(station.lat, station.lng),
-      name: station.name,
-      eTidesName: station.name,
-      tzOffset: Number(station.timezonecorr)
-    }]
+    stations: [
+      {
+        id: station.id,
+        location: coordsFromLatLon(station.lat, station.lng),
+        name: station.name,
+        eTidesName: station.name,
+        tzOffset: Number(station.timezonecorr),
+      },
+    ],
   }
 }
