@@ -1,9 +1,11 @@
 import {defineConfig, globalIgnores} from 'eslint/config'
-import nextPlugin from '@next/eslint-plugin-next'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTs from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier/flat'
 
 const eslintConfig = defineConfig([
-  nextPlugin.configs['core-web-vitals', 'next-typescript'],
+  ...nextVitals,
+  ...nextTs,
   prettier,
   // Override default ignores of eslint-config-next.
   globalIgnores([
