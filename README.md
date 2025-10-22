@@ -9,7 +9,7 @@ Web app to quickly display upcoming high & low tide data from nearest NOAA tide 
 
 Automated deploys at Google Cloud Run and Vercel, triggered by changes to
 the [main branch](https://github.com/just6979/tide-catcher-next/tree/main)
-at [Github](https://github.com/just6979/tide-catcher-next)
+at [GitHub](https://github.com/just6979/tide-catcher-next)
 
 * Main: https://tide-catcher.justinwhite.net
 * Alternate URL: https://tide-catcher-next-1072051472642.us-east1.run.app
