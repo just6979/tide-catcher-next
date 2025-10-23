@@ -170,6 +170,7 @@ paths:
 components:
   parameters:
     stationId:
+      description: "A Station ID: string of 7 digits, or 3 letters followed by 4 digits"
       in: path
       name: id
       required: true
@@ -177,8 +178,9 @@ components:
         type: string
       example: "8441241"
     location:
+      description: "A Location: string of 2 comma-separated numbers"
       in: path
-      name: location
+      name: loc
       required: true
       schema:
         type: string
@@ -197,11 +199,11 @@ components:
       properties:
         code:
           type: string
-        message:
+        msg:
           type: string
           default: ""
-        example:
-          status: { code: 200, msg: "OK" }
+      example:
+        status: { code: 200, msg: "OK" }
 
     Location:
       description: Structured latitude and longitude
@@ -225,7 +227,7 @@ components:
         id:
           type: string
           description: Unique ID of the station
-        location:
+        reqLocation:
           type: object
           items:
             $ref: "#/components/schemas/Location"
@@ -241,7 +243,7 @@ components:
       example:
         {
           "id": "8441241",
-          "location": { "lat": 42.710, "lon": -70.788 },
+          "reqLocation": { "lat": 42.710, "lon": -70.788 },
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
           "tzOffset": -5,
@@ -274,7 +276,7 @@ components:
             [
               {
                 "id": "8441241",
-                "location": { "lat": 42.710, "lon": -70.788 },
+                "reqLocation": { "lat": 42.710, "lon": -70.788 },
                 "name": "Plum Island South",
                 "eTidesName": "Plum Island South",
                 "tzOffset": -5,
@@ -286,14 +288,14 @@ components:
       description: Tide entity
       type: object
       properties:
-        source-date:
+        sourceDate:
           type: string
           description: Date exactly from NOAA API
-        iso-date:
+        isoDate:
           type: string
           format: date-time
           description: ISO formatted date and time of the tide
-        local-date:
+        localDate:
           type: string
           format: date-time
           description: ISO formatted date and time of the tide, possibly in a different timezone as iso-date
@@ -333,10 +335,10 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/Status"
-        reqTimestamp:
+        reqDatetime:
           type: string
           format: date-time
-          description: Requested timestamp
+          description: datetime of when the request started processing
         reqLocation:
           type: object
           items:
