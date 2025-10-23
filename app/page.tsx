@@ -1,5 +1,5 @@
-import TidesFromGeolocation from "@/app/tides/gps/page"
+import TidesChooser from "@/app/tides/page"
 
 export default async function Home() {
-  return <TidesFromGeolocation />
+  return <TidesChooser />
 }
