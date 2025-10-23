@@ -119,6 +119,8 @@ paths:
   /api/tides/location:
     get:
       description: list of next tides for the closest station to the default location
+      parameters:
+        - $ref: "#/components/parameters/tzOffsetHeader"
       responses:
         200:
           description: OK
@@ -132,6 +134,7 @@ paths:
       description: list of next tides for the closest station to the given location
       parameters:
         - $ref: "#/components/parameters/location"
+        - $ref: "#/components/parameters/tzOffsetHeader"
       responses:
         200:
           description: OK
@@ -180,6 +183,12 @@ components:
       schema:
         type: string
       example: "42.710,-70.788"
+    tzOffsetHeader:
+      description: "A Timezone Offset, in minutes, as a string"
+      in: header
+      name: "X-Tidecatcher-Tz-Offset"
+      schema:
+        type: string
 
   schemas:
     Status:
