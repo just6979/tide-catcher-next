@@ -165,3 +165,7 @@ tbody > .future ~ .future {
   padding-inline-start: 0;
   line-height: 150%;
 }
+
+#mode-selector form {
+  padding: 0.5em 0;
+}
