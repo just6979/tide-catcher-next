@@ -12,7 +12,7 @@
 {{host}}/api/station/location/{{location}}
 
 ### location that should have no stations in range
-{{host}}/api/station/location/{{badLocation}}
+{{host}}/api/station/location/{{emptyLocation}}
 
 ### single nearest station within 10 miles of default location: 42.710,-70.788
 {{host}}/api/station/location
@@ -22,6 +22,9 @@
 
 ### stations by default location: 42.710,-70.788
 {{host}}/api/stations/location
+
+### bad location
+{{host}}/api/stations/location/{{badLocation}}
 
 ### all stations
 {{host}}/api/stations
