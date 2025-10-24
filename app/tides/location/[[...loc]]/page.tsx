@@ -1,9 +1,9 @@
 "use client"
 
+import TidesFromGeolocation from "@/app/components/TidesFromGeolocationElement"
 import TidesFromLocationElement from "@/app/components/TidesFromLocationElement"
 import { defaultLocation } from "@/app/lib/constants"
 import { coordsFromString } from "@/app/lib/coords"
-import TidesFromGeolocation from "@/app/tides/gps/page"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 

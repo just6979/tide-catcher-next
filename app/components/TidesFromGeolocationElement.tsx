@@ -1,5 +1,3 @@
-"use client"
-
 import TidesFromLocationElement from "@/app/components/TidesFromLocationElement"
 import { GEOLOCATION_ERRORS } from "@/app/lib/constants"
 import { useEffect, useState } from "react"
