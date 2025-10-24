@@ -38,7 +38,7 @@ export default function TidesChooser() {
         </strong>
       </p>
       <p>
-        Nearby:&nbsp;
+        &nbsp;Nearby:&nbsp;
         <input
           id="gps-location"
           name="location"
@@ -52,7 +52,7 @@ export default function TidesChooser() {
       </p>
 
       <p>
-        <span>Location:&nbsp;</span>
+        <span>&nbsp;Coords:&nbsp;</span>
         <span>
           <input
             name="location"
