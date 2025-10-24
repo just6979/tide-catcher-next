@@ -19,7 +19,7 @@ export async function stationsFromStation(
 
   const stations: NoaaCoOpsStation[] = data["stations"]
 
-  if (stations == null || stations.length == 0) {
+  if (stations === null || stations.length === 0) {
     return {
       status: {
         code: 404,

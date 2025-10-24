@@ -17,7 +17,7 @@ export default function TidesElement(props: {
         <tbody>
           {data.tides.map((tide: Tide) => {
             const tideType: string = tide["type"]
-            const arrow: string = tideType == "high" ? "⤴" : "⤵"
+            const arrow: string = tideType === "high" ? "⤴" : "⤵"
             const prior =
               new Date(tide["isoDate"]) < nowDate ? "prior" : "future"
             return (

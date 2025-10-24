@@ -51,7 +51,7 @@ export async function stationsAll(
 
   const stationList: NoaaTidePredStation[] = data["stationList"]
 
-  if (stationList == null) {
+  if (stationList === null) {
     return makeStationsError({ code: 404, msg: "No stations found." }, utcDate)
   }
 

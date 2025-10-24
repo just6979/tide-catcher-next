@@ -35,7 +35,7 @@ async function processTides(
   tzOffset?: string,
   reqLocation?: Coords,
 ): Promise<TidesResponse> {
-  if (stationData.status.code != 200 || stationData.stations.length == 0) {
+  if (stationData.status.code != 200 || stationData.stations.length === 0) {
     return {
       status: stationData.status,
       reqTimestamp: nowDate.toISOString(),

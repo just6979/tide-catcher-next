@@ -32,7 +32,7 @@ export function coordsFromString(locationString: string): Coords | undefined {
 }
 
 export function coordsToString(coords: Coords | undefined): string {
-  if (coords == undefined) {
+  if (coords === undefined) {
     return "Unknown"
   }
   return `${coords.lat.toFixed(3)},${coords.lon.toFixed(3)}`

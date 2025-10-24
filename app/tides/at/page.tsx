@@ -14,7 +14,7 @@ export default function TidesAt() {
   const station = searchParams.get("station")
 
   if (location) {
-    if (location == "gps") {
+    if (location === "gps") {
       return <TidesFromGeolocation />
     }
     if (coordsFromString(location)) {
@@ -24,7 +24,7 @@ export default function TidesAt() {
   }
 
   if (station) {
-    if (station.length == 7) {
+    if (station.length === 7) {
       return <TidesFromStationElement id={station} />
     }
     return <Error msg={`Invalid station: ${station}`} />
