@@ -1,7 +1,7 @@
-import { coordsFromLatLon } from "@/app/lib/coords"
-import { fetchNoaaUrl } from "@/app/lib/noaa"
-import { makeStationsError } from "@/app/lib/stationsUtils"
-import type { NoaaCoOpsStation, StationsResponse } from "@/app/lib/types"
+import { coordsFromLatLon } from "@/app/_lib/coords"
+import { fetchNoaaUrl } from "@/app/_lib/noaa"
+import { makeStationsError } from "@/app/_lib/stationsUtils"
+import type { NoaaCoOpsStation, StationsResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 
 export async function stationsFromStation(

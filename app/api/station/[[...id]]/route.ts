@@ -1,5 +1,5 @@
-import { defaultStation } from "@/app/lib/constants"
-import { stationsFromStation } from "@/app/lib/stationsFromStation"
+import { defaultStation } from "@/app/_lib/constants"
+import { stationsFromStation } from "@/app/_lib/stationsFromStation"
 
 export async function GET(
   request: Request,

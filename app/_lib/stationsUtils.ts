@@ -1,4 +1,4 @@
-import type { Coords, StationsResponse, Status } from "@/app/lib/types"
+import type { Coords, StationsResponse, Status } from "@/app/_lib/types"
 
 export function makeStationsError(
   status: Status,

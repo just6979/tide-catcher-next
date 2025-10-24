@@ -1,5 +1,5 @@
-import { defaultStation } from "@/app/lib/constants"
-import { tidesFromStation } from "@/app/lib/tides"
+import { defaultStation } from "@/app/_lib/constants"
+import { tidesFromStation } from "@/app/_lib/tides"
 
 export async function GET(
   request: Request,

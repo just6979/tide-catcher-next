@@ -1,4 +1,4 @@
-import { stationsAll } from "@/app/lib/stationsAll"
+import { stationsAll } from "@/app/_lib/stationsAll"
 
 export async function GET() {
   // fetch all stations from NOAA

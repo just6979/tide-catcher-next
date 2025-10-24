@@ -1,5 +1,5 @@
-import TidesFromLocationElement from "@/app/components/TidesFromLocationElement"
-import { GEOLOCATION_ERRORS } from "@/app/lib/constants"
+import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
+import { GEOLOCATION_ERRORS } from "@/app/_lib/constants"
 import { useEffect, useState } from "react"
 
 export default function TidesFromGeolocation() {

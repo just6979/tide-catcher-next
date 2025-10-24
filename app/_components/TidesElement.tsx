@@ -1,5 +1,5 @@
-import { coordsToString } from "@/app/lib/coords"
-import type { Tide, TidesResponse } from "@/app/lib/types"
+import { coordsToString } from "@/app/_lib/coords"
+import type { Tide, TidesResponse } from "@/app/_lib/types"
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 

@@ -1,17 +1,17 @@
-import TidesElement from "@/app/components/TidesElement"
-import { EMPTY_TIDES_RESPONSE } from "@/app/lib/constants"
-import type { TidesResponse } from "@/app/lib/types"
+import TidesElement from "@/app/_components/TidesElement"
+import { EMPTY_TIDES_RESPONSE } from "@/app/_lib/constants"
+import type { TidesResponse } from "@/app/_lib/types"
 import { useEffect, useMemo, useState } from "react"
 
-export default function TidesFromLocationElement(props: { location: string }) {
-  const location = props.location
+export default function TidesFromStationElement(props: { id: string }) {
+  const stationId = props.id
   const nowDate = useMemo(() => new Date(), [])
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_TIDES_RESPONSE)
 
   useEffect(() => {
-    fetch(`/api/tides/location/${location}`, {
+    fetch(`/api/tides/station/${stationId}`, {
       headers: {
         "X-Tidecatcher-Tz-Offset": (
           nowDate.getTimezoneOffset() * -1
@@ -23,13 +23,13 @@ export default function TidesFromLocationElement(props: { location: string }) {
         setData(data)
         setIsLoading(false)
       })
-  }, [location, nowDate])
+  }, [nowDate, stationId])
 
   if (isLoading) {
-    return <p>Loading Tides near [{location}]...</p>
+    return <p>Loading Tides from Station {stationId}...</p>
   }
   if (!data || !("tides" in data) || !(data.tides.length > 0)) {
-    return <p>No Tides found near [{location}].</p>
+    return <p>No Tides found for Station {stationId}.</p>
   }
   if (data.status.code != 200) {
     return (

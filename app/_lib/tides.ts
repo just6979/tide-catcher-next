@@ -1,14 +1,14 @@
-import { EMPTY_STATION, WEEKDAYS } from "@/app/lib/constants"
-import { fetchNoaaUrl } from "@/app/lib/noaa"
-import { stationsFromCoords } from "@/app/lib/stationsFromCoords"
-import { stationsFromStation } from "@/app/lib/stationsFromStation"
+import { EMPTY_STATION, WEEKDAYS } from "@/app/_lib/constants"
+import { fetchNoaaUrl } from "@/app/_lib/noaa"
+import { stationsFromCoords } from "@/app/_lib/stationsFromCoords"
+import { stationsFromStation } from "@/app/_lib/stationsFromStation"
 import type {
   Coords,
   NoaaTidePrediction,
   StationsResponse,
   Tide,
   TidesResponse,
-} from "@/app/lib/types"
+} from "@/app/_lib/types"
 import { TZDateMini } from "@date-fns/tz"
 import { UTCDate } from "@date-fns/utc"
 import { formatISO, subHours } from "date-fns"

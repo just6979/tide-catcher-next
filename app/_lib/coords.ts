@@ -1,4 +1,4 @@
-import type { Coords } from "@/app/lib/types"
+import type { Coords } from "@/app/_lib/types"
 
 export function coordsFromLatLon(lat: number, lon: number): Coords | undefined {
   if (lat < -90 || lat > 90) {

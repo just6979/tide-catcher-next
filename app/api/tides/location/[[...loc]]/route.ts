@@ -1,7 +1,7 @@
-import { defaultLocation, EMPTY_STATION } from "@/app/lib/constants"
-import { coordsFromString } from "@/app/lib/coords"
-import { tidesFromCoords } from "@/app/lib/tides"
-import { TidesResponse } from "@/app/lib/types"
+import { defaultLocation, EMPTY_STATION } from "@/app/_lib/constants"
+import { coordsFromString } from "@/app/_lib/coords"
+import { tidesFromCoords } from "@/app/_lib/tides"
+import { TidesResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 
 export async function GET(

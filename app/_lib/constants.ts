@@ -2,7 +2,7 @@ import type {
   ApiResponse,
   StationsResponse,
   TidesResponse,
-} from "@/app/lib/types"
+} from "@/app/_lib/types"
 
 /* Plum Island South */
 export const defaultStation = "8441241"

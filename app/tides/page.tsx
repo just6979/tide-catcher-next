@@ -1,6 +1,6 @@
 "use client"
 
-import { GEOLOCATION_ERRORS } from "@/app/lib/constants"
+import { GEOLOCATION_ERRORS } from "@/app/_lib/constants"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 

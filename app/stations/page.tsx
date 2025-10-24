@@ -1,8 +1,8 @@
 "use client"
 
-import { EMPTY_STATION_RESPONSE } from "@/app/lib/constants"
-import { coordsToString } from "@/app/lib/coords"
-import type { StationsResponse } from "@/app/lib/types"
+import { EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
+import { coordsToString } from "@/app/_lib/coords"
+import type { StationsResponse } from "@/app/_lib/types"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"

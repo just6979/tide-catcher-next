@@ -1,4 +1,4 @@
-import { stationsAll } from "@/app/lib/stationsAll"
+import { stationsAll } from "@/app/_lib/stationsAll"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 

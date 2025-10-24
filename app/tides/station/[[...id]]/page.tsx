@@ -1,7 +1,7 @@
 "use client"
 
-import TidesFromStationElement from "@/app/components/TidesFromStationElement"
-import { defaultStation } from "@/app/lib/constants"
+import TidesFromStationElement from "@/app/_components/TidesFromStationElement"
+import { defaultStation } from "@/app/_lib/constants"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 
