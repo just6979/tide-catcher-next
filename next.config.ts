@@ -15,4 +15,5 @@ module.exports = {
       hmrRefreshes: true,
     },
   },
+  allowedDevOrigins: ["merlin", "merlin.local"],
 }
