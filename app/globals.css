@@ -159,3 +159,7 @@ tbody > .future ~ .future {
 .single-station caption {
   font-size: 133%;
 }
+
+.error {
+  color: darkred;
+}
