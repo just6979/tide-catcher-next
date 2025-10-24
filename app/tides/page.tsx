@@ -92,14 +92,14 @@ export default function TidesChooser() {
   )
 
   function goToGps(): void {
-    router.push(`/tides/at?location=${gpsLocated ? gpsLocation : "gps"}`)
+    router.push(`/tides/location/${gpsLocated ? gpsLocation : "gps"}`)
   }
 
   function goToLocation(): void {
-    router.push(`/tides/at?location=${location}`)
+    router.push(`/tides/location/${location}`)
   }
 
   function goToStation(): void {
-    router.push(`/tides/at?station=${station}`)
+    router.push(`/tides/station/${station}`)
   }
 }
