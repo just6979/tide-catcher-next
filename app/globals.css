@@ -163,3 +163,11 @@ tbody > .future ~ .future {
 .error {
   color: darkred;
 }
+
+input {
+  font-family: monospace;
+}
+
+button {
+  font-family: monospace;
+}
