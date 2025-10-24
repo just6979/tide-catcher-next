@@ -13,7 +13,5 @@ export async function GET(
 
   const responseData = await tidesFromStation(stationId, tzOffset)
 
-  return new Response(JSON.stringify(responseData), {
-    headers: { "Content-Type": "application/json" },
-  })
+  return Response.json(responseData)
 }
