@@ -20,23 +20,23 @@ export default function TidesAt() {
     if (coordsFromString(location)) {
       return <TidesFromLocationElement location={location} />
     }
-    return makeError(`Invalid location: ${location}`)
+    return <Error msg={`Invalid location: ${location}`} />
   }
 
   if (station) {
     if (station.length == 7) {
       return <TidesFromStationElement id={station} />
     }
-    return makeError(`Invalid station: ${station}`)
+    return <Error msg={`Invalid station: ${station}`} />
   }
 
-  return makeError("No valid Station or Location provided.")
+  return <Error msg={"No valid Station or Location provided."} />
 }
 
-function makeError(msg: string): JSX.Element {
+function Error(props: { msg: string }): JSX.Element {
   return (
     <div>
-      <p>{msg}</p>
+      <p>{props.msg}</p>
       <p>
         <Link href="/tides">Go Back</Link>
       </p>
