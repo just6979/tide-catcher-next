@@ -42,9 +42,7 @@ export default function StationFromStation() {
       <caption>{stationItem.name}</caption>
       <tbody>
         <tr>
-          <td>
-            Tides <a href="/stations">Station</a>
-          </td>
+          <td>NOAA ID</td>
           <td>
             <a
               href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${stationItem.id}`}
@@ -55,7 +53,7 @@ export default function StationFromStation() {
           </td>
         </tr>
         <tr>
-          <td>Tides Location</td>
+          <td>Location</td>
           <td>
             [
             <a
@@ -68,7 +66,27 @@ export default function StationFromStation() {
           </td>
         </tr>
         <tr>
-          <td>Tides TZ Offset</td>
+          <td>Common Name</td>
+          <td>{stationItem.commonName}</td>
+        </tr>
+        <tr>
+          <td>Full Name</td>
+          <td>{stationItem.fullName}</td>
+        </tr>
+        <tr>
+          <td>eTides Name</td>
+          <td>{stationItem.etidesName}</td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td>{stationItem.state}</td>
+        </tr>
+        <tr>
+          <td>Region</td>
+          <td>{stationItem.region}</td>
+        </tr>
+        <tr>
+          <td>Timezone Offset</td>
           <td>{stationItem.tzOffset}</td>
         </tr>
       </tbody>

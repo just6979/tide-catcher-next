@@ -1,7 +1,6 @@
 "use client"
 
 import { EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
-import { coordsToString } from "@/app/_lib/coords"
 import type { StationsResponse } from "@/app/_lib/types"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -52,20 +51,8 @@ export default function StationsAll() {
       <ul>
         {data.stations.map((station) => (
           <li key={station.id}>
-            <a
-              href={`https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=${station.id}`}
-              target="_blank"
-            >
-              {station.id}
-            </a>{" "}
-            | {station.name} | [
-            <a
-              href={`https://www.google.com/maps/place/${coordsToString(station.location)}/@${coordsToString(station.location)},12z`}
-              target="_blank"
-            >
-              {coordsToString(station.location)}
-            </a>
-            ]
+            <a href={`/station/${station.id}`}>{station.id}</a>: {station.name}
+            {station.state ? `, ${station.state}` : `, ${station.region}`}
           </li>
         ))}
       </ul>
