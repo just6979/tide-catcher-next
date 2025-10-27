@@ -25,7 +25,7 @@ export async function tidesFromStation(
   stationId: string,
   tzOffset?: string,
 ): Promise<TidesResponse> {
-  const stationData = stationsFromStation(stationId)
+  const stationData = await stationsFromStation(stationId)
   return await processTides(stationData, new Date(), tzOffset)
 }
 

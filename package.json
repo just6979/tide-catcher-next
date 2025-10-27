@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsx ./app/_lib/storageSqlite.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

@@ -8,6 +8,6 @@ export async function GET(
   const { id } = await params
 
   return Response.json(
-    stationsFromStation(id && id.length > 0 ? id[0] : defaultStation),
+    await stationsFromStation(id && id.length > 0 ? id[0] : defaultStation),
   )
 }

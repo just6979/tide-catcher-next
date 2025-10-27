@@ -1,8 +1,9 @@
 import { dbFilename } from "@/app/_lib/constants"
 import { coordsFromLatLon } from "@/app/_lib/coords"
-import type { NoaaTidePredStation, SqlStation, Station } from "@/app/_lib/types"
+import type { SqlStation, Station } from "@/app/_lib/types"
 import Database from "better-sqlite3"
-import * as url from "node:url"
+import * as fs from "node:fs"
+import url from "node:url"
 
 // run this file from the project root to process the station data
 // into a SQLite db to be uploaded with everything else
@@ -44,7 +45,7 @@ function makeStationFromRow(row: SqlStation): Station {
   }
 }
 
-function initDb() {
+export function initDb() {
   const db = new Database(dbFilename)
   db.pragma("journal_mode=WAL")
   const tableName = "stations"
@@ -75,11 +76,8 @@ function initDb() {
   } else {
     console.error(`Unable to create table '${tableName}'.`)
   }
-
-  db.close()
 }
-
-function makeDbFromJson(data: NoaaTidePredStation[]) {
+function makeDbFromJson(data: Station[]) {
   console.log(`Processing ${data.length} Stations from NOAA.`)
   const db = new Database(dbFilename)
   // needs "OR REPLACE" because ONE station, 8730667, is duped in the json
@@ -90,16 +88,16 @@ function makeDbFromJson(data: NoaaTidePredStation[]) {
     `)
   data.forEach((s) => {
     const values = [
-      s.stationId,
-      s.stationName,
-      s.lat,
-      s.lon,
+      s.id,
+      s.name,
+      s.location?.lat,
+      s.location?.lon,
       s.commonName,
-      s.stationFullName,
-      s.etidesStnName,
+      s.fullName,
+      s.etidesName,
       s.state,
       s.region,
-      Number(s.timeZoneCorr),
+      s.tzOffset,
     ]
     insertStmt.run(values)
   })
@@ -114,26 +112,9 @@ function makeDbFromJson(data: NoaaTidePredStation[]) {
 
 export function refreshStationsData() {
   initDb()
-
-  const tidePredUrl =
-    "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json"
-  fetch(tidePredUrl)
-    .then((res) => {
-      res
-        .json()
-        .then((data) => {
-          // where the magic happens
-          makeDbFromJson(data["stationList"])
-        })
-        .catch((err) => {
-          console.error(`Unable to decode JSON from ${tidePredUrl}`)
-          console.error(err)
-        })
-    })
-    .catch((err) => {
-      console.error(`Unable to fetch data from ${tidePredUrl}`)
-      console.error(err)
-    })
+  const stationsFile = fs.readFileSync("./app/_data/stations.json")
+  const stationList: Station[] = JSON.parse(stationsFile.toString())
+  makeDbFromJson(stationList)
 }
 
 if (import.meta.url.startsWith("file:")) {

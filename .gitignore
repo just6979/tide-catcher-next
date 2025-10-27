@@ -40,4 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/app/_data/stations.sqlite
+/app/_data/stations.sqlite*

@@ -76,6 +76,15 @@ export interface NoaaTidePredStation {
   distance: number
 }
 
+export interface NoaaCoOpsStation {
+  id: string
+  lat: number
+  lng: number
+  name: string
+  state: string
+  timezonecorr: number
+}
+
 export interface NoaaTidePrediction {
   t: string
   v: string
