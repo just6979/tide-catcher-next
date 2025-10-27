@@ -12,8 +12,13 @@ export interface Station {
   id: string
   location?: Coords
   name: string
-  eTidesName: string
+  commonName: string
+  fullName: string
+  etidesName: string
+  state: string
+  region: string
   tzOffset: number
+  distance?: number
 }
 
 export interface Tide {
@@ -43,21 +48,32 @@ export interface TidesResponse extends ApiResponse {
   tides: Tide[]
 }
 
-export interface NoaaTidePredStation {
-  stationId: string
+export interface SqlStation {
+  id: string
+  name: string
   lat: number
   lon: number
-  stationName: string
-  etidesStnName: string
-  timeZoneCorr: number
+  commonName: string
+  fullName: string
+  etidesName: string
+  state: string
+  region: string
+  tzOffset: number
+  distance?: number
 }
 
-export interface NoaaCoOpsStation {
-  id: string
+export interface NoaaTidePredStation {
+  stationId: string
+  stationName: string
   lat: number
-  lng: number
-  name: string
-  timezonecorr: number
+  lon: number
+  commonName: string
+  stationFullName: string
+  etidesStnName: string
+  state: string
+  region: string
+  timeZoneCorr: string
+  distance: number
 }
 
 export interface NoaaTidePrediction {

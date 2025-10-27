@@ -1,5 +1,6 @@
 import type {
   ApiResponse,
+  Station,
   StationsResponse,
   TidesResponse,
 } from "@/app/_lib/types"
@@ -7,6 +8,8 @@ import type {
 /* Plum Island South */
 export const defaultStation = "8441241"
 export const defaultLocation = "42.710,-70.788"
+
+export const dbFilename: string = "./app/_data/stations.sqlite"
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
@@ -17,11 +20,17 @@ export const GEOLOCATION_ERRORS = [
   "TIMEOUTNo location data acquired in the time allotted.",
 ]
 
-export const EMPTY_STATION = {
+export const EMPTY_STATION: Station = {
   id: "",
   name: "",
-  eTidesName: "",
+  location: undefined,
+  commonName: "",
+  fullName: "",
+  etidesName: "",
+  state: "",
+  region: "",
   tzOffset: 0,
+  distance: undefined,
 }
 
 export const EMPTY_API_RESPONSE: ApiResponse = {

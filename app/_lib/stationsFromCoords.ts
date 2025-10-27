@@ -41,8 +41,13 @@ export async function stationsFromCoords(
             id: station.stationId,
             location: coordsFromLatLon(station.lat, station.lon),
             name: station.stationName,
-            eTidesName: station.etidesStnName,
+            commonName: station.commonName,
+            fullName: station.stationFullName,
+            etidesName: station.etidesStnName,
+            state: station.state,
+            region: station.region,
             tzOffset: Number(station.timeZoneCorr),
+            distance: station.distance,
           }
         },
       )

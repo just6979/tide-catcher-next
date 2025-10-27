@@ -1,25 +1,13 @@
-import { coordsFromLatLon } from "@/app/_lib/coords"
-import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import { makeStationsError } from "@/app/_lib/stationsUtils"
-import type { NoaaCoOpsStation, StationsResponse } from "@/app/_lib/types"
+import { getStation } from "@/app/_lib/storageSqlite"
+import type { StationsResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 
-export async function stationsFromStation(
-  id: string,
-): Promise<StationsResponse> {
+export function stationsFromStation(id: string): StationsResponse {
   const utcDate = new UTCDate()
 
-  const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
+  const station = getStation(id)
 
-  if ("errorMsg" in data)
-    return makeStationsError(
-      { code: data.errorCode, msg: data.errorMsg },
-      utcDate,
-    )
-
-  const stations: NoaaCoOpsStation[] = data["stations"]
-
-  if (stations === null || stations.length === 0) {
+  if (!station) {
     return {
       status: {
         code: 404,
@@ -31,21 +19,12 @@ export async function stationsFromStation(
     }
   }
 
-  const station = stations[0]
   return {
     status: {
       code: 200,
     },
     reqTimestamp: utcDate.toISOString(),
     count: 1,
-    stations: [
-      {
-        id: station.id,
-        location: coordsFromLatLon(station.lat, station.lng),
-        name: station.name,
-        eTidesName: station.name,
-        tzOffset: Number(station.timezonecorr),
-      },
-    ],
+    stations: [station],
   }
 }
