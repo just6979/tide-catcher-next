@@ -1,6 +1,6 @@
 import { coordsFromLatLon } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import { getStation, initDb } from "@/app/_lib/storageSqlite"
+import { getStation, refreshStationsData } from "@/app/_lib/storageSqlite"
 import type {
   NoaaCoOpsStation,
   Station,
@@ -23,9 +23,7 @@ async function tryFallbacks(id: string): Promise<Station | undefined> {
   if (!station) {
     // somehow can't even read the JSON file
     // then revert to using the NOAA CO-OPS API
-    const data = await fetchNoaaUrl(
-      `/mdapi/prod/webapi/stations/${id}.json`,
-    )
+    const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
     const stations: NoaaCoOpsStation[] = data["stations"]
     if (stations && stations.length !== 0 && stations[0]) {
       const s = stations[0]
@@ -55,7 +53,7 @@ export async function stationsFromStation(
     station = getStation(id)
   } catch {
     console.log("Can't open Stations DB, attempting to create it.")
-    initDb()
+    refreshStationsData()
     try {
       station = getStation(id)
     } catch {
