@@ -1,8 +1,14 @@
-import { DEFAULT_COORDS } from "@/app/_lib/constants"
-import { stationsTidePred } from "@/app/_lib/stationsTidePred"
+import { DEFAULT_LOCATION } from "@/app/_lib/constants"
+import { getStationLocationParams } from "@/app/api/stations/location/[loc]/route"
+import { redirect, RedirectType } from "next/navigation"
+import type { NextRequest } from "next/server"
 
-export const dynamic = "force-static"
+export async function GET(request: NextRequest) {
+  const { countParam, count, rangeParam, range } =
+    getStationLocationParams(request)
 
-export async function GET() {
-  return Response.json(await stationsTidePred(DEFAULT_COORDS))
+  let params: string = countParam ? `&count=${count}` : ""
+  params += rangeParam ? `&range=${range}` : ""
+
+  redirect(`location/${DEFAULT_LOCATION}?${params}`, RedirectType.replace)
 }

@@ -1,6 +1,6 @@
-import { DEFAULT_COORDS } from "@/app/_lib/constants"
-import { tidesFromCoords } from "@/app/_lib/tides"
+import { DEFAULT_LOCATION } from "@/app/_lib/constants"
+import { redirect, RedirectType } from "next/navigation"
 
 export async function GET() {
-  return Response.json(await tidesFromCoords(DEFAULT_COORDS))
+  redirect(`location/${DEFAULT_LOCATION}`, RedirectType.replace)
 }

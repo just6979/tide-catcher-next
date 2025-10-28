@@ -1,8 +1,8 @@
 import { DEFAULT_STATION } from "@/app/_lib/constants"
-import { stationsById } from "@/app/_lib/stationsLocal"
+import { redirect, RedirectType } from "next/navigation"
 
 export const dynamic = "force-static"
 
 export async function GET() {
-  return Response.json(await stationsById(DEFAULT_STATION))
+  redirect(`stations/${DEFAULT_STATION}`, RedirectType.replace)
 }

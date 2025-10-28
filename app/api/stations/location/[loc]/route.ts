@@ -11,14 +11,7 @@ export async function GET(
 ) {
   const { loc } = await params
 
-  const countParam = request.nextUrl.searchParams.get("count")
-  let count = !countParam ? 1 : Number(countParam)
-  count = isNaN(count) ? 1 : count
-
-  const rangeParam = request.nextUrl.searchParams.get("range")
-  let range = !rangeParam ? 10 : Number(rangeParam)
-  range = isNaN(range) ? 10 : range
-  range = Math.min(range, MAX_TIDEPRED_RANGE)
+  const { count, range } = getStationLocationParams(request)
 
   let responseData: StationsResponse
   const coords = coordsFromString(loc)
@@ -37,4 +30,15 @@ export async function GET(
   }
 
   return Response.json(responseData)
+}
+export function getStationLocationParams(request: NextRequest) {
+  const countParam = request.nextUrl.searchParams.get("count")
+  let count = !countParam ? 1 : Number(countParam)
+  count = isNaN(count) ? 1 : count
+
+  const rangeParam = request.nextUrl.searchParams.get("range")
+  let range = !rangeParam ? 10 : Number(rangeParam)
+  range = isNaN(range) ? 10 : range
+  range = Math.min(range, MAX_TIDEPRED_RANGE)
+  return { countParam, count, rangeParam, range }
 }
