@@ -1,6 +1,10 @@
 import { DEFAULT_STATION } from "@/app/_lib/constants"
 import { stationsById } from "@/app/_lib/stationsLocal"
 
+export async function generateStaticParams() {
+  return [{ id: [DEFAULT_STATION] }]
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id?: string[] | undefined }> },
