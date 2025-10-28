@@ -2,13 +2,9 @@
 
 import { EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
 import type { StationsResponse } from "@/app/_lib/types"
-import Link from "next/link"
-import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function StationsAll() {
-  const isRefreshed = useSearchParams().has("refreshed")
-
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 
@@ -38,16 +34,7 @@ export default function StationsAll() {
   return (
     <div id="stations">
       <h2>Stations</h2>
-      <p>
-        {data.count} stations available{" "}
-        <span id="refresh">
-          (
-          <Link href="/stations/refresh" replace>
-            {isRefreshed ? "Refresh Again" : "Refresh"}
-          </Link>
-          )
-        </span>
-      </p>
+      <p>{data.count} stations available </p>
       <ul>
         {data.stations.map((station) => (
           <li key={station.id}>
