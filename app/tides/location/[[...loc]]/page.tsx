@@ -31,7 +31,7 @@ export default function TidesFromLocation() {
         Invalid location &ldquo;{location}&rdquo;
       </p>
       <p>
-        <Link href="/">Start Over</Link>
+        <Link href="/" prefetch={true}>Start Over</Link>
       </p>
     </div>
   )

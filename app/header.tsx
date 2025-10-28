@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function Header() {
   return (
     <div id="header">
-      <Link href="/#">
+      <Link href="/">
         <Image
           id="logo"
           src="/images/wave_left_480.png"

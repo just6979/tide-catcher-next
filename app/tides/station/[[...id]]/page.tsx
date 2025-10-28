@@ -24,7 +24,7 @@ export default function TidesFromStation() {
         Invalid station &ldquo;{stationId}&rdquo;
       </p>
       <p>
-        <Link href="/">Start Over</Link>
+        <Link href="/" prefetch={true}>Start Over</Link>
       </p>
     </div>
   )
