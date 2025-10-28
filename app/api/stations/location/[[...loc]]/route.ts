@@ -1,6 +1,6 @@
 import { defaultLocation } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
-import { stationsFromCoords } from "@/app/_lib/stationsFromCoords"
+import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type { StationsResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 
@@ -24,7 +24,7 @@ export async function GET(
       stations: [],
     }
   } else {
-    responseData = await stationsFromCoords(coords, 10)
+    responseData = await stationsTidePred(coords, 10)
   }
 
   return Response.json(responseData)

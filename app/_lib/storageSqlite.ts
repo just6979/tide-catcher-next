@@ -8,7 +8,7 @@ import url from "node:url"
 // run this file from the project root to process the station data
 // into a SQLite db to be uploaded with everything else
 
-export function getStation(stationId: string): Station | undefined {
+export function getStationById(stationId: string): Station | undefined {
   const db = new Database(dbFilename, { readonly: true })
   const stmt = db.prepare(
     `SELECT *
@@ -45,10 +45,11 @@ function makeStationFromRow(row: SqlStation): Station {
   }
 }
 
-export function initDb() {
+export function createStationsDb() {
   const db = new Database(dbFilename)
   db.pragma("journal_mode=WAL")
   const tableName = "stations"
+
   db.exec(`
     DROP TABLE IF EXISTS ${tableName};
     CREATE TABLE ${tableName}
@@ -76,17 +77,17 @@ export function initDb() {
   } else {
     console.error(`Unable to create table '${tableName}'.`)
   }
-}
-function makeDbFromJson(data: Station[]) {
-  console.log(`Processing ${data.length} Stations from NOAA.`)
-  const db = new Database(dbFilename)
+
+  const stationsFile = fs.readFileSync("./app/_data/stations.json")
+  const stationList: Station[] = JSON.parse(stationsFile.toString())
+  console.log(`Processing ${stationList.length} Stations from NOAA.`)
   // needs "OR REPLACE" because ONE station, 8730667, is duped in the json
   const insertStmt = db.prepare(`
       INSERT OR REPLACE INTO stations
       (id, name, lat, lon, commonName, fullName, etidesName, state, region, tzOffset)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `)
-  data.forEach((s) => {
+  stationList.forEach((s) => {
     const values = [
       s.id,
       s.name,
@@ -105,21 +106,14 @@ function makeDbFromJson(data: Station[]) {
   const countStmt = db.prepare("SELECT COUNT(*) AS count FROM stations;")
   // @ts-expect-error better-sqlite3 always returns "unknown" types
   const count = countStmt.get()["count"]
-  console.log(`Inserted ${count} Stations.`)
+  console.log(`Added ${count} stations to table '${tableName}'`)
 
   db.close()
-}
-
-export function refreshStationsData() {
-  initDb()
-  const stationsFile = fs.readFileSync("./app/_data/stations.json")
-  const stationList: Station[] = JSON.parse(stationsFile.toString())
-  makeDbFromJson(stationList)
 }
 
 if (import.meta.url.startsWith("file:")) {
   const modulePath = url.fileURLToPath(import.meta.url)
   if (process.argv[1] === modulePath) {
-    refreshStationsData()
+    createStationsDb()
   }
 }

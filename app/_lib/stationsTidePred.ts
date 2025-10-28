@@ -1,6 +1,5 @@
 import { coordsFromLatLon, coordsToString } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import { makeStationsError } from "@/app/_lib/stationsUtils"
 import type {
   Coords,
   NoaaTidePredStation,
@@ -9,7 +8,7 @@ import type {
 } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 
-export async function stationsFromCoords(
+export async function stationsTidePred(
   location: Coords,
   count = Infinity,
   initialRange = 10,
@@ -27,16 +26,18 @@ export async function stationsFromCoords(
     )
 
     if ("errorMsg" in data)
-      return makeStationsError(
-        { code: data.errorCode, msg: data.errorMsg },
-        utcDate,
-      )
+      return {
+        status: { code: data.errorCode, msg: data.errorMsg },
+        reqTimestamp: utcDate.toISOString(),
+        count: 0,
+        stations: [],
+      }
 
     const stations: NoaaTidePredStation[] = data["stationList"]
     if (stations != null) {
-      const stationsSlice = stations.slice(0, Math.min(count, stations.length))
-      const stationsOut: Station[] = stationsSlice.map(
-        (station: NoaaTidePredStation): Station => {
+      const stationsOut = stations
+        .slice(0, Math.min(count, stations.length))
+        .map((station: NoaaTidePredStation): Station => {
           return {
             id: station.stationId,
             location: coordsFromLatLon(station.lat, station.lon),
@@ -49,12 +50,9 @@ export async function stationsFromCoords(
             tzOffset: Number(station.timeZoneCorr),
             distance: station.distance,
           }
-        },
-      )
+        })
       return {
-        status: {
-          code: 200,
-        },
+        status: { code: 200 },
         reqTimestamp: utcDate.toISOString(),
         reqLocation: location,
         count: stationsOut.length,
@@ -64,12 +62,14 @@ export async function stationsFromCoords(
   } while (attempts > 0)
 
   // no stations found after maxing out the range
-  return makeStationsError(
-    {
+  return {
+    status: {
       code: 404,
       msg: `No stations found within ${range} miles of location (${coordsToString(location)}).`,
     },
-    utcDate,
-    location,
-  )
+    reqTimestamp: utcDate.toISOString(),
+    reqLocation: location,
+    count: 0,
+    stations: [],
+  }
 }
