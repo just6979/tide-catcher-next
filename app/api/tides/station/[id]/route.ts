@@ -1,17 +1,15 @@
-import { DEFAULT_STATION } from "@/app/_lib/constants"
 import { tidesFromStation } from "@/app/_lib/tides"
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ id?: string[] | undefined }> },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params
-  const stationId = id && id.length > 0 ? id[0] : DEFAULT_STATION
 
   const headersList = request.headers
   const tzOffset = headersList.get("X-Tidecatcher-Tz-Offset") || undefined
 
-  const responseData = await tidesFromStation(stationId, tzOffset)
+  const responseData = await tidesFromStation(id, tzOffset)
 
   return Response.json(responseData)
 }

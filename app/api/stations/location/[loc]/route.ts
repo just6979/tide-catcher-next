@@ -1,4 +1,4 @@
-import { DEFAULT_LOCATION, MAX_TIDEPRED_RANGE } from "@/app/_lib/constants"
+import { MAX_TIDEPRED_RANGE } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type { StationsResponse } from "@/app/_lib/types"
@@ -7,10 +7,9 @@ import { NextRequest } from "next/server"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ loc?: string[] | undefined }> },
+  { params }: { params: Promise<{ loc: string }> },
 ) {
   const { loc } = await params
-  const location = loc && loc.length > 0 ? loc[0] : DEFAULT_LOCATION
 
   const countParam = request.nextUrl.searchParams.get("count")
   let count = !countParam ? 1 : Number(countParam)
@@ -22,12 +21,12 @@ export async function GET(
   range = Math.min(range, MAX_TIDEPRED_RANGE)
 
   let responseData: StationsResponse
-  const coords = coordsFromString(location)
+  const coords = coordsFromString(loc)
   if (!coords) {
     responseData = {
       status: {
         code: 404,
-        msg: `Invalid location: ${location}`,
+        msg: `Invalid location: ${loc}`,
       },
       reqTimestamp: new UTCDate().toISOString(),
       count: 0,
