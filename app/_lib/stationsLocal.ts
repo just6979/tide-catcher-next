@@ -27,10 +27,6 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
     }
   } catch (error) {
     console.log(`Unable to read local 'stations.json': ${error})`)
-  }
-
-  if (stations.length === 0) {
-    console.log("No stations found in local 'stations.json'.")
     if (!id) {
       stations = await fetchAllNoaa()
     } else {
