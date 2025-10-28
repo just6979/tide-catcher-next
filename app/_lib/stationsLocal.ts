@@ -1,7 +1,5 @@
-import { LOCAL_STATIONS_JSON } from "@/app/_lib/constants"
 import { coordsFromLatLon } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import { createStationsDb, getStations } from "@/app/_lib/storageSqlite"
 import type {
   NoaaCoOpsStation,
   NoaaTidePredStation,
@@ -14,66 +12,43 @@ import fs from "node:fs"
 export async function stationsById(id?: string): Promise<StationsResponse> {
   const utcDate = new UTCDate()
 
-  let stations
+  let stations: Station[] = []
   try {
-    stations = getStations(id)
-  } catch {
-    console.log("Can't open Stations DB, attempting to create it.")
-    createStationsDb()
-    try {
-      stations = getStations(id)
-    } catch {
-      console.error("Still can't open Stations DB, using fallbacks.")
-      stations = await stationByIdFallback(id)
-    }
-  }
-
-  if (stations.length === 0) {
-    console.error("No stations found.")
-    return {
-      status: {
-        code: 404,
-        msg: `No stations found for ID: ${id}`,
-      },
-      reqTimestamp: utcDate.toISOString(),
-      count: [].length,
-      stations: [],
-    }
-  }
-
-  return {
-    status: {
-      code: 200,
-    },
-    reqTimestamp: utcDate.toISOString(),
-    count: stations.length,
-    stations: stations,
-  }
-}
-
-async function stationByIdFallback(id = ""): Promise<Station[]> {
-  console.log("Falling back to reading local 'stations.json'.")
-  try {
-    const stationsFile = fs.readFileSync(LOCAL_STATIONS_JSON)
+    const stationsFile = fs.readFileSync("./app/_data/stations.json")
     const stationData = JSON.parse(stationsFile.toString())
     const stationList: Station[] = stationData["stationList"] || []
     if (stationList && stationList.length > 0) {
       if (!id) {
-        return stationList
+        stations = stationList
       }
       const station = stationList.find((station) => station.id === id)
-      if (station) return [station]
-      else return []
+      if (station) stations = [station]
     }
   } catch (error) {
     console.log(`Unable to read local 'stations.json': ${error})`)
+    if (id) {
+      stations = await fallBackNoaaById(id)
+    } else {
+      stations = await fallbackNoaaAll()
+    }
   }
 
-  // somehow can't even read the JSON file
-  if (id) {
-    return fallBackNoaaById(id)
-  } else {
-    return fallbackNoaaAll()
+  let status
+  if (stations.length === 0) {
+    console.error("No stations found.")
+    status = {
+      code: 404,
+      msg: `No stations found for ID: ${id}`,
+    }
+    }else {
+      status = { code: 200}
+    }
+
+  return {
+    status: status,
+    reqTimestamp: utcDate.toISOString(),
+    count: stations.length,
+    stations: stations,
   }
 }
 

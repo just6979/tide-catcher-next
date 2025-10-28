@@ -9,9 +9,6 @@ import type {
 export const DEFAULT_STATION = "8441241"
 export const DEFAULT_LOCATION = "42.710,-70.788"
 
-export const DB_FILENAME: string = "./app/_data/stations.sqlite"
-export const LOCAL_STATIONS_JSON: string = "./app/_data/stations.json"
-
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export const GEOLOCATION_ERRORS = [
