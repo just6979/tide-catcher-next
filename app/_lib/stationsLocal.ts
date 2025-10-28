@@ -20,9 +20,10 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
     if (stationList && stationList.length > 0) {
       if (!id) {
         stations = stationList
+      } else {
+        const station = stationList.find((station) => station.id === id)
+        if (station) stations = [station]
       }
-      const station = stationList.find((station) => station.id === id)
-      if (station) stations = [station]
     }
   } catch (error) {
     console.log(`Unable to read local 'stations.json': ${error})`)
