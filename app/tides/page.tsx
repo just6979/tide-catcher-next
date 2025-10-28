@@ -56,7 +56,7 @@ export default function TidesChooser() {
         <span>
           <input
             name="location"
-            value={location}
+            placeholder={location}
             onChange={(event) => setLocation(event.target.value)}
             onFocus={(event) => {
               event.target.select()
@@ -73,7 +73,7 @@ export default function TidesChooser() {
         Station:&nbsp;
         <input
           name="station"
-          value={station}
+          placeholder={station}
           onChange={(event) => setStation(event.target.value)}
           onFocus={(event) => {
             event.target.select()
