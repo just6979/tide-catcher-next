@@ -1,11 +1,6 @@
 import { coordsFromLatLon } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import type {
-  NoaaCoOpsStation,
-  NoaaTidePredStation,
-  Station,
-  StationsResponse,
-} from "@/app/_lib/types"
+import type { NoaaCoOpsStation, NoaaTidePredStation, Station, StationsResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 import fs from "node:fs"
 
@@ -51,6 +46,12 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
   }
 }
 
+export function getAllStationIDs() {
+  const stationsFile = fs.readFileSync("./app/_data/stations.json")
+  const stationData = JSON.parse(stationsFile.toString())
+  const stationList: Station[] = stationData["stationList"] || []
+  return stationList.map((station) => station.id)
+}
 async function fetchAllNoaa(): Promise<Station[]> {
   console.log("Trying NOAA TidePredStations API.")
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/tidepredstations.json`)

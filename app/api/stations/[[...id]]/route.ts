@@ -1,8 +1,10 @@
 import { DEFAULT_STATION } from "@/app/_lib/constants"
-import { stationsById } from "@/app/_lib/stationsLocal"
+import { getAllStationIDs, stationsById } from "@/app/_lib/stationsLocal"
 
 export async function generateStaticParams() {
-  return [{ id: [DEFAULT_STATION] }]
+  return getAllStationIDs().map((stationId) => {
+    return { id: [stationId] }
+  })
 }
 
 export async function GET(
