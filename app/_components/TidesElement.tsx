@@ -71,7 +71,10 @@ export default function TidesElement(props: {
             <td>
               <Link href={`/tides/station/${data.station.id}`}>
                 {data.station.id}
-              </Link>
+              </Link> (
+              <Link href={`/stations/${data.station.id}`}>
+                Details
+              </Link>)
             </td>
           </tr>
           <tr>
