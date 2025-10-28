@@ -1,36 +1,36 @@
 
+### station by default id: 8441241
+{{host}}/api/stations
+
 ### station by id
-{{host}}/api/station/{{station}}
+{{host}}/api/stations/{{station}}
 
 ### station from bad id
-{{host}}/api/station/{{badStation}}
-
-### station by default id: 8441241
-{{host}}/api/station
-
-### single nearest station within 10 miles
-{{host}}/api/station/location/{{location}}
-
-### location that should have no stations in range
-{{host}}/api/station/location/{{emptyLocation}}
+{{host}}/api/stations/{{badStation}}
 
 ### single nearest station within 10 miles of default location: 42.710,-70.788
-{{host}}/api/station/location
+{{host}}/api/stations/location
 
-### multiple nearest stations within 10 miles
+### 10 nearest station within 10 miles of default location: 42.710,-70.788
+{{host}}/api/stations/location?count=10
+
+### single nearest station within 10 miles
 {{host}}/api/stations/location/{{location}}
 
-### stations by default location: 42.710,-70.788
-{{host}}/api/stations/location
+### 10 nearest stations within 10 miles
+{{host}}/api/stations/location/{{location}}?count=10
+
+### location that should have no stations in range
+{{host}}/api/stations/location/{{emptyLocation}}
+
+### intentionally requesting empty list
+{{host}}/api/stations/location?count=0
 
 ### bad location
 {{host}}/api/stations/location/{{badLocation}}
 
 ### all stations
-{{host}}/api/stations
-
-//### all stations refresh
-//{{host}}/api/stations/refresh
+{{host}}/api/stations/all
 
 ### tides by id
 {{host}}/api/tides/station/{{station}}

@@ -10,7 +10,7 @@ export default function StationsAll() {
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 
   useEffect(() => {
-    fetch("/api/stations")
+    fetch("/api/stations/all")
       .then((res) => res.json())
       .then((data: StationsResponse) => {
         setData(data)
@@ -39,7 +39,8 @@ export default function StationsAll() {
       <ul>
         {data.stations.map((station) => (
           <li key={station.id}>
-            <Link href={`/station/${station.id}`}>{station.id}</Link>: {station.name}
+            <Link href={`/station/${station.id}`}>{station.id}</Link>:{" "}
+            {station.name}
             {station.state ? `, ${station.state}` : `, ${station.region}`}
           </li>
         ))}

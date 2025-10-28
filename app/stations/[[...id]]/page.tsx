@@ -14,7 +14,7 @@ export default function StationFromStation() {
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)
 
   useEffect(() => {
-    fetch(`/api/station/${stationId}`)
+    fetch(`/api/stations/${stationId}`)
       .then((res) => res.json())
       .then((data: StationsResponse) => {
         setData(data)

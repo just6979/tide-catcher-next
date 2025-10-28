@@ -14,7 +14,7 @@ servers:
     description: Alternate
 
 paths:
-  /api/station:
+  /api/stations:
     get:
       description: metadata for the default station
       responses:
@@ -25,7 +25,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StationsResponse"
 
-  /api/station/{id}:
+  /api/stations/{id}:
     get:
       description: metadata for given station
       parameters:
@@ -38,40 +38,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/StationsResponse"
 
-  /api/station/location:
-    get:
-      description: closest single station to the default location, if any, within 10-160 miles
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StationsResponse"
-
-  /api/station/location/{loc}:
-    get:
-      description: closest single station to the given location, if any, within 10-160 miles
-      parameters:
-        - $ref: "#/components/parameters/location"
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StationsResponse"
-
-  /api/stations:
+  /api/stations/all:
     get:
       description: list of all cached stations
-      parameters:
-        - in: query
-          name: refreshed
-          schema:
-            type: boolean
-          required: false
-          description: indicates that we arrived here from the /stations/refresh redirect?
       responses:
         200:
           description: "OK"
@@ -83,6 +52,8 @@ paths:
   /api/stations/location:
     get:
       description: list of closest stations to the default location, if any, within 10-160 miles
+      parameters:
+        - $ref: "#/components/parameters/stationCount"
       responses:
         200:
           description: OK
@@ -96,6 +67,7 @@ paths:
       description: list of closest stations to the given location, if any, within 10-160 miles
       parameters:
         - $ref: "#/components/parameters/location"
+        - $ref: "#/components/parameters/stationCount"
       responses:
         200:
           description: OK
@@ -103,18 +75,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StationsResponse"
-
-  /api/stations/refresh:
-    get:
-      description: list of all cached stations
-      responses:
-        303:
-          description: "redirect"
-          headers:
-            Location:
-              schema:
-                type: string
-                format: uri
 
   /api/tides/location:
     get:
@@ -185,6 +145,14 @@ components:
       schema:
         type: string
       example: "42.710,-70.788"
+    stationCount:
+      description: "Limit the number of stations returned"
+      in: query
+      name: count
+      required: false
+      schema:
+        type: number
+      example: 10
     tzOffsetHeader:
       description: "A Timezone Offset, in minutes, as a string"
       in: header
