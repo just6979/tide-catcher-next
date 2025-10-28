@@ -39,15 +39,13 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
   }
 
   let status
-  if (stations.length === 0) {
-    console.error("No stations found.")
-    status = {
-      code: 404,
-      msg: `No stations found for ID: ${id}`,
-    }
-    }else {
-      status = { code: 200}
-    }
+  if (stations.length > 0) {
+    status = { code: 200 }
+  } else {
+    const msg: string = "No stations found" + (id ? ` for ID '${id}'.` : ".")
+    console.log(msg)
+    status = { code: 404, msg: msg }
+  }
 
   return {
     status: status,
