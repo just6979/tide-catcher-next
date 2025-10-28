@@ -26,7 +26,13 @@ async function main(filename: string) {
     }
   })
   console.log("Writing to local JSON.")
-  fs.writeFileSync(filename, JSON.stringify(stations))
+  fs.writeFileSync(
+    filename,
+    JSON.stringify({
+      count: stations.length,
+      stationList: stations,
+    }),
+  )
 }
 
 if (import.meta.url.startsWith("file:")) {

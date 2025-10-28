@@ -54,7 +54,8 @@ async function stationByIdFallback(id = ""): Promise<Station[]> {
   console.log("Falling back to reading local 'stations.json'.")
   try {
     const stationsFile = fs.readFileSync("./app/_data/stations.json")
-    const stationList: Station[] = JSON.parse(stationsFile.toString())
+    const stationData = JSON.parse(stationsFile.toString())
+    const stationList: Station[] = stationData["stationList"] || []
     if (stationList && stationList.length > 0) {
       if (!id) {
         return stationList

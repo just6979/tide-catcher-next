@@ -57,8 +57,9 @@ export function createStationsDb() {
   }
 
   const stationsFile = fs.readFileSync("./app/_data/stations.json")
-  const stationList: Station[] = JSON.parse(stationsFile.toString())
-  console.log(`Processing ${stationList.length} Stations from NOAA.`)
+  const stationData = JSON.parse(stationsFile.toString())
+  const stationList: Station[] = stationData["stationList"] || []
+  console.log(`Processing ${stationList.length} Stations from local 'stations.json'.`)
   // needs "OR REPLACE" because ONE station, 8730667, is duped in the json
   const insertStmt = db.prepare(`
       INSERT OR REPLACE INTO stations
