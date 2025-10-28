@@ -1,6 +1,7 @@
 "use client"
 
 import { GEOLOCATION_ERRORS } from "@/app/_lib/constants"
+import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -10,6 +11,27 @@ export default function TidesChooser() {
   const [gpsLocation, setGpsLocation] = useState("Checking...")
   const [location, setLocation] = useState("42.710,-70.788")
   const [station, setStation] = useState("8441241")
+
+  useEffect(() => {
+    const prefetchFull = { kind: PrefetchKind.FULL }
+    router.prefetch(`/tides/location/gps`, prefetchFull)
+    if (gpsLocated) {
+      router.prefetch(`/tides/location/${gpsLocation}`, prefetchFull)
+      router.prefetch(`/api/tides/location/${gpsLocation}`, prefetchFull)
+    }
+    if (location.split(",").length === 2) {
+      const [lat, lon] = location.split(",")
+      if (!isNaN(Number(lat)) && !isNaN(Number(lon))) {
+        console.log("valid location")
+        router.prefetch(`/tides/location/${location}`, prefetchFull)
+        router.prefetch(`/api/tides/location/${location}`, prefetchFull)
+      }
+    }
+    if (station.length === 7) {
+      router.prefetch(`/tides/station/${station}`, prefetchFull)
+      router.prefetch(`/api/tides/station/${station}`, prefetchFull)
+    }
+  }, [router, gpsLocated, gpsLocation, location, station])
 
   useEffect(() => {
     navigator.permissions
