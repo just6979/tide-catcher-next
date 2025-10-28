@@ -1,6 +1,5 @@
 import { dbFilename } from "@/app/_lib/constants"
-import { coordsFromLatLon } from "@/app/_lib/coords"
-import type { SqlStation, Station } from "@/app/_lib/types"
+import type { Station } from "@/app/_lib/types"
 import Database from "better-sqlite3"
 import * as fs from "node:fs"
 import url from "node:url"
@@ -8,41 +7,20 @@ import url from "node:url"
 // run this file from the project root to process the station data
 // into a SQLite db to be uploaded with everything else
 
-export function getStationById(stationId: string): Station | undefined {
+export function getStations(id?: string): Station[] {
   const db = new Database(dbFilename, { readonly: true })
-  const stmt = db.prepare(
+
+  const singleStmt: string =
     `SELECT *
      FROM stations
-     WHERE id = '${stationId}';`,
-  )
-  const row = stmt.get()
-  if (!row) return undefined
-  // @ts-expect-error better-sqlite3 always returns "unknown" types
-  return makeStationFromRow(row)
-}
+     WHERE id = '${id}'; `
+  const allStmt: string =
+    `SELECT *
+     FROM stations; `
 
-export function getAllStations(): Station[] {
-  const db = new Database(dbFilename, { readonly: true })
-  const stmt = db.prepare(`SELECT * FROM stations;`)
-  const rows = stmt.all()
-  return rows.map((row) => {
-    // @ts-expect-error better-sqlite3 always returns "unknown" types
-    return makeStationFromRow(row)
-  })
-}
-
-function makeStationFromRow(row: SqlStation): Station {
-  return {
-    id: row.id,
-    location: coordsFromLatLon(row.lat, row.lon),
-    name: row.name,
-    commonName: row.commonName,
-    fullName: row.fullName,
-    etidesName: row.etidesName,
-    state: row.state,
-    region: row.region,
-    tzOffset: row.tzOffset,
-  }
+  const stmt = db.prepare(id ? singleStmt : allStmt)
+  // @ts-expect-error because better-sqlite3 always returns "unknown" types
+  return stmt.all()
 }
 
 export function createStationsDb() {

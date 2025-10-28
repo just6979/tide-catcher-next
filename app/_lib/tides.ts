@@ -1,7 +1,7 @@
 import { EMPTY_STATION, WEEKDAYS } from "@/app/_lib/constants"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
-import { stationById } from "@/app/_lib/stationsLocal"
+import { stationsById } from "@/app/_lib/stationsLocal"
 import type {
   Coords,
   NoaaTidePrediction,
@@ -25,7 +25,7 @@ export async function tidesFromStation(
   stationId: string,
   tzOffset?: string,
 ): Promise<TidesResponse> {
-  const stationData = await stationById(stationId)
+  const stationData = await stationsById(stationId)
   return await processTides(stationData, new Date(), tzOffset)
 }
 

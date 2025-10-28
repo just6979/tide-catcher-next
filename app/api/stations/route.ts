@@ -1,5 +1,5 @@
-import { stationsAll } from "@/app/_lib/stationsLocal"
+import { stationsById } from "@/app/_lib/stationsLocal"
 
 export async function GET() {
-  return Response.json(stationsAll())
+  return Response.json(await stationsById())
 }

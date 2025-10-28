@@ -1,5 +1,5 @@
 import { defaultStation } from "@/app/_lib/constants"
-import { stationById } from "@/app/_lib/stationsLocal"
+import { stationsById } from "@/app/_lib/stationsLocal"
 
 export async function GET(
   request: Request,
@@ -8,6 +8,6 @@ export async function GET(
   const { id } = await params
 
   return Response.json(
-    await stationById(id && id.length > 0 ? id[0] : defaultStation),
+    await stationsById(id && id.length > 0 ? id[0] : defaultStation),
   )
 }
