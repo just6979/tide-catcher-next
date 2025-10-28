@@ -1,26 +1,11 @@
-"use client"
-
-import { EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
-import type { StationsResponse } from "@/app/_lib/types"
+import { stationsById } from "@/app/_lib/stationsLocal"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 
-export default function StationsAll() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState(EMPTY_STATION_RESPONSE)
+export const dynamic = "force-static"
 
-  useEffect(() => {
-    fetch("/api/stations/all")
-      .then((res) => res.json())
-      .then((data: StationsResponse) => {
-        setData(data)
-        setIsLoading(false)
-      })
-  }, [])
+export default async function StationsAll() {
+  const data = await stationsById()
 
-  if (isLoading) {
-    return <p>Loading Stations List...</p>
-  }
   if (!data || !("stations" in data) || !(data.stations.length > 0)) {
     return <p>No Stations List found.</p>
   }
