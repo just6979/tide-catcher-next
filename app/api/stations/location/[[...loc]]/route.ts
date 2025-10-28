@@ -1,4 +1,4 @@
-import { DEFAULT_LOCATION } from "@/app/_lib/constants"
+import { DEFAULT_LOCATION, MAX_TIDEPRED_RANGE } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type { StationsResponse } from "@/app/_lib/types"
@@ -12,9 +12,14 @@ export async function GET(
   const { loc } = await params
   const location = loc && loc.length > 0 ? loc[0] : DEFAULT_LOCATION
 
-  const count = request.nextUrl.searchParams.get("count")
-  let stationCount = !count ? 1 : Number(count)
-  stationCount = isNaN(stationCount) ? 1 : stationCount
+  const countParam = request.nextUrl.searchParams.get("count")
+  let count = !countParam ? 1 : Number(countParam)
+  count = isNaN(count) ? 1 : count
+
+  const rangeParam = request.nextUrl.searchParams.get("range")
+  let range = !rangeParam ? 10 : Number(rangeParam)
+  range = isNaN(range) ? 10 : range
+  range = Math.min(range, MAX_TIDEPRED_RANGE)
 
   let responseData: StationsResponse
   const coords = coordsFromString(location)
@@ -29,7 +34,7 @@ export async function GET(
       stations: [],
     }
   } else {
-    responseData = await stationsTidePred(coords, stationCount)
+    responseData = await stationsTidePred(coords, count, range)
   }
 
   return Response.json(responseData)

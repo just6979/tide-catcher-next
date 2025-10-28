@@ -17,8 +17,14 @@
 ### single nearest station within 10 miles
 {{host}}/api/stations/location/{{location}}
 
-### 10 nearest stations within 10 miles
+### 10 nearest stations within 10 miles (only 7)
 {{host}}/api/stations/location/{{location}}?count=10
+
+### 10 nearest stations within 1 miles (only 1)
+{{host}}/api/stations/location/{{location}}?count=10&range=1
+
+### 200 nearest stations within 100 miles (should be ~167)
+{{host}}/api/stations/location/{{location}}?count=200&range=100
 
 ### location that should have no stations in range
 {{host}}/api/stations/location/{{emptyLocation}}

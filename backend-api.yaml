@@ -54,6 +54,7 @@ paths:
       description: list of closest stations to the default location, if any, within 10-160 miles
       parameters:
         - $ref: "#/components/parameters/stationCount"
+        - $ref: "#/components/parameters/stationRange"
       responses:
         200:
           description: OK
@@ -68,6 +69,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/location"
         - $ref: "#/components/parameters/stationCount"
+        - $ref: "#/components/parameters/stationRange"
       responses:
         200:
           description: OK
@@ -152,7 +154,15 @@ components:
       required: false
       schema:
         type: number
-      example: 10
+        default: 10
+    stationRange:
+      description: "Limit the number of stations returned"
+      in: query
+      name: range
+      required: false
+      schema:
+        type: number
+        default: 10
     tzOffsetHeader:
       description: "A Timezone Offset, in minutes, as a string"
       in: header

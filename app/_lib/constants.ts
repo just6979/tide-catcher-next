@@ -9,6 +9,8 @@ import type {
 export const DEFAULT_STATION = "8441241"
 export const DEFAULT_LOCATION = "42.710,-70.788"
 
+export const MAX_TIDEPRED_RANGE: number = 500
+
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export const GEOLOCATION_ERRORS = [
