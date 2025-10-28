@@ -2,6 +2,7 @@ import { coordsToString } from "@/app/_lib/coords"
 import type { Tide, TidesResponse } from "@/app/_lib/types"
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Link from "next/link"
 
 export default function TidesElement(props: {
   data: TidesResponse
@@ -53,7 +54,7 @@ export default function TidesElement(props: {
                 </a>
               </td>
               <td>
-                [<a href={`/tides/location/${reqLoc}`}>{reqLoc}</a>]
+                [<Link href={`/tides/location/${reqLoc}`}>{reqLoc}</Link>]
               </td>
             </tr>
           )}
@@ -68,9 +69,9 @@ export default function TidesElement(props: {
               </a>
             </td>
             <td>
-              <a href={`/tides/station/${data.station.id}`}>
+              <Link href={`/tides/station/${data.station.id}`}>
                 {data.station.id}
-              </a>
+              </Link>
             </td>
           </tr>
           <tr>
@@ -85,7 +86,7 @@ export default function TidesElement(props: {
               </a>
             </td>
             <td>
-              [<a href={`/tides/location/${stationLoc}`}>{stationLoc}</a>]
+              [<Link href={`/tides/location/${stationLoc}`}>{stationLoc}</Link>]
             </td>
           </tr>
         </tbody>

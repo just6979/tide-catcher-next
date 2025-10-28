@@ -2,6 +2,7 @@
 
 import { EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
 import type { StationsResponse } from "@/app/_lib/types"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 export default function StationsAll() {
@@ -38,7 +39,7 @@ export default function StationsAll() {
       <ul>
         {data.stations.map((station) => (
           <li key={station.id}>
-            <a href={`/station/${station.id}`}>{station.id}</a>: {station.name}
+            <Link href={`/station/${station.id}`}>{station.id}</Link>: {station.name}
             {station.state ? `, ${station.state}` : `, ${station.region}`}
           </li>
         ))}
