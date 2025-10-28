@@ -1,4 +1,4 @@
-import { defaultLocation } from "@/app/_lib/constants"
+import { DEFAULT_LOCATION } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type { StationsResponse } from "@/app/_lib/types"
@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ loc?: string[] | undefined }> },
 ) {
   const { loc } = await params
-  const location = loc && loc.length > 0 ? loc[0] : defaultLocation
+  const location = loc && loc.length > 0 ? loc[0] : DEFAULT_LOCATION
 
   let responseData: StationsResponse
   const coords = coordsFromString(location)

@@ -1,4 +1,4 @@
-import { defaultLocation, EMPTY_STATION } from "@/app/_lib/constants"
+import { DEFAULT_LOCATION, EMPTY_STATION } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { tidesFromCoords } from "@/app/_lib/tides"
 import type { TidesResponse } from "@/app/_lib/types"
@@ -10,7 +10,7 @@ export async function GET(
 ) {
   const utcDate = new UTCDate()
   const { loc } = await params
-  const location = loc && loc.length > 0 ? loc[0] : defaultLocation
+  const location = loc && loc.length > 0 ? loc[0] : DEFAULT_LOCATION
 
   const headersList = request.headers
   const tzOffset = headersList.get("X-Tidecatcher-Tz-Offset") || undefined

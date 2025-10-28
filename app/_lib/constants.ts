@@ -6,10 +6,11 @@ import type {
 } from "@/app/_lib/types"
 
 /* Plum Island South */
-export const defaultStation = "8441241"
-export const defaultLocation = "42.710,-70.788"
+export const DEFAULT_STATION = "8441241"
+export const DEFAULT_LOCATION = "42.710,-70.788"
 
-export const dbFilename: string = "./app/_data/stations.sqlite"
+export const DB_FILENAME: string = "./app/_data/stations.sqlite"
+export const LOCAL_STATIONS_JSON: string = "./app/_data/stations.json"
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 

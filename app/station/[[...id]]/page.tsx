@@ -1,6 +1,6 @@
 "use client"
 
-import { defaultStation, EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
+import { DEFAULT_STATION, EMPTY_STATION_RESPONSE } from "@/app/_lib/constants"
 import { coordsToString } from "@/app/_lib/coords"
 import type { Station, StationsResponse } from "@/app/_lib/types"
 import { useParams } from "next/navigation"
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 
 export default function StationFromStation() {
   const { id } = useParams<{ id: string }>()
-  const stationId = id && id.length > 0 ? id[0] : defaultStation
+  const stationId = id && id.length > 0 ? id[0] : DEFAULT_STATION
 
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState(EMPTY_STATION_RESPONSE)

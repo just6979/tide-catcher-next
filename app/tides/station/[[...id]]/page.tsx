@@ -1,16 +1,16 @@
 "use client"
 
 import TidesFromStationElement from "@/app/_components/TidesFromStationElement"
-import { defaultStation } from "@/app/_lib/constants"
+import { DEFAULT_STATION } from "@/app/_lib/constants"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 
 export default function TidesFromStation() {
   const { id } = useParams<{ id: string }>()
-  const stationId = id && id.length > 0 ? id[0] : defaultStation
+  const stationId = id && id.length > 0 ? id[0] : DEFAULT_STATION
 
   if (!stationId) {
-    return <TidesFromStationElement id={defaultStation} />
+    return <TidesFromStationElement id={DEFAULT_STATION} />
   }
 
   if (stationId.length === 7) {

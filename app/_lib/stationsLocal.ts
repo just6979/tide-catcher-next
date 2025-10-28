@@ -1,3 +1,4 @@
+import { LOCAL_STATIONS_JSON } from "@/app/_lib/constants"
 import { coordsFromLatLon } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
 import { createStationsDb, getStations } from "@/app/_lib/storageSqlite"
@@ -53,7 +54,7 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
 async function stationByIdFallback(id = ""): Promise<Station[]> {
   console.log("Falling back to reading local 'stations.json'.")
   try {
-    const stationsFile = fs.readFileSync("./app/_data/stations.json")
+    const stationsFile = fs.readFileSync(LOCAL_STATIONS_JSON)
     const stationData = JSON.parse(stationsFile.toString())
     const stationList: Station[] = stationData["stationList"] || []
     if (stationList && stationList.length > 0) {

@@ -1,4 +1,4 @@
-import { dbFilename } from "@/app/_lib/constants"
+import { DB_FILENAME, LOCAL_STATIONS_JSON } from "@/app/_lib/constants"
 import type { Station } from "@/app/_lib/types"
 import Database from "better-sqlite3"
 import * as fs from "node:fs"
@@ -8,15 +8,15 @@ import url from "node:url"
 // into a SQLite db to be uploaded with everything else
 
 export function getStations(id?: string): Station[] {
-  const db = new Database(dbFilename, { readonly: true })
+  const db = new Database(DB_FILENAME, { readonly: true })
 
-  const singleStmt: string =
-    `SELECT *
-     FROM stations
-     WHERE id = '${id}'; `
-  const allStmt: string =
-    `SELECT *
-     FROM stations; `
+  const singleStmt: string = `
+    SELECT *
+    FROM stations
+    WHERE id = '${id}';`
+  const allStmt: string = `
+    SELECT *
+    FROM stations; `
 
   const stmt = db.prepare(id ? singleStmt : allStmt)
   // @ts-expect-error because better-sqlite3 always returns "unknown" types
@@ -24,7 +24,7 @@ export function getStations(id?: string): Station[] {
 }
 
 export function createStationsDb() {
-  const db = new Database(dbFilename)
+  const db = new Database(DB_FILENAME)
   db.pragma("journal_mode=WAL")
   const tableName = "stations"
 
@@ -51,15 +51,17 @@ export function createStationsDb() {
     .get()
 
   if (tableExists) {
-    console.log(`Created DB '${dbFilename}' and table '${tableName}'.`)
+    console.log(`Created DB '${DB_FILENAME}' and table '${tableName}'.`)
   } else {
     console.error(`Unable to create table '${tableName}'.`)
   }
 
-  const stationsFile = fs.readFileSync("./app/_data/stations.json")
+  const stationsFile = fs.readFileSync(LOCAL_STATIONS_JSON)
   const stationData = JSON.parse(stationsFile.toString())
   const stationList: Station[] = stationData["stationList"] || []
-  console.log(`Processing ${stationList.length} Stations from local 'stations.json'.`)
+  console.log(
+    `Processing ${stationList.length} Stations from local 'stations.json'.`,
+  )
   // needs "OR REPLACE" because ONE station, 8730667, is duped in the json
   const insertStmt = db.prepare(`
       INSERT OR REPLACE INTO stations

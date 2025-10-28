@@ -1,7 +1,7 @@
 import { EMPTY_STATION, WEEKDAYS } from "@/app/_lib/constants"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import { stationsById } from "@/app/_lib/stationsLocal"
+import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type {
   Coords,
   NoaaTidePrediction,
