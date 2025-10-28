@@ -27,10 +27,14 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
     }
   } catch (error) {
     console.log(`Unable to read local 'stations.json': ${error})`)
-    if (id) {
-      stations = await fallBackNoaaById(id)
+  }
+
+  if (stations.length === 0) {
+    console.log("No stations found in local 'stations.json'.")
+    if (!id) {
+      stations = await fetchAllNoaa()
     } else {
-      stations = await fallbackNoaaAll()
+      stations = await fetchByIdNoaa(id)
     }
   }
 
@@ -53,8 +57,8 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
   }
 }
 
-async function fallbackNoaaAll(): Promise<Station[]> {
-  console.log("Falling back to using NOAA TidePredStations API.")
+async function fetchAllNoaa(): Promise<Station[]> {
+  console.log("Trying NOAA TidePredStations API.")
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/tidepredstations.json`)
   const stations: NoaaTidePredStation[] = data["stationList"] || []
   if (stations && stations.length !== 0) {
@@ -76,8 +80,8 @@ async function fallbackNoaaAll(): Promise<Station[]> {
   return []
 }
 
-async function fallBackNoaaById(id: string): Promise<Station[]> {
-  console.log("Falling back to using NOAA CO-OPS API.")
+async function fetchByIdNoaa(id: string): Promise<Station[]> {
+  console.log("Trying NOAA CO-OPS API.")
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/stations/${id}.json`)
   const stations: NoaaCoOpsStation[] = data["stations"] || []
   if (stations && stations.length !== 0) {
