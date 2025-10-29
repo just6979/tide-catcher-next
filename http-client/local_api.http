@@ -1,5 +1,5 @@
 
-### station by default id: 8441241
+### station by default id
 {{host}}/api/stations
 
 ### station by id
@@ -8,25 +8,29 @@
 ### station from bad id
 {{host}}/api/stations/{{badStation}}
 
-### single nearest station within 10 miles of default location: 42.710,-70.788
+
+### single nearest station within 10 miles of default location
 {{host}}/api/stations/location
 
-### 10 nearest station within 10 miles of default location: 42.710,-70.788
+### up to 10 (actually ~7) nearest stations within 10 miles of default location
 {{host}}/api/stations/location?count=10
 
 ### single nearest station within 10 miles
 {{host}}/api/stations/location/{{location}}
 
-### 10 nearest stations within 10 miles (only 7)
-{{host}}/api/stations/location/{{location}}?count=10
+### up to 5 nearest stations within default 10 miles
+{{host}}/api/stations/location/{{location}}?count=5
 
-### 10 nearest stations within 1 miles (only 1)
-{{host}}/api/stations/location/{{location}}?count=10&range=1
+### all (7) nearest stations within default 10 miles
+{{host}}/api/stations/location/{{location}}?count=500
 
-### 200 nearest stations within 100 miles (should be ~167)
-{{host}}/api/stations/location/{{location}}?count=200&range=100
+### up to 5 nearest stations within 1 miles (only 1)
+{{host}}/api/stations/location/{{location}}?count=5&radius=1
 
-### location that should have no stations in range
+### up to 200 nearest stations within 100 miles (should be ~167)
+{{host}}/api/stations/location/{{location}}?count=200&radius=100
+
+### location that should have no stations in default radius
 {{host}}/api/stations/location/{{emptyLocation}}
 
 ### intentionally requesting empty list
@@ -35,17 +39,20 @@
 ### bad location
 {{host}}/api/stations/location/{{badLocation}}
 
+
 ### all stations
 {{host}}/api/stations/all
+
 
 ### tides by id
 {{host}}/api/tides/station/{{station}}
 
-### tides by default id: 8441241
+### tides by default id
 {{host}}/api/tides/station
+
 
 ### tides by location
 {{host}}/api/tides/location/{{location}}
 
-### tides by default location: 42.710,-70.788
+### tides by default location
 {{host}}/api/tides/location

@@ -1,7 +1,7 @@
 import {
   DEFAULT_TIDEPRED_COUNT,
-  DEFAULT_TIDEPRED_RANGE,
-  MAX_TIDEPRED_RANGE,
+  DEFAULT_TIDEPRED_RADIUS,
+  MAX_TIDEPRED_RADIUS,
 } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
@@ -31,10 +31,10 @@ export async function GET(
   let count = !countParam ? DEFAULT_TIDEPRED_COUNT : Number(countParam)
   count = isNaN(count) ? DEFAULT_TIDEPRED_COUNT : count
 
-  const rangeParam = request.nextUrl.searchParams.get("range")
-  let range = !rangeParam ? DEFAULT_TIDEPRED_RANGE : Number(rangeParam)
-  range = isNaN(range) ? DEFAULT_TIDEPRED_RANGE : range
-  range = Math.min(range, MAX_TIDEPRED_RANGE)
+  const radiusParam = request.nextUrl.searchParams.get("radius")
+  let radius = !radiusParam ? DEFAULT_TIDEPRED_RADIUS : Number(radiusParam)
+  radius = isNaN(radius) ? DEFAULT_TIDEPRED_RADIUS : radius
+  radius = Math.min(radius, MAX_TIDEPRED_RADIUS)
 
-  return Response.json(await stationsTidePred(coords, count, range))
+  return Response.json(await stationsTidePred(coords, count, radius))
 }

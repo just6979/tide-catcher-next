@@ -10,8 +10,9 @@ export const DEFAULT_STATION = "8441241"
 export const DEFAULT_LOCATION = "42.710,-70.788"
 
 export const DEFAULT_TIDEPRED_COUNT: number = 1
-export const DEFAULT_TIDEPRED_RANGE: number = 10
-export const MAX_TIDEPRED_RANGE: number = 500
+export const DEFAULT_TIDEPRED_RADIUS: number = 10
+// if radius is above this, it reverts to the default of 50
+export const MAX_TIDEPRED_RADIUS: number = 500
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 

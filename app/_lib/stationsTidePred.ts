@@ -1,4 +1,4 @@
-import { MAX_TIDEPRED_RANGE } from "@/app/_lib/constants"
+import { MAX_TIDEPRED_RADIUS } from "@/app/_lib/constants"
 import { coordsFromLatLon, coordsToString } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
 import type {
@@ -12,15 +12,15 @@ import { UTCDate } from "@date-fns/utc"
 export async function stationsTidePred(
   location: Coords,
   count = Infinity,
-  initialRange = 10,
+  initialRadius = 10,
 ): Promise<StationsResponse> {
   const utcDate = new UTCDate()
-  let range = Math.min(initialRange, MAX_TIDEPRED_RANGE)
+  let radius = Math.min(initialRadius, MAX_TIDEPRED_RADIUS)
   let attempts = 5
 
   do {
     const data = await fetchNoaaUrl(
-      `/mdapi/prod/webapi/tidepredstations.json?lat=${location.lat}&lon=${location.lon}&radius=${range}`,
+      `/mdapi/prod/webapi/tidepredstations.json?lat=${location.lat}&lon=${location.lon}&radius=${radius}`,
     )
 
     if ("errorMsg" in data)
@@ -58,15 +58,15 @@ export async function stationsTidePred(
       }
     }
 
-    range *= 2
+    radius *= 2
     attempts -= 1
-  } while (attempts > 0 && range <= MAX_TIDEPRED_RANGE)
+  } while (attempts > 0 && radius <= MAX_TIDEPRED_RADIUS)
 
-  // no stations found after maxing out the range
+  // no stations found after maxing out the radius
   return {
     status: {
       code: 404,
-      msg: `No stations found within ${range / 2} miles of location (${coordsToString(location)}).`,
+      msg: `No stations found within ${radius / 2} miles of location (${coordsToString(location)}).`,
     },
     reqTimestamp: utcDate.toISOString(),
     reqLocation: location,
