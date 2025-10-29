@@ -1,6 +1,5 @@
 import type {
   ApiResponse,
-  Coords,
   Station,
   StationsResponse,
   TidesResponse,
@@ -9,8 +8,9 @@ import type {
 /* Plum Island South */
 export const DEFAULT_STATION = "8441241"
 export const DEFAULT_LOCATION = "42.710,-70.788"
-export const DEFAULT_COORDS: Coords = { lat: 42.710, lon: -70.788 }
 
+export const DEFAULT_TIDEPRED_COUNT: number = 1
+export const DEFAULT_TIDEPRED_RANGE: number = 10
 export const MAX_TIDEPRED_RANGE: number = 500
 
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]

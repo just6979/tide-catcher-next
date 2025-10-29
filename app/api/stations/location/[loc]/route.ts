@@ -1,7 +1,10 @@
-import { MAX_TIDEPRED_RANGE } from "@/app/_lib/constants"
+import {
+  DEFAULT_TIDEPRED_COUNT,
+  DEFAULT_TIDEPRED_RANGE,
+  MAX_TIDEPRED_RANGE,
+} from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
-import type { StationsResponse } from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 import { NextRequest } from "next/server"
 
@@ -10,13 +13,10 @@ export async function GET(
   { params }: { params: Promise<{ loc: string }> },
 ) {
   const { loc } = await params
-
-  const { count, range } = getStationLocationParams(request)
-
-  let responseData: StationsResponse
   const coords = coordsFromString(loc)
+
   if (!coords) {
-    responseData = {
+    return Response.json({
       status: {
         code: 404,
         msg: `Invalid location: ${loc}`,
@@ -24,21 +24,17 @@ export async function GET(
       reqTimestamp: new UTCDate().toISOString(),
       count: 0,
       stations: [],
-    }
-  } else {
-    responseData = await stationsTidePred(coords, count, range)
+    })
   }
 
-  return Response.json(responseData)
-}
-export function getStationLocationParams(request: NextRequest) {
   const countParam = request.nextUrl.searchParams.get("count")
-  let count = !countParam ? 1 : Number(countParam)
-  count = isNaN(count) ? 1 : count
+  let count = !countParam ? DEFAULT_TIDEPRED_COUNT : Number(countParam)
+  count = isNaN(count) ? DEFAULT_TIDEPRED_COUNT : count
 
   const rangeParam = request.nextUrl.searchParams.get("range")
-  let range = !rangeParam ? 10 : Number(rangeParam)
-  range = isNaN(range) ? 10 : range
+  let range = !rangeParam ? DEFAULT_TIDEPRED_RANGE : Number(rangeParam)
+  range = isNaN(range) ? DEFAULT_TIDEPRED_RANGE : range
   range = Math.min(range, MAX_TIDEPRED_RANGE)
-  return { countParam, count, rangeParam, range }
+
+  return Response.json(await stationsTidePred(coords, count, range))
 }
