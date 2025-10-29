@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx ./app/_data/makeStationsJson.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
