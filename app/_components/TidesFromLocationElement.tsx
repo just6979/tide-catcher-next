@@ -11,13 +11,8 @@ export default function TidesFromLocationElement(props: { location: string }) {
   const [data, setData] = useState(EMPTY_TIDES_RESPONSE)
 
   useEffect(() => {
-    fetch(`/api/tides/location/${location}`, {
-      headers: {
-        "X-Tidecatcher-Tz-Offset": (
-          nowDate.getTimezoneOffset() * -1
-        ).toString(),
-      },
-    })
+    const tzOffset = nowDate.getTimezoneOffset() * -1
+    fetch(`/api/tides/location/${location}?${tzOffset}`)
       .then((res) => res.json())
       .then((data: TidesResponse) => {
         setData(data)

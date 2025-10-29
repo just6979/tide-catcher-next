@@ -49,8 +49,8 @@ async function processTides(
   let offset = undefined
   let noaaTz = "lst_ldt"
   let useLocalTime = true
-  if (tzOffset != undefined) {
-    const offsetNum = Number(tzOffset)
+  const offsetNum = Number(tzOffset)
+  if (tzOffset != undefined && !isNaN(offsetNum)) {
     const offsetAbs = Math.abs(offsetNum)
     const offsetHours = Math.floor(offsetAbs / 60)
     const offsetMinutes = offsetAbs % 60

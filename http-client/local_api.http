@@ -56,3 +56,6 @@
 
 ### tides by default location
 {{host}}/api/tides/location
+
+### tides by default location with tzOffset of -8 hours
+{{host}}/api/tides/location?tzOffset=-480

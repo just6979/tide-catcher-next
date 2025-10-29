@@ -1,13 +1,13 @@
 import { tidesFromStation } from "@/app/_lib/tides"
+import type { NextRequest } from "next/server"
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params
 
-  const headersList = request.headers
-  const tzOffset = headersList.get("X-Tidecatcher-Tz-Offset") || undefined
+  const tzOffset = request.nextUrl.searchParams.get("tzOffset") || undefined
 
   const responseData = await tidesFromStation(id, tzOffset)
 
