@@ -1,6 +1,8 @@
 {
   "name": "tide-catcher-next",
   "version": "1.6.0",
+  "license": "MIT",
+  "author": "Justin White <jw@justinwhite.net>",
   "type": "module",
   "private": true,
   "scripts": {
