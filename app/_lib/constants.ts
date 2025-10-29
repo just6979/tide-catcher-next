@@ -14,6 +14,8 @@ export const DEFAULT_TIDEPRED_RADIUS: number = 10
 // if radius is above this, it reverts to the default of 50
 export const MAX_TIDEPRED_RADIUS: number = 500
 
+export const STATION_ID_REGEX: RegExp = /(?:[A-Z]{3}|\d{3})\d{4}/
+
 export const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export const GEOLOCATION_ERRORS = [
