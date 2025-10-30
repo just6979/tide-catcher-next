@@ -1,5 +1,5 @@
-import TidesChooser from "@/app/tides/page"
+import TidesChooserClient from "@/app/_components/TidesChooser"
 
 export default async function Home() {
-  return <TidesChooser />
+  return <TidesChooserClient />
 }

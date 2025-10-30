@@ -9,7 +9,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: {
     default: "Tide Catcher",
-    template: "%s | Tide Catcher",
+    template: "Tide Catcher %s",
   },
   applicationName: "Tide Catcher",
   description:

@@ -1,10 +1,12 @@
+"use client"
+
 import ErrorMsg from "@/app/_components/ErrorMsg"
-import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
+import TidesFromLocation from "@/app/_components/TidesFromLocation"
 import { GEOLOCATION_ERRORS, GEOLOCATION_OPTIONS } from "@/app/_lib/constants"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export default function TidesFromGeolocation() {
+export default function TidesFromGPS() {
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState("")
   const [locationError, setLocationError] = useState("")
@@ -29,7 +31,7 @@ export default function TidesFromGeolocation() {
   }, [])
 
   useEffect(() => {
-    router.replace(`/tides/location/${location}`)
+    router.push(`/tides/location/${location}`)
   }, [location, router])
 
   if (isLocating) {
@@ -39,5 +41,5 @@ export default function TidesFromGeolocation() {
     return <ErrorMsg msg={`Cannot determine location: ${locationError}`} />
   }
 
-  return <TidesFromLocationElement location={location} />
+  return <TidesFromLocation location={location} />
 }

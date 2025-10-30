@@ -1,3 +1,5 @@
+"use client"
+
 import AlertMsg from "@/app/_components/AlertMsg"
 import ErrorMsg from "@/app/_components/ErrorMsg"
 import TidesTable from "@/app/_components/TidesTable"
