@@ -1,12 +1,14 @@
 import ErrorMsg from "@/app/_components/ErrorMsg"
 import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
 import { GEOLOCATION_ERRORS, GEOLOCATION_OPTIONS } from "@/app/_lib/constants"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function TidesFromGeolocation() {
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState("")
   const [locationError, setLocationError] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -25,6 +27,10 @@ export default function TidesFromGeolocation() {
       GEOLOCATION_OPTIONS,
     )
   }, [])
+
+  useEffect(() => {
+    router.replace(`/tides/location/${location}`)
+  }, [location, router])
 
   if (isLocating) {
     return <p>Getting your location...</p>
