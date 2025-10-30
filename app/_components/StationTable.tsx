@@ -3,7 +3,7 @@ import { coordsToString } from "@/app/_lib/coords"
 import { stationsById } from "@/app/_lib/stationsLocal"
 import type { Station } from "@/app/_lib/types"
 
-export default async function StationTableElement(props: { id: string }) {
+export default async function StationTable(props: { id: string }) {
   const { id } = props
 
   const data = await stationsById(id)

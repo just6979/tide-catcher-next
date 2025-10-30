@@ -4,7 +4,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
 
-export default function TidesElement(props: {
+export default function TidesTable(props: {
   data: TidesResponse
   nowDate: Date
 }) {
@@ -71,10 +71,8 @@ export default function TidesElement(props: {
             <td>
               <Link href={`/tides/station/${data.station.id}`}>
                 {data.station.id}
-              </Link> (
-              <Link href={`/stations/${data.station.id}`}>
-                Details
-              </Link>)
+              </Link>{" "}
+              (<Link href={`/stations/${data.station.id}`}>Details</Link>)
             </td>
           </tr>
           <tr>
