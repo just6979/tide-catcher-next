@@ -7,23 +7,17 @@ export async function generateStaticParams() {
   return [{ id: DEFAULT_STATION }]
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}): Promise<Metadata> {
-  const { id } = await params
+export async function generateMetadata(
+  props: PageProps<"/stations/[id]">,
+): Promise<Metadata> {
+  const { id } = await props.params
   return {
     title: `| Station ${id} Info`,
   }
 }
 
-export default async function StationById({
-  params,
-}: {
-  params: Promise<{ id: string }>
-}) {
-  const { id } = await params
+export default async function StationById(props: PageProps<"/stations/[id]">) {
+  const { id } = await props.params
 
   if (STATION_ID_REGEX.test(id)) {
     return <StationTable id={id} />
