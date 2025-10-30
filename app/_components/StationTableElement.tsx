@@ -1,8 +1,17 @@
+import ErrorMsg from "@/app/_components/ErrorMsg"
 import { coordsToString } from "@/app/_lib/coords"
+import { stationsById } from "@/app/_lib/stationsLocal"
 import type { Station } from "@/app/_lib/types"
 
-export default function StationTableElement(props: { station: Station }) {
-  const { station } = props
+export default async function StationTableElement(props: { id: string }) {
+  const { id } = props
+
+  const data = await stationsById(id)
+  if (data.stations.length === 0) {
+    return <ErrorMsg msg={`Station ${id} not found.`} />
+  }
+  const station: Station = data.stations[0]
+
   return (
     <table className="request-info single-station">
       <caption>{station.name}</caption>
@@ -23,7 +32,7 @@ export default function StationTableElement(props: { station: Station }) {
           <td>
             [
             <a
-              href={`https://www.google.com/maps/place/${coordsToString(station.location)}/@${coordsToString(station.location)},12z`}
+              href={`https://www.google.com/maps/place/ ${coordsToString(station.location)}/@${coordsToString(station.location)},12z`}
               target="_blank"
             >
               {coordsToString(station.location)}
