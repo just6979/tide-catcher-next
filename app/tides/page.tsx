@@ -4,6 +4,7 @@ import {
   DEFAULT_LOCATION,
   DEFAULT_STATION,
   GEOLOCATION_ERRORS,
+  GEOLOCATION_OPTIONS,
   STATION_ID_REGEX,
 } from "@/app/_lib/constants"
 import { PrefetchKind } from "next/dist/client/components/router-reducer/router-reducer-types"
@@ -114,7 +115,6 @@ export default function TidesChooser() {
   )
 
   function getGeoLocation(): void {
-    console.log("getting location")
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const loc = `${position.coords.latitude.toFixed(3)},${position.coords.longitude.toFixed(3)}`
@@ -122,14 +122,10 @@ export default function TidesChooser() {
         setGpsLocated(true)
       },
       (error) => {
-        console.log(`error getting location: ${GEOLOCATION_ERRORS[error.code]}`)
+        console.warn(`error getting location: ${GEOLOCATION_ERRORS[error.code]}`)
         setGpsLocation("Can't pre-locate. Hit Go!")
       },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 30000,
-        timeout: 5000,
-      },
+      GEOLOCATION_OPTIONS,
     )
   }
 

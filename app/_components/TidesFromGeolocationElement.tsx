@@ -1,5 +1,5 @@
 import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
-import { GEOLOCATION_ERRORS } from "@/app/_lib/constants"
+import { GEOLOCATION_ERRORS, GEOLOCATION_OPTIONS } from "@/app/_lib/constants"
 import { useEffect, useState } from "react"
 
 export default function TidesFromGeolocation() {
@@ -8,25 +8,20 @@ export default function TidesFromGeolocation() {
   const [locationError, setLocationError] = useState("")
 
   useEffect(() => {
-    console.log("getting location")
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const loc = `${position.coords.latitude.toFixed(3)},${position.coords.longitude.toFixed(3)}`
         setLocation(loc)
-        console.log(`found location: [${loc}]`)
         setLocating(false)
       },
       (error) => {
-        console.log("error getting location")
-        console.log(GEOLOCATION_ERRORS[error.code])
+        console.warn(
+          `error getting location: ${GEOLOCATION_ERRORS[error.code]}`,
+        )
         setLocationError(GEOLOCATION_ERRORS[error.code])
         setLocating(false)
       },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 30000,
-        timeout: 5000,
-      },
+      GEOLOCATION_OPTIONS,
     )
   }, [])
 
