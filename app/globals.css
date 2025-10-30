@@ -164,6 +164,10 @@ tbody > .future ~ .future {
   color: darkred;
 }
 
+.info {
+  color: gold;
+}
+
 input {
   font-family: monospace;
 }

@@ -1,8 +1,9 @@
 "use client"
 
+import ErrorMsg from "@/app/_components/ErrorMsg"
+import StartOver from "@/app/_components/StartOver"
 import TidesFromStationElement from "@/app/_components/TidesFromStationElement"
 import { STATION_ID_REGEX } from "@/app/_lib/constants"
-import Link from "next/link"
 import { useParams } from "next/navigation"
 
 export default function TidesFromStation() {
@@ -14,15 +15,8 @@ export default function TidesFromStation() {
 
   return (
     <div>
-      <p>
-        <span className="error">Error:</span>
-        Invalid Station ID: &ldquo;{id}&rdquo;
-      </p>
-      <p>
-        <Link href="/" prefetch={true}>
-          Start Over
-        </Link>
-      </p>
+      <ErrorMsg msg={`Invalid station ID: ${id}`} />
+      <StartOver />
     </div>
   )
 }

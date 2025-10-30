@@ -1,3 +1,4 @@
+import ErrorMsg from "@/app/_components/ErrorMsg"
 import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
 import { GEOLOCATION_ERRORS, GEOLOCATION_OPTIONS } from "@/app/_lib/constants"
 import { useEffect, useState } from "react"
@@ -29,7 +30,7 @@ export default function TidesFromGeolocation() {
     return <p>Getting your location...</p>
   }
   if (locationError != "") {
-    return <p>Error getting location: {locationError}</p>
+    return <ErrorMsg msg={`Cannot determine location: ${locationError}`} />
   }
 
   return <TidesFromLocationElement location={location} />

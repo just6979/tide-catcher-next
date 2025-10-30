@@ -1,9 +1,10 @@
 "use client"
 
+import ErrorMsg from "@/app/_components/ErrorMsg"
+import StartOver from "@/app/_components/StartOver"
 import TidesFromGeolocation from "@/app/_components/TidesFromGeolocationElement"
 import TidesFromLocationElement from "@/app/_components/TidesFromLocationElement"
 import { coordsFromString } from "@/app/_lib/coords"
-import Link from "next/link"
 import { useParams } from "next/navigation"
 
 export default function TidesFromLocation() {
@@ -21,15 +22,8 @@ export default function TidesFromLocation() {
 
   return (
     <div>
-      <p>
-        <span className="error">Error:</span>
-        Invalid location &ldquo;{location}&rdquo;
-      </p>
-      <p>
-        <Link href="/" prefetch={true}>
-          Start Over
-        </Link>
-      </p>
+      <ErrorMsg msg={`Invalid location: [${location}]`} />
+      <StartOver />
     </div>
   )
 }

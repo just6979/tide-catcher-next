@@ -1,3 +1,5 @@
+import AlertMsg from "@/app/_components/AlertMsg"
+import ErrorMsg from "@/app/_components/ErrorMsg"
 import TidesElement from "@/app/_components/TidesElement"
 import { EMPTY_TIDES_RESPONSE } from "@/app/_lib/constants"
 import type { TidesResponse } from "@/app/_lib/types"
@@ -23,15 +25,11 @@ export default function TidesFromStationElement(props: { id: string }) {
   if (isLoading) {
     return <p>Loading Tides from Station {stationId}...</p>
   }
-  if (!data || !("tides" in data) || !(data.tides.length > 0)) {
-    return <p>No Tides found for Station {stationId}.</p>
+  if (data.tides.length === 0) {
+    return <AlertMsg msg={`No Tides found for Station ${stationId}.`} />
   }
   if (data.status.code != 200) {
-    return (
-      <p>
-        Error: {data.status.code}: {data.status.msg}
-      </p>
-    )
+    return <ErrorMsg msg={`Error: ${data.status.code}: ${data.status.msg}`} />
   }
 
   return <TidesElement data={data} nowDate={nowDate} />
