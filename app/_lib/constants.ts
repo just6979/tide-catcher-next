@@ -1,13 +1,10 @@
-import type {
-  ApiResponse,
-  Station,
-  StationsResponse,
-  TidesResponse,
-} from "@/app/_lib/types"
+import type { ApiResponse, Station, TidesResponse } from "@/app/_lib/types"
 
 /* Plum Island South */
 export const DEFAULT_STATION = "8441241"
 export const DEFAULT_LOCATION = "42.710,-70.788"
+
+export const NOAA_API_BASE_PATH = `https://api.tidesandcurrents.noaa.gov`
 
 export const DEFAULT_TIDEPRED_COUNT: number = 1
 export const DEFAULT_TIDEPRED_RADIUS: number = 10
@@ -43,12 +40,6 @@ export const EMPTY_API_RESPONSE: ApiResponse = {
     code: 200,
   },
   reqTimestamp: "",
-}
-
-export const EMPTY_STATION_RESPONSE: StationsResponse = {
-  ...EMPTY_API_RESPONSE,
-  count: 0,
-  stations: [],
 }
 
 export const EMPTY_TIDES_RESPONSE: TidesResponse = {

@@ -1,22 +1,20 @@
-const basePath = `https://api.tidesandcurrents.noaa.gov`
+import { NOAA_API_BASE_PATH } from "@/app/_lib/constants"
 
 export function buildNoaaUrl(path: string): string {
-  if (path.startsWith(basePath)) {
-    console.error(`${path} is already a NOAA URL`)
+  if (path.startsWith(NOAA_API_BASE_PATH)) {
+    console.log(`${path} is already a NOAA URL`)
     return path
   }
   if (path.startsWith("/")) {
-    return `${basePath}${path}`
+    return `${NOAA_API_BASE_PATH}${path}`
   } else {
-    return `${basePath}/${path}`
+    return `${NOAA_API_BASE_PATH}/${path}`
   }
 }
 
 export async function fetchNoaaUrl(path: string) {
   try {
-    const noaaResponse = await fetch(buildNoaaUrl(path), {
-      cache: "force-cache",
-    })
+    const noaaResponse = await fetch(buildNoaaUrl(path))
     return await noaaResponse.json()
   } catch (error) {
     return {
