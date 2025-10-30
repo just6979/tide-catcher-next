@@ -7,10 +7,10 @@ export const DEFAULT_LOCATION = "42.710,-70.788"
 
 export const NOAA_API_BASE_PATH = `https://api.tidesandcurrents.noaa.gov`
 
-export const DEFAULT_TIDEPRED_COUNT: number = 1
-export const DEFAULT_TIDEPRED_RADIUS: number = 10
+export const DEFAULT_TIDEPRED_COUNT = 1
+export const DEFAULT_TIDEPRED_RADIUS = 10
 // if radius is above this, it reverts to the default of 50
-export const MAX_TIDEPRED_RADIUS: number = 500
+export const MAX_TIDEPRED_RADIUS = 500
 
 export const STATION_ID_REGEX: RegExp = /(?:[A-Z]{3}|\d{3})\d{4}/
 
