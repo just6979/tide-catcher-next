@@ -40,6 +40,11 @@ export default function Footer() {
               Github
             </a>
           </li>
+          <li>
+            Privacy: We don&#39;t record or save anything. Your location might
+            end up in a request log, since you are sending it to us, but those
+            log are ephemeral and currently only retained for 1 day.
+          </li>
         </ul>
       </div>
 
