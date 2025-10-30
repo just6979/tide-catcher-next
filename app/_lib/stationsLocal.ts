@@ -1,6 +1,12 @@
 import { coordsFromLatLon } from "@/app/_lib/coords"
 import { fetchNoaaUrl } from "@/app/_lib/noaa"
-import type { NoaaCoOpsStation, NoaaTidePredStation, Station, StationsResponse } from "@/app/_lib/types"
+import type {
+  NoaaCoOpsStation,
+  NoaaTidePredStation,
+  Station,
+  StationsResponse,
+  Status,
+} from "@/app/_lib/types"
 import { UTCDate } from "@date-fns/utc"
 import fs from "node:fs"
 
@@ -29,7 +35,7 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
     }
   }
 
-  let status
+  let status: Status
   if (stations.length > 0) {
     status = { code: 200 }
   } else {
@@ -46,11 +52,11 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
   }
 }
 
-export function getAllStationIDs() {
+export function getAllStationIDs(): string[] {
   const stationsFile = fs.readFileSync("./app/_data/stations.json")
   const stationData = JSON.parse(stationsFile.toString())
   const stationList: Station[] = stationData["stationList"] || []
-  return stationList.map((station) => station.id)
+  return stationList.map((station: Station): string => station.id)
 }
 async function fetchAllNoaa(): Promise<Station[]> {
   console.log("Trying NOAA TidePredStations API.")

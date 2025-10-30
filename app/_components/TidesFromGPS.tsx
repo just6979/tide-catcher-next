@@ -6,7 +6,7 @@ import { GEOLOCATION_ERRORS, GEOLOCATION_OPTIONS } from "@/app/_lib/constants"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
-export default function TidesFromGPS() {
+export default function TidesFromGPS(): React.JSX.Element {
   const [isLocating, setLocating] = useState(true)
   const [location, setLocation] = useState("")
   const [locationError, setLocationError] = useState("")

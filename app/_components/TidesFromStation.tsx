@@ -7,7 +7,9 @@ import { EMPTY_TIDES_RESPONSE } from "@/app/_lib/constants"
 import type { TidesResponse } from "@/app/_lib/types"
 import { useEffect, useMemo, useState } from "react"
 
-export default function TidesFromStation(props: { id: string }) {
+export default function TidesFromStation(props: {
+  id: string
+}): React.JSX.Element {
   const stationId = props.id
   const nowDate = useMemo(() => new Date(), [])
 

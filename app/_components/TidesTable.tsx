@@ -7,7 +7,7 @@ import Link from "next/link"
 export default function TidesTable(props: {
   data: TidesResponse
   nowDate: Date
-}) {
+}): React.JSX.Element {
   const { data, nowDate } = props
   const reqLoc = coordsToString(data.reqLocation)
   const stationLoc = coordsToString(data.station.location)

@@ -7,7 +7,9 @@ import { EMPTY_TIDES_RESPONSE } from "@/app/_lib/constants"
 import type { TidesResponse } from "@/app/_lib/types"
 import { useEffect, useMemo, useState } from "react"
 
-export default function TidesFromLocation(props: { location: string }) {
+export default function TidesFromLocation(props: {
+  location: string
+}): React.JSX.Element {
   const location = props.location
   const nowDate = useMemo(() => new Date(), [])
 

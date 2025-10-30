@@ -11,7 +11,7 @@ import { NextRequest } from "next/server"
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ loc: string }> },
-) {
+): Promise<Response> {
   const { loc } = await params
   const coords = coordsFromString(loc)
 

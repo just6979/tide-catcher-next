@@ -5,6 +5,7 @@ import { stationsTidePred } from "@/app/_lib/stationsTidePred"
 import type {
   Coords,
   NoaaTidePrediction,
+  Station,
   StationsResponse,
   Tide,
   TidesResponse,
@@ -17,7 +18,7 @@ export async function tidesFromCoords(
   location: Coords,
   tzOffset?: string,
 ): Promise<TidesResponse> {
-  const stationData = await stationsTidePred(location, 1)
+  const stationData: StationsResponse = await stationsTidePred(location, 1)
   return await processTides(stationData, new UTCDate(), tzOffset, location)
 }
 
@@ -44,9 +45,9 @@ async function processTides(
       tides: [],
     }
   }
-  const station = stationData.stations[0]
+  const station: Station = stationData.stations[0]
 
-  let offset = undefined
+  let offset = ""
   let noaaTz = "lst_ldt"
   let useLocalTime = true
   const offsetNum = Number(tzOffset)
@@ -97,9 +98,9 @@ async function processTides(
     "predictions" in data ? data["predictions"] : []
   const tides: Tide[] = predictions.map(
     (prediction: NoaaTidePrediction): Tide => {
-      const predDate: string = `${prediction.t}${useLocalTime ? "" : "Z"}`
+      const predDate = `${prediction.t}${useLocalTime ? "" : "Z"}`
       const tideDate = new UTCDate(Date.parse(predDate))
-      const localDate = new TZDateMini(tideDate, offset)
+      const localDate = new TZDateMini(tideDate, offset || undefined)
       return {
         sourceDate: predDate,
         isoDate: formatISO(tideDate),

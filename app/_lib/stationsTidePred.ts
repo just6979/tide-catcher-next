@@ -11,8 +11,8 @@ import { UTCDate } from "@date-fns/utc"
 
 export async function stationsTidePred(
   location: Coords,
-  count = Infinity,
-  initialRadius = 10,
+  count: number = Infinity,
+  initialRadius: number = 10,
 ): Promise<StationsResponse> {
   const utcDate = new UTCDate()
   let radius = Math.min(initialRadius, MAX_TIDEPRED_RADIUS)
@@ -33,7 +33,7 @@ export async function stationsTidePred(
 
     const stations: NoaaTidePredStation[] = data["stationList"]
     if (stations != null) {
-      const stationsOut = stations
+      const stationsOut: Station[] = stations
         .slice(0, Math.min(count, stations.length))
         .map((station: NoaaTidePredStation): Station => {
           return {

@@ -11,7 +11,7 @@ import { PrefetchKind } from "next/dist/client/components/router-reducer/router-
 import { useRouter } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
 
-export default function TidesChooserClient() {
+export default function TidesChooserClient(): React.JSX.Element {
   const nowDate = useMemo(() => new Date(), [])
   const router = useRouter()
   const [gpsLocated, setGpsLocated] = useState(false)
