@@ -16,4 +16,5 @@ module.exports = {
     },
   },
   allowedDevOrigins: ["merlin", "merlin.local"],
+  cacheComponents: true,
 }

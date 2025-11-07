@@ -5,7 +5,6 @@ import {
 } from "@/app/_lib/constants"
 import { coordsFromString } from "@/app/_lib/coords"
 import { stationsTidePred } from "@/app/_lib/stationsTidePred"
-import { UTCDate } from "@date-fns/utc"
 import { NextRequest } from "next/server"
 
 export async function GET(
@@ -21,7 +20,6 @@ export async function GET(
         code: 404,
         msg: `Invalid location: ${loc}`,
       },
-      reqTimestamp: new UTCDate().toISOString(),
       count: 0,
       stations: [],
     })

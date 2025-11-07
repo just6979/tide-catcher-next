@@ -205,7 +205,7 @@ components:
         id:
           type: string
           description: Unique ID of the station
-        reqLocation:
+        location:
           type: object
           items:
             $ref: "#/components/schemas/Location"
@@ -221,7 +221,7 @@ components:
       example:
         {
           "id": "8441241",
-          "reqLocation": { "lat": 42.710, "lon": -70.788 },
+          "location": { "lat": 42.710, "lon": -70.788 },
           "name": "Plum Island South",
           "eTidesName": "Plum Island South",
           "tzOffset": -5,
@@ -254,7 +254,7 @@ components:
             [
               {
                 "id": "8441241",
-                "reqLocation": { "lat": 42.710, "lon": -70.788 },
+                "location": { "lat": 42.710, "lon": -70.788 },
                 "name": "Plum Island South",
                 "eTidesName": "Plum Island South",
                 "tzOffset": -5,
@@ -313,10 +313,6 @@ components:
           type: object
           items:
             $ref: "#/components/schemas/Status"
-        reqDatetime:
-          type: string
-          format: date-time
-          description: datetime of when the request started processing
         reqLocation:
           type: object
           items:
@@ -332,7 +328,6 @@ components:
       example:
         {
           "status": { code: "OK", message: "" },
-          "reqTimestamp": "2025-10-15T19:22:58.605Z",
           "reqLocation": { "lat": 42.710, "lon": -70.788 },
           "station":
             {

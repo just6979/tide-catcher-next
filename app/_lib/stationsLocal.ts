@@ -7,12 +7,9 @@ import type {
   StationsResponse,
   Status,
 } from "@/app/_lib/types"
-import { UTCDate } from "@date-fns/utc"
 import fs from "node:fs"
 
 export async function stationsById(id?: string): Promise<StationsResponse> {
-  const utcDate = new UTCDate()
-
   let stations: Station[] = []
   try {
     const stationsFile = fs.readFileSync("./app/_data/stations.json")
@@ -46,7 +43,6 @@ export async function stationsById(id?: string): Promise<StationsResponse> {
 
   return {
     status: status,
-    reqTimestamp: utcDate.toISOString(),
     count: stations.length,
     stations: stations,
   }

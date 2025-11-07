@@ -34,7 +34,6 @@ export interface Tide {
 
 export interface ApiResponse {
   status: Status
-  reqTimestamp: string
   reqLocation?: Coords
 }
 
@@ -46,20 +45,6 @@ export interface StationsResponse extends ApiResponse {
 export interface TidesResponse extends ApiResponse {
   station: Station
   tides: Tide[]
-}
-
-export interface SqlStation {
-  id: string
-  name: string
-  lat: number
-  lon: number
-  commonName: string
-  fullName: string
-  etidesName: string
-  state: string
-  region: string
-  tzOffset: number
-  distance?: number
 }
 
 export interface NoaaTidePredStation {

@@ -46,15 +46,12 @@ export const EMPTY_STATION: Station = {
   distance: undefined,
 }
 
-export const EMPTY_API_RESPONSE: ApiResponse = {
-  status: {
-    code: 200,
-  },
-  reqTimestamp: "",
-}
-
 export const EMPTY_TIDES_RESPONSE: TidesResponse = {
-  ...EMPTY_API_RESPONSE,
+  ...({
+    status: {
+      code: 200,
+    },
+  }),
   station: EMPTY_STATION,
   tides: [],
 }

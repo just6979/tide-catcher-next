@@ -2,13 +2,13 @@ import { stationsById } from "@/app/_lib/stationsLocal"
 import type { Metadata } from "next"
 import Link from "next/link"
 
-export const dynamic = "force-static"
-
 export const metadata: Metadata = {
   title: "| Stations List",
 }
 
 export default async function StationsAll() {
+  "use cache"
+
   const data = await stationsById()
 
   if (!data || !("stations" in data) || !(data.stations.length > 0)) {

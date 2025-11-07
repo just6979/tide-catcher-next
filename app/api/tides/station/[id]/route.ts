@@ -8,7 +8,6 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const utcDate = new UTCDate()
   const { id } = await params
 
   let responseData: TidesResponse
@@ -18,7 +17,6 @@ export async function GET(
         code: 404,
         msg: `Invalid Station ID: ${id}`,
       },
-      reqTimestamp: utcDate.toISOString(),
       station: EMPTY_STATION,
       tides: [],
     }

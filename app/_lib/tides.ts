@@ -19,7 +19,7 @@ export async function tidesFromCoords(
   tzOffset?: string,
 ): Promise<TidesResponse> {
   const stationData: StationsResponse = await stationsTidePred(location, 1)
-  return await processTides(stationData, new UTCDate(), tzOffset, location)
+  return await processTides(stationData, tzOffset, location)
 }
 
 export async function tidesFromStation(
@@ -27,19 +27,17 @@ export async function tidesFromStation(
   tzOffset?: string,
 ): Promise<TidesResponse> {
   const stationData = await stationsById(stationId)
-  return await processTides(stationData, new Date(), tzOffset)
+  return await processTides(stationData, tzOffset)
 }
 
 async function processTides(
   stationData: StationsResponse,
-  nowDate: Date,
   tzOffset?: string,
   reqLocation?: Coords,
 ): Promise<TidesResponse> {
   if (stationData.status.code != 200 || stationData.stations.length === 0) {
     return {
       status: stationData.status,
-      reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
       station: EMPTY_STATION,
       tides: [],
@@ -64,7 +62,7 @@ async function processTides(
   }
 
   const backdateHours = 7
-  const reqDate = subHours(nowDate, backdateHours)
+  const reqDate = subHours(new Date(), backdateHours)
 
   const month = String(reqDate.getMonth() + 1).padStart(2, "0")
   const day = String(reqDate.getDate()).padStart(2, "0")
@@ -87,7 +85,6 @@ async function processTides(
         code: 500,
         msg: `Error calling NOAA API: ${"message" in data.error ? data.error.message : "Unknown error"}`,
       },
-      reqTimestamp: nowDate.toISOString(),
       reqLocation: reqLocation,
       station: station,
       tides: [],
@@ -123,7 +120,6 @@ async function processTides(
       code: 200,
       msg: undefined,
     },
-    reqTimestamp: nowDate.toISOString(),
     reqLocation: reqLocation,
     station: station,
     tides: tides,

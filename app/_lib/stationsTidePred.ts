@@ -7,14 +7,12 @@ import type {
   Station,
   StationsResponse,
 } from "@/app/_lib/types"
-import { UTCDate } from "@date-fns/utc"
 
 export async function stationsTidePred(
   location: Coords,
   count: number = Infinity,
   initialRadius: number = 10,
 ): Promise<StationsResponse> {
-  const utcDate = new UTCDate()
   let radius = Math.min(initialRadius, MAX_TIDEPRED_RADIUS)
   let attempts = 5
 
@@ -26,7 +24,6 @@ export async function stationsTidePred(
     if ("errorMsg" in data)
       return {
         status: { code: data.errorCode, msg: data.errorMsg },
-        reqTimestamp: utcDate.toISOString(),
         count: 0,
         stations: [],
       }
@@ -51,7 +48,6 @@ export async function stationsTidePred(
         })
       return {
         status: { code: 200 },
-        reqTimestamp: utcDate.toISOString(),
         reqLocation: location,
         count: stationsOut.length,
         stations: stationsOut,
@@ -68,7 +64,6 @@ export async function stationsTidePred(
       code: 404,
       msg: `No stations found within ${radius / 2} miles of location (${coordsToString(location)}).`,
     },
-    reqTimestamp: utcDate.toISOString(),
     reqLocation: location,
     count: 0,
     stations: [],

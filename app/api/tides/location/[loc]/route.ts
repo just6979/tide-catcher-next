@@ -22,7 +22,6 @@ export async function GET(
         code: 404,
         msg: `Invalid location: ${loc}`,
       },
-      reqTimestamp: utcDate.toISOString(),
       station: EMPTY_STATION,
       tides: [],
     }

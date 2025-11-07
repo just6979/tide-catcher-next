@@ -38,8 +38,8 @@ export default function TidesTable(props: {
       <table className="request-info">
         <tbody>
           <tr>
-            <td>Request Time</td>
-            <td>{new Date(data.reqTimestamp).toLocaleString()}</td>
+            <td>Current Time</td>
+            <td>{new Date().toLocaleString()}</td>
           </tr>
           {data.reqLocation != undefined && (
             <tr>
