@@ -2,9 +2,13 @@ import Footer from "@/app/footer"
 import Header from "@/app/header"
 import Loading from "@/app/loading"
 import type { Metadata, Viewport } from "next"
+import { Share_Tech_Mono, Sono, Source_Code_Pro } from "next/font/google"
 import { ReactNode, Suspense } from "react"
 
 import "./globals.css"
+
+const monoFont = Sono({ weight: "400" })
+const scpFont = Source_Code_Pro({weight: "400"})
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +32,7 @@ export default function RootLayout({
   children: ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={scpFont.className}>
       <body>
         <Header />
         <Suspense fallback={<Loading />}>{children}</Suspense>

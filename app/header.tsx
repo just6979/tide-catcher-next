@@ -1,5 +1,8 @@
+import { Trade_Winds } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
+
+const tradeWinds = Trade_Winds({ weight: "400" })
 
 export default function Header() {
   return (
@@ -13,7 +16,7 @@ export default function Header() {
           height={48}
           unoptimized={false}
         />
-        <h1>Tide Catcher</h1>
+        <h1 className={tradeWinds.className}>Tide Catcher</h1>
       </Link>
     </div>
   )
