@@ -2,13 +2,12 @@ import Footer from "@/app/footer"
 import Header from "@/app/header"
 import Loading from "@/app/loading"
 import type { Metadata, Viewport } from "next"
-import { Share_Tech_Mono, Sono, Source_Code_Pro } from "next/font/google"
+import { Source_Code_Pro } from "next/font/google"
 import { ReactNode, Suspense } from "react"
 
 import "./globals.css"
 
-const monoFont = Sono({ weight: "400" })
-const scpFont = Source_Code_Pro({weight: "400"})
+const scpFont = Source_Code_Pro({ weight: "400", subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: {
