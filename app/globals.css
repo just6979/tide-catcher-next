@@ -1,26 +1,29 @@
 :root {
+  color-scheme: light dark;
   --background: lightblue;
   --foreground: black;
   --high-row-bg: cornflowerblue;
   --low-row-bg: tan;
 }
 
-html,
-body {
+html {
+  min-width: 320px;
   max-width: 500px;
-  padding: 0.5em 0;
   margin: auto;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: "Source Code Pro", monospace;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 400;
+  font-style: normal;
   font-size: 125%;
   width: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0.5em 0;
   text-align: center;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -29,16 +32,13 @@ a {
   color: inherit;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+header {
+  padding-bottom: 0.25em;
+  border-bottom: dotted thin;
 }
 
 header h1 {
   margin: 0;
-  padding-bottom: 0.25em;
-  border-bottom: dotted thin;
 }
 
 header a {
@@ -177,11 +177,11 @@ nav button {
 }
 
 input {
-  font-family: monospace;
+  font-family: inherit;
 }
 
 button {
-  font-family: monospace;
+  font-family: inherit;
 }
 
 #about {
