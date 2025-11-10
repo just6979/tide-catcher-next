@@ -129,6 +129,11 @@ nav button {
   border: dotted thin;
 }
 
+.active-route button {
+  border: solid thin;
+  filter: brightness(125%);
+}
+
 #coming-soon {
   border-top: dotted thin;
 }

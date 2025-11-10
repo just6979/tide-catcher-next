@@ -1,8 +1,8 @@
-export default function Loading() {
+export default function Loading({ msg = "Tide Catcher" }) {
   // Define the Loading UI here
   return (
     <div>
-      <p>Loading Tide Catcher...</p>
+      <p>Loading {msg}...</p>
     </div>
   )
 }

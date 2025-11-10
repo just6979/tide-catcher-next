@@ -37,7 +37,9 @@ export default function RootLayout({
         <main>
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={<Loading msg={"NavBar"} />}>
+          <Footer />
+        </Suspense>
       </body>
     </html>
   )
