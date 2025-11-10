@@ -34,7 +34,9 @@ export default function RootLayout({
     <html lang="en" className={scpFont.className}>
       <body>
         <Header />
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <main>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </main>
         <Footer />
       </body>
     </html>

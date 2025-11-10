@@ -6,7 +6,7 @@ const tradeWinds = Trade_Winds({ weight: "400" })
 
 export default function Header() {
   return (
-    <div id="header">
+    <header id="header">
       <Link href="/">
         <Image
           id="logo"
@@ -18,6 +18,6 @@ export default function Header() {
         />
         <h1 className={tradeWinds.className}>Tide Catcher</h1>
       </Link>
-    </div>
+    </header>
   )
 }

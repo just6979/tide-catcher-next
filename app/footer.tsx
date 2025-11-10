@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div id="footer">
+    <footer>
       <div id="about">
         <h3>About</h3>
         <ul>
@@ -91,6 +91,6 @@ export default function Footer() {
           </li>
         </ul>
       </div>
-    </div>
+    </footer>
   )
 }

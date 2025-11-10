@@ -35,13 +35,13 @@ a {
   }
 }
 
-#header h1 {
+header h1 {
   margin: 0;
   padding-bottom: 0.25em;
   border-bottom: dotted thin;
 }
 
-#header a {
+header a {
   text-decoration: none;
 }
 
@@ -114,7 +114,7 @@ tbody > .future ~ .future {
   text-decoration: none;
 }
 
-#footer {
+footer {
   border-top: dashed thin;
   font-size: 50%;
   text-align: start;
