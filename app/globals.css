@@ -115,10 +115,18 @@ tbody > .future ~ .future {
 }
 
 footer {
-  border-top: dashed thin;
-  font-size: 50%;
-  text-align: start;
-  margin: 1em;
+  font-size: 75%;
+  border-top: dotted thin;
+  margin: 0;
+}
+
+nav {
+  padding: 0.5em;
+}
+
+nav button {
+  padding: 0.25em 1em;
+  border: dotted thin;
 }
 
 #coming-soon {
@@ -174,4 +182,12 @@ input {
 
 button {
   font-family: monospace;
+}
+
+#about {
+  font-size: 75%;
+}
+
+#about ul {
+  text-align: left;
 }
