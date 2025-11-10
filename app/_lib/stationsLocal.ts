@@ -54,6 +54,7 @@ export function getAllStationIDs(): string[] {
   const stationList: Station[] = stationData["stationList"] || []
   return stationList.map((station: Station): string => station.id)
 }
+
 async function fetchAllNoaa(): Promise<Station[]> {
   console.log("Trying NOAA TidePredStations API.")
   const data = await fetchNoaaUrl(`/mdapi/prod/webapi/tidepredstations.json`)

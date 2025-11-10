@@ -117,6 +117,7 @@ tbody > .future ~ .future {
 footer {
   font-size: 75%;
   border-top: dotted thin;
+  padding-top: 0.5em;
   margin: 0;
 }
 
