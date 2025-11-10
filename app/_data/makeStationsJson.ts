@@ -5,13 +5,25 @@ import path from "node:path"
 import * as url from "node:url"
 
 async function main(filename: string): Promise<void> {
+  console.log("Checking for existing stations list...")
+  try {
+    const existingFile = fs.readFileSync(filename)
+    const existingData = JSON.parse(existingFile.toString())
+    if ("count" in existingData && existingData.count > 0) {
+      console.log("Found some existing stations: skip fetching.")
+      return
+    }
+  } catch {
+    console.log("Unable to open existing stations list: regenerating list...")
+  }
+
   const url =
     "https://api.tidesandcurrents.noaa.gov/mdapi/prod/webapi/tidepredstations.json"
-  console.log(`Fetching ${url}`)
+  console.log(`Fetching stations from '${url}'...`)
   const tpRes: Response = await fetch(url)
   const tpData = await tpRes.json()
   const tpStations: NoaaTidePredStation[] = tpData["stationList"]
-  console.log(`Mapping ${tpStations.length} to local stations`)
+  console.log(`Mapping ${tpStations.length} to local stations...`)
   const stations: Station[] = tpStations.map(
     (s: NoaaTidePredStation): Station => {
       return {
@@ -27,7 +39,7 @@ async function main(filename: string): Promise<void> {
       }
     },
   )
-  console.log("Writing to local JSON.")
+  console.log("Writing to local JSON...")
   fs.writeFileSync(
     filename,
     JSON.stringify({
@@ -35,6 +47,7 @@ async function main(filename: string): Promise<void> {
       stationList: stations,
     }),
   )
+  console.log("Finished.")
 }
 
 if (import.meta.url.startsWith("file:")) {
