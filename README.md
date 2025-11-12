@@ -11,7 +11,7 @@ Automated deploys at Google Cloud Run and Vercel, triggered by changes to
 the [main branch](https://github.com/just6979/tide-catcher-next/tree/main)
 at [GitHub](https://github.com/just6979/tide-catcher-next)
 
-- Main: https://tide-catcher.justinwhite.net
+- Main: https://tide-catcher-next.justinwhite.net
 - Alternate URL: https://tide-catcher-next-1072051472642.us-east1.run.app
 - Secondary Deploy: https://tide-catcher-next.vercel.app
 
