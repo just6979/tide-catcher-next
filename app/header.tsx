@@ -10,10 +10,10 @@ export default function Header() {
       <Link href="/">
         <Image
           id="logo"
-          src="/images/wave_left_480.png"
+          src="/images/wave-line-icon-192.png"
           alt="Site Logo"
-          width={48}
-          height={48}
+          width={64}
+          height={64}
           unoptimized={false}
         />
         <h1 className={tradeWinds.className}>Tide Catcher</h1>
